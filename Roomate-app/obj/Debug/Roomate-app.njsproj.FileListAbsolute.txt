@@ -1,0 +1,3 @@
+C:\Users\jstut\OneDrive - email.ucr.edu\UCR\Summer 2019\Code\roommate\Roomate-app\obj\Debug\Roomate-app.njsprojAssemblyReference.cache
+C:\Users\jstut\OneDrive - email.ucr.edu\UCR\Summer 2019\Code\roommate\Roomate-app\obj\Debug\Roomate-app.njsproj.CoreCompileInputs.cache
+C:\Users\jstut\OneDrive - email.ucr.edu\UCR\Summer 2019\Code\roommate\Roomate-app\bin\Microsoft.NodejsTools.WebRole.dll

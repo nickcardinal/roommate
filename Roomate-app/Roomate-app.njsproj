@@ -32,6 +32,12 @@
       <Link>README.md</Link>
     </Content>
     <Content Include="config.js" />
+    <Content Include="login.html">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="login.js">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="server.js" />
     <Content Include="package.json" />
   </ItemGroup>
