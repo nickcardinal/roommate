@@ -11,7 +11,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>dea6c5a1-2482-4588-9313-f802634f88d0</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>server.js</StartupFile>
+    <StartupFile>public\server.js</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -31,15 +31,20 @@
     <Content Include="..\README.md">
       <Link>README.md</Link>
     </Content>
-    <Content Include="config.js" />
-    <Content Include="login.html">
+    <Content Include="public\config.js" />
+    <Content Include="public\login.html">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="login.js">
+    <Content Include="public\login.js">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="server.js" />
+    <Content Include="public\404.html" />
+    <Content Include="public\index.html" />
+    <Content Include="public\server.js" />
     <Content Include="package.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="public\" />
   </ItemGroup>
   <Import Project="$(VSToolsPath)\Node.js Tools\Microsoft.NodejsToolsV2.targets" />
   <ProjectExtensions>
