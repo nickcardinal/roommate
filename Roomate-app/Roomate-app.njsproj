@@ -32,6 +32,9 @@
       <Link>README.md</Link>
     </Content>
     <Content Include="public\config.js" />
+    <Content Include="public\css\default.css">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="public\login.html">
       <SubType>Code</SubType>
     </Content>
@@ -45,6 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="public\" />
+    <Folder Include="public\css\" />
   </ItemGroup>
   <Import Project="$(VSToolsPath)\Node.js Tools\Microsoft.NodejsToolsV2.targets" />
   <ProjectExtensions>
