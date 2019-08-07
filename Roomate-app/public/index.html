@@ -20,7 +20,8 @@
     <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,400i,700|Raleway:300,400,400i,700&display=swap" rel="stylesheet">
     <!-- link rel="icon" href="IMG" -->
 
-    <title>CheckMates</title>
+    <script src="https://www.gstatic.com/firebasejs/4.1.3/firebase.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.1.3/firebase-auth.js"></script>
 
     <!-- update the version number as needed -->
     <script defer src="/__/firebase/6.3.4/firebase-app.js"></script>
@@ -32,6 +33,7 @@
     <!-- initialize the SDK after all desired features are loaded -->
     <script defer src="/__/firebase/init.js"></script>
 
+    <title>CheckMates</title>
 </head>
 <body>
   <div id="message">
@@ -46,13 +48,13 @@
 
             <p class="home-slogan">Keep your roommates in check ✔️</p>
 
-            <button class="login-btn" type="button" onclick="login()">
+            <!-- <button class="login-btn" type="button" onclick="login()">
               <img class="login-btn-img" src="./images/logoGoogle.png" alt="Google Logo">
               Sign in with Google
-            </button>
+            </button> -->
 
-            <!-- <button type="button" onclick="login()">Login with Google</button>
-            <button type="button" onclick="redirLogin()">Redirect to Google</button> -->
+            <button type="button" onclick="login()">Login with Google</button>
+            <button type="button" onclick="redirLogin()">Redirect to Google</button>
         </div>
       </div>
     </div>
