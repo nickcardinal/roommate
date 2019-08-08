@@ -28,11 +28,18 @@ h3 {
 p {
   font-family: 'Montserrat', sans-serif;
   font-size: 1.25em;
+  color: #4F4F4F;
 }
 
 .page {
   height: 100%;
   height: 100vh;
+}
+
+button {
+  border: none;
+  background: none;
+  padding: 0;
 }
 
 /* HOME */
@@ -78,9 +85,21 @@ p {
   font-weight: bold;
   font-size: 1.25em;
   color: #FFFFFF;
+
+  display: flex;
+	align-items: center;
+}
+
+.login-btn:hover {
+  background-color: #449DD1;
+
+	-webkit-transition: all 0.125s ease-out;
+	transition: all 0.125s ease-out;
 }
 
 .login-btn-img {
   width: 35px;
   height: auto;
+
+  padding-right: 10px;
 }
