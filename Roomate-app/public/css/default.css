@@ -3,8 +3,8 @@
 }
 
 /* UNIVERSAL */
-﻿body {
-  background-image: linear-gradient(#FFFFFF, #F2F2F2);
+body {
+  background: linear-gradient(#FFFFFF, #F2F2F2);
 
   font-family: 'Raleway', sans-serif;
   font-family: 'Montserrat', sans-serif;
