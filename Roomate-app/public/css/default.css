@@ -111,3 +111,10 @@ button {
       height: auto;
   }
 }
+
+@media (max-height: 475px) {
+  .home-logo {
+      height: 40vh;
+      width: auto;
+  }
+}
