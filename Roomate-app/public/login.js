@@ -3,9 +3,8 @@
 }
 
 function login() {
-    var token, user, name, email, photoUrl, verified;
+    let token, user, name, email, photoUrl, verified;
     var provider = new firebase.auth.GoogleAuthProvider();
-    provider.addScope('https://www.googleapis.com/auth/userinfo.email');
     firebase.auth().signInWithPopup(provider).then(function (result) {
         token = result.credential.accessToken;
         user = result.user;
@@ -14,7 +13,7 @@ function login() {
         photoUrl = user.photoURL;
         emailVerified = user.emailVerified;
         console.log(user.email)
-        window.alert("Welcome, " + name);        
+        window.alert("Welcome, " + name);
     }).catch(function (error) {
         var errorCode = error.code;
         var errorMessage = error.message;
@@ -22,6 +21,7 @@ function login() {
         //var credential = error.credential;
         console.log("ERROR: " + errorCode + " : " + errorMessage);
     });
+    console.log(name);
 }
 
 function logout() {
@@ -31,3 +31,4 @@ function logout() {
 
     });
 }
+
