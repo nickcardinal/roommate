@@ -1,0 +1,19 @@
+{
+  "name": "roommate",
+  "version": "1.0.0",
+  "description": "Roommate is the all-in-one home-life management software.",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nickcardinal/roommate.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nickcardinal/roommate/issues"
+  },
+  "homepage": "https://github.com/nickcardinal/roommate#readme"
+}
