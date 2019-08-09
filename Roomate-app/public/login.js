@@ -11,9 +11,7 @@ function login() {
         name = user.displayName;
         email = user.email;
         photoUrl = user.photoURL;
-        emailVerified = user.emailVerified;
-        console.log(user.email)
-        window.alert("Welcome, " + name);
+        console.log(name + '\n' + email + '\n' + photoUrl);
     }).catch(function (error) {
         var errorCode = error.code;
         var errorMessage = error.message;
@@ -21,7 +19,6 @@ function login() {
         //var credential = error.credential;
         console.log("ERROR: " + errorCode + " : " + errorMessage);
     });
-    console.log(name);
 }
 
 function logout() {

@@ -11,7 +11,8 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>dea6c5a1-2482-4588-9313-f802634f88d0</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>public\server.js</StartupFile>
+    <StartupFile>
+    </StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -35,15 +36,11 @@
     <Content Include="public\css\default.css">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="public\login.html">
-      <SubType>Code</SubType>
-    </Content>
     <Content Include="public\login.js">
       <SubType>Code</SubType>
     </Content>
     <Content Include="public\404.html" />
     <Content Include="public\index.html" />
-    <Content Include="public\server.js" />
     <Content Include="package.json" />
     <Content Include="public\Space.js">
       <SubType>Code</SubType>
