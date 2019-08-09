@@ -7,20 +7,24 @@ class User {
         this.fName
         this.email = mail;
         this.photoUrl = '';
-        //let userRef = db.collection('Users');
-        //let query = userRef.where('usrEmail', '==', email).get().then(snapshot => {
-        //    if (snapshot.empty) {
-        //        //New user
-        //    } else {
-        //        snapshot.forEach(doc => {
-        //            console.log(doc.id, '=>', doc.data());
-        //        });
-        //    }
-        //}).catch(err => {
-        //    console.log('Error getting documents');
-        //});
+        this.createFirebaseUser();
     }
     pushToFirestore() {
 
+    }
+    createFirebaseUser() {
+        var db = firebase.firestore();
+        let userRef = db.collection('Users');
+        let query = userRef.where('usrEmail', '==', email).get().then(snapshot => {
+            if (snapshot.empty) {
+                //New user
+            } else {
+                snapshot.forEach(doc => {
+                    console.log(doc.id, '=>', doc.data());
+                });
+            }
+        }).catch(err => {
+            console.log('Error getting documents');
+        });
     }
 }

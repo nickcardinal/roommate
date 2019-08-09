@@ -12,6 +12,7 @@ function login() {
         email = user.email;
         photoUrl = user.photoURL;
         console.log(name + '\n' + email + '\n' + photoUrl);
+        var client = new User(token, email);
     }).catch(function (error) {
         var errorCode = error.code;
         var errorMessage = error.message;
