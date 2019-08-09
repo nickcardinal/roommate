@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/nickcardinal/roommate/issues"
   },
-  "homepage": "https://github.com/nickcardinal/roommate#readme"
+  "homepage": "https://github.com/nickcardinal/roommate#readme",
+  "devDependencies": {
+    "jest": "^24.8.0"
+  }
 }
