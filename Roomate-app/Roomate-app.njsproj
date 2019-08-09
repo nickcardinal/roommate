@@ -41,7 +41,6 @@
     </Content>
     <Content Include="public\404.html" />
     <Content Include="public\index.html" />
-    <Content Include="package.json" />
     <Content Include="public\Space.js">
       <SubType>Code</SubType>
     </Content>

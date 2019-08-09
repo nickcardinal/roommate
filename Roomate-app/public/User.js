@@ -7,7 +7,7 @@ class User {
         this.fName
         this.email = mail;
         this.photoUrl = '';
-        this.createFirebaseUser();
+        //this.createFirebaseUser();
     }
     pushToFirestore() {
 
