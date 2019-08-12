@@ -1,4 +1,7 @@
-﻿const firebaseConfig = {
+﻿function initialize() {
+    firebase.initializeApp(firebaseConfig);
+}
+const firebaseConfig = {
     apiKey: "AIzaSyCmyzsBoBimz_LSIKGBVPqYb9-Ngq4aW38",
     authDomain: "roommate-a0823.firebaseapp.com",
     databaseURL: "https://roommate-a0823.firebaseio.com",
