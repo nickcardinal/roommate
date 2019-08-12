@@ -24,30 +24,21 @@
   function logout() {
     localStorage.clear();
     sessionStorage.clear();
-    firebase.auth().signOut().then(function() {
-  
-    }).catch(function(error) {
-  
-    });
+    window.location.href = './index.html';
   }
   
   function redirLogin(user, database){
     let mateRef = database.collection("Mates");
+    sessionStorage.setItem(0, user.email);
     let mate = mateRef
       .where("usrEmail", "==", user.email)
       .get()
       .then(snapshot => {
         if (snapshot.empty) {
-            nickname = user.displayName;
-          sessionStorage.setItem(0, user.displayName);
-          sessionStorage.setItem(1, nickname);
-          sessionStorage.setItem(2, user.email);
+          sessionStorage.setItem(1, user.displayName);
           window.location.href = './welcome.html';
           return;
         }
-        snapshot.forEach(doc => {
-          console.log(doc.id + " " + doc.data());
-        });
         window.location.href = './overview.html';
       }).catch(err => {
           console.log('Error getting documents', err);
@@ -55,18 +46,31 @@
   }
 
   function loginNewUser(redir){
+    sessionStorage.removeItem(1);
     let database = firebase.firestore();
     database.collection("Mates").add({
         usrName: document.getElementById("userName").value,
         usrNickname:  document.getElementById("nickname").value,
-        usrEmail: sessionStorage.getItem(2)
-    }).then(ref=>{
+        usrEmail: sessionStorage.getItem(0)
+    }).then(ref =>{
         window.location.href = redir;
     });
   }
   function initializeWelcome(){
+      if(!sessionStorage.getItem(0).includes('@')){
+          window.location.href = "./index.html";
+      }
       initialize();
-      document.getElementById("userName").value = sessionStorage.getItem(0);
+      database = firebase.firestore();
+      let query = database.collection('Mates').where('usrEmail', '==', sessionStorage.getItem(0)).get().then(snapshot =>{
+          if(!snapshot.empty){
+              window.location.href = "./index.html";
+          }else{
+              return;
+          }
+      });
+      document.getElementById("userName").value = sessionStorage.getItem(1);
       document.getElementById("nickname").value = sessionStorage.getItem(1);
-
   }
+
+ 
