@@ -7,5 +7,6 @@ class Mate {
         this.fullName;
         this.email;
         this.photoUrl;
+        //test commit
     }
 }
