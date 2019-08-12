@@ -10,8 +10,6 @@
       .then(function(result) {
         token = result.credential.accessToken;
         user = result.user;
-        name = user.displayName;
-        email = user.email;
         redirLogin(user, db);
       })
       .catch(function(error) {
@@ -36,6 +34,7 @@
       .then(snapshot => {
         if (snapshot.empty) {
           sessionStorage.setItem(1, user.displayName);
+          sessionStorage.setItem(2, user.photoURL);
           window.location.href = './welcome.html';
           return;
         }
@@ -51,7 +50,10 @@
     database.collection("Mates").add({
         usrName: document.getElementById("userName").value,
         usrNickname:  document.getElementById("nickname").value,
-        usrEmail: sessionStorage.getItem(0)
+        usrEmail: sessionStorage.getItem(0),
+        usrPhotoUrl: sessionStorage.getItem(2)
+    }).then(ref=>{
+        sessionStorage.removeItem(2);
     }).then(ref =>{
         window.location.href = redir;
     });
