@@ -9,8 +9,15 @@
     <script src="./login.js"></script>
     <script src="./config.js"></script>
 </head>
-<body onload="initialize()">
+<body onload="initializeWelcome()">
+    <form id="userData" name="userData">
+        Name:<br>
+        <input type="text" id="userName" name="userName"><br>
+        Nickname:<br>
+        <input type="text" id="nickname" name="nickname"><br>
+    </form>
     <button onclick="loginNewUser('./Create_Space.html')">Create a new Space</button>
     <button onclick="loginNewUser('./Join_Space.html')">Join an existing Space</button>
+    <!--parameter is the link to be redirected to, may be changed to match the actual page name-->
 </body>
 </html>

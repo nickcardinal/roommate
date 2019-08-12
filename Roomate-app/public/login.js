@@ -38,10 +38,7 @@
       .get()
       .then(snapshot => {
         if (snapshot.empty) {
-          let nickname = window.prompt("Welcome, " + user.displayName + ', enter a nickname: ',user.displayName);
-          if (nickname == null || nickname == "") {
             nickname = user.displayName;
-          }
           sessionStorage.setItem(0, user.displayName);
           sessionStorage.setItem(1, nickname);
           sessionStorage.setItem(2, user.email);
@@ -60,13 +57,16 @@
   function loginNewUser(redir){
     let database = firebase.firestore();
     database.collection("Mates").add({
-        usrName: sessionStorage.getItem(0),
-        usrNickname:  sessionStorage.getItem(1),
+        usrName: document.getElementById("userName").value,
+        usrNickname:  document.getElementById("nickname").value,
         usrEmail: sessionStorage.getItem(2)
     }).then(ref=>{
         window.location.href = redir;
     });
-    
-    
+  }
+  function initializeWelcome(){
+      initialize();
+      document.getElementById("userName").value = sessionStorage.getItem(0);
+      document.getElementById("nickname").value = sessionStorage.getItem(1);
 
   }
