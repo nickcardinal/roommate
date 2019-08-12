@@ -23,26 +23,16 @@
     <!-- link rel="icon" href="IMG" -->
 
     <script src="https://www.gstatic.com/firebasejs/4.1.3/firebase.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/4.1.3/firebase-auth.js"></script>
 
     <script src="https://www.gstatic.com/firebasejs/5.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/5.10.1/firebase-firestore.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
-
-    <!-- update the version number as needed -->
-    <script defer src="/__/firebase/6.3.4/firebase-app.js"></script>
-    <!-- include only the Firebase features as you need -->
     <script defer src="/__/firebase/6.3.4/firebase-auth.js"></script>
-    <script defer src="/__/firebase/6.3.4/firebase-database.js"></script>
-    <script defer src="/__/firebase/6.3.4/firebase-messaging.js"></script>
-    <script defer src="/__/firebase/6.3.4/firebase-storage.js"></script>
-    <!-- initialize the SDK after all desired features are loaded -->
-    <script defer src="/__/firebase/init.js"></script>
 
     <title>CheckMates</title>
 </head>
-<body>
+<body onload="initialize()">
     <div id="message">
         <div class="container page">
             <div class="home-items-container">
@@ -66,22 +56,22 @@
 
     <!-- <p id="load">Firebase SDK Loading&hellip;</p> -->
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            try {
+    <!-- <script>
+        document.addEventListener( 'DOMContentLoaded', function ()
+        {
+            try
+            {
                 let app = firebase.app();
-                let features = ['auth', 'database', 'messaging', 'storage'].filter(feature => typeof app[feature] === 'function');
-                document.getElementById('load').innerHTML = `Firebase SDK loaded with ${features.join(', ')}`;
-            } catch (e) {
-                console.error(e);
-                document.getElementById('load').innerHTML = 'Error loading the Firebase SDK, check the console.';
+                let features = [ 'auth', 'database', 'messaging', 'storage' ].filter( feature => typeof app[ feature ] === 'function' );
+                document.getElementById( 'load' ).innerHTML = `Firebase SDK loaded with ${ features.join( ', ' ) }`;
+            } catch ( e )
+            {
+                console.error( e );
+                document.getElementById( 'load' ).innerHTML = 'Error loading the Firebase SDK, check the console.';
             }
-        });
-    </script>
+        } );
+    </script> -->
     <script src="./login.js"></script>
     <script src="./config.js"></script>
-    <script src="./User.js"></script>
-    <script src="./Space.js"></script>
-    <script src="./Task.js"></script>
 </body>
 </html>

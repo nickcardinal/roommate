@@ -9,7 +9,6 @@
       .signInWithPopup(provider)
       .then(function(result) {
         token = result.credential.accessToken;
-        localStorage.setItem(0, token);
         user = result.user;
         name = user.displayName;
         email = user.email;
@@ -46,7 +45,7 @@
           sessionStorage.setItem(0, user.displayName);
           sessionStorage.setItem(1, nickname);
           sessionStorage.setItem(2, user.email);
-          window.location.href = './joinOrCreate.html';
+          window.location.href = './welcome.html';
           return;
         }
         snapshot.forEach(doc => {
@@ -56,4 +55,18 @@
       }).catch(err => {
           console.log('Error getting documents', err);
       });
+  }
+
+  function loginNewUser(redir){
+    let database = firebase.firestore();
+    database.collection("Mates").add({
+        usrName: sessionStorage.getItem(0),
+        usrNickname:  sessionStorage.getItem(1),
+        usrEmail: sessionStorage.getItem(2)
+    }).then(ref=>{
+        window.location.href = redir;
+    });
+    
+    
+
   }
