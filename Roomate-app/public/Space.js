@@ -2,11 +2,12 @@
     constructor() {
         this.name;
         this.description;
-        this.spaceID;
+        this.ID;
         this.mates = [];
         this.tasks = [];
     }
 
+    //Name Functions
     setName(name) {
       this.name = name;
     }
@@ -15,6 +16,7 @@
       return this.name;
     }
 
+    //Description Functions
     setDescription(description) {
       this.description = description;
     }
@@ -23,14 +25,16 @@
       return this.description;
     }
 
-    setSpaceID(spaceID) {
-      this.spaceID = spaceId;
+    //ID Functions
+    setID(ID) {
+      this.ID = ID;
     }
 
-    getSpaceID() {
-      return this.spaceID;
+    getID() {
+      return this.ID;
     }
 
+    //Mate Array Functions
     addMate(mate) {
       this.mates.push(mate);
     }
@@ -39,6 +43,7 @@
       return this.mates;
     }
 
+    //Task Array Functions
     addTask(task) {
       this.tasks.push(task);
     }
