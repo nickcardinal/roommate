@@ -69,27 +69,6 @@ function redirLogin(user, authExpiration, database) {
     redirect('./overview.html');
 }
 
-function updateTokenData(authExpiration, mateQuery, mateRef, callback){
-  mateQuery.get().then(snapshot => {
-    if (!snapshot.empty) {
-      snapshot.forEach(ref => {
-        sessionStorage.setItem('user', ref.id);
-        let token = sessionStorage.getItem('token');
-        mateRef.doc(ref.id).update({
-            usrToken: token,
-            usrExpiration: authExpiration
-          });
-      });
-    }
-  }).catch(err => {
-    console.log(
-      "Error updating firestore:",
-      err.code,
-      err.message
-    )
-  });
-}
-
 function loginNewUser(redir) {
   sessionStorage.removeItem(2);
   let database = firebase.firestore();
