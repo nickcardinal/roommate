@@ -2,22 +2,22 @@
 class Mate {
     
     constructor() {
-        this.googleAuthToken;
+        //this.googleAuthToken;
         this.user_ID;
         this.nickName;
         this.fullName;
         this.email;
-        this.photoUrl;
+        this.photoURL;
         //test commit
     }
     
-    setToken(googleAuthToken) {
-        this.googleAuthToken = googleAuthToken;
-    }
-    
-    getToken() {
-        return this.googleAuthToken;
-    }
+//    setToken(googleAuthToken) {
+//        this.googleAuthToken = googleAuthToken;
+//    }
+//
+//    getToken() {
+//        return this.googleAuthToken;
+//    }
     
     setID(user_ID) {
         this.user_ID = user_ID;
@@ -60,22 +60,29 @@ class Mate {
     }
 }
 
-function createFirestoreMate() {
+function addNewMate() {
     var matedb = firebase.firestore();
     
-    var currMate = new Mate();
-    
-    currMate.fullName = "John Doe";
-    currMate.email = "jDoe@ucr.edu";
-    currMate.photoUrl = "jDoe.com";
-    
-    //console.log(Andre.getFullName());
-    
-    matedb.collection("Mates").add(
-       {
-       usrNickName: $("#nameField").val(),
-       usrFullName: currMate.fullName,
-       usrEmail: currMate.email,
-       usrPhotoURL: currMate.photoUrl,
-       });
+    var mate = db.collection('Mates').doc(sessionStorage.getItem(1));
+    mate.update({
+        userNickname: document.getElementById($("#nameField").val()),
+    })
+    //usrNickName: $("#nameField").val(),
 }
+
+function assignMateInfo(docId, db) {
+    let mate = db.collection('Mates').doc(docId);
+    
+    this.user_ID = docId;
+    this.fullName = mate.data().usrName;
+    this.nickName = mate.data().usrNickName;
+    this.email = mate.data().usrEmail;
+    this.photoURL = mate.data().usrPhotoUrl;
+}
+
+
+//this.user_ID;
+//this.nickName;
+//this.fullName;
+//this.email;
+//this.photoURL;
