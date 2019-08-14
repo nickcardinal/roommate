@@ -94,8 +94,8 @@ function createFirestoreTask() {
 	// currTask.dueMonth = 0;
 	// currTask.dueDay = 0;
 	// currTask.dueTime = 0;
-	// currTask.assignedMate = "Unique Mate ID"
-	// currTask.completionStatus = true;
+	currTask.assignedMate = "Unique Mate ID"
+	currTask.completionStatus = false;
 
 	taskdb.collection("Task").add({
 		tskTitle: $("#titleField").val(),
