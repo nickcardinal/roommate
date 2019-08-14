@@ -58,13 +58,13 @@ function createFirestoreSpace() {
 
     //test space
     let currSpace = new Space();
-    currSpace.name = "My Space";
-    currSpace.description = "This is my space"
+    currSpace.setTitle("My Space");
+    currSpace.setDescription("This is my new space");
     //currSpace.mates.push();
 
     let data = {
-      spcTitle: currSpace.description,
-      spcDescription: currSpace.description,
+      spcTitle: currSpace.getTitle(),
+      spcDescription: currSpace.getDescription(),
       spcMates: firebase.firestore.FieldValue.arrayUnion('/Mates/mnTsbYn8LSlug7JlYsxW')
     }
 
@@ -94,8 +94,8 @@ function reWriteFirestoreSpace(ID, space) {
   let spacedb = firebase.firestore().collection("Spaces");
 
   let data = {
-    spcTitle: space.description,
-    spcDescription: space.description
+    spcTitle: space.getTitle(),
+    spcDescription: space.getDescription()
   }
 
   spacedb.doc(ID).set(data);
