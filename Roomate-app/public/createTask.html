@@ -1,40 +1,45 @@
 <!DOCTYPE html>
 
 <html>
-    <head>
-<!--        <script src="https://www.gstatic.com/firebasejs/4.1.3/firebase.js"></script>-->
-<!--        <script src="https://www.gstatic.com/firebasejs/4.1.3/firebase-auth.js"></script>-->
-        <script src="https://www.gstatic.com/firebasejs/5.10.1/firebase-app.js"></script>
-        <script src="https://www.gstatic.com/firebasejs/5.10.1/firebase-firestore.js"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    </head>
-    <body onload="initialize()">
-        <h1>Create Task</h1>
-    
-        <form>
-            Task Title:
-	    <br>
-            <input type="text" id="titleField">
-            <br><br>
- 
-	    Description:
-	    <br>
-	    <input type="text" id="descriptionField">
-            <br><br>
- 
-	    Due Date/Time:
-	    <br>
-	    <input type="datetime-local" id="dueDateTimeField">
-            <br><br>
+  <head>
+    <!--        <script src="https://www.gstatic.com/firebasejs/4.1.3/firebase.js"></script>-->
+    <!--        <script src="https://www.gstatic.com/firebasejs/4.1.3/firebase-auth.js"></script>-->
+    <script src="https://www.gstatic.com/firebasejs/5.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.10.1/firebase-firestore.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  </head>
+  <body onload="initialize()">
+    <h1>Create Task</h1>
 
-            <br><br>
-            <button type="button" onclick="createFirestoreTask()">Create Task</button>
-            
-        </form>
-        
-        <script src="./Task.js"></script>
-        <script src="./config.js"></script>
-        <script src="./login.js"></script>
-        
-    </body>
+    <form>
+      Task Title:
+      <br>
+      <input type="text" id="titleField">
+      <br><br>
+
+      Description:
+      <br>
+      <input type="text" id="descriptionField">
+      <br><br>
+
+      Due Date (DD/MM/YYYY):
+      <br>
+      <input type="number" name="Day" min="1" max="31" id="dueDayField">
+      <input type="number" name="Month" min="1" max="12" id="dueMonthField">
+      <input type="number" name="Year" min="2019" max="2029" id="dueYearField">
+      <br><br>
+
+      Due Time (0000 to 2359):
+      <br>
+      <input type="number" name="Time" min="0" max="2359" id="dueTimeField">
+      <br><br>
+
+      <br><br>
+      <button type="button" onclick="createFirestoreTask()">Create Task</button>
+    </form>
+
+    <script src="./Task.js"></script>
+    <script src="./config.js"></script>
+    <script src="./login.js"></script>
+  </body>
 </html>
