@@ -58,5 +58,24 @@ class Mate {
     getPhotoURL() {
         return this.photoURL;
     }
+}
+
+function createFirestoreMate() {
+    var matedb = firebase.firestore();
     
+    var currMate = new Mate();
+    
+    currMate.fullName = "John Doe";
+    currMate.email = "jDoe@ucr.edu";
+    currMate.photoUrl = "jDoe.com";
+    
+    //console.log(Andre.getFullName());
+    
+    matedb.collection("Mates").add(
+       {
+       usrNickName: $("#nameField").val(),
+       usrFullName: currMate.fullName,
+       usrEmail: currMate.email,
+       usrPhotoURL: currMate.photoUrl,
+       });
 }
