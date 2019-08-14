@@ -2,13 +2,12 @@
 	constructor(taskId, spaceId) {
 		this.title;
 		this.description;
-		this.dueDate;
-		this.dueTime;
+		this.dueDateTime;
 		this.assignedMate;
 		this.completionStatus;
     	}
 
-	//Title Functions
+	//Getters/Setters
 	setTitle(title) {
 		this.title = title;
 	}
@@ -17,7 +16,6 @@
 		return this.title;
 	}
 
-	//Description Functions
 	setDescription(description) {
 		this.description = description;
 	}
@@ -26,25 +24,14 @@
 		return this.description;
 	}
 
-	//Due-Date Functions
-	setDueDate(dueDate) {
-		this.dueDate = dueDate;
+	setDueDateTime(dueDateTime) {
+		this.dueDate = dueDateTime;
 	}
 
-	getDueDate(dueDate) {
-		return this.dueDate;
+	getDueDateTime(dueDateTime) {
+		return this.dueDateTime;
 	}
 
-	//Due-Time Functions
-	setDueTime(dueTime) {
-		this.dueTime = dueTime;
-	}
-
-	getDueTime(dueTime) {
-		return this.dueTime;
-	}
-
-	//Assigned Mate Functions
 	setAssignedMate(assignedMate) {
 		this.assignedMate = assignedMate;
 	}
@@ -53,12 +40,24 @@
 		return this.assignedMate;
 	}
 
-	//Completion Status Functions
 	setCompletionStatus(completionStatus) {
 		this.completionStatus = completionStatus;
 	}
 
 	getCompletionStatus(completionStatus) {
 		return this.completionStatus;
+	}
+
+	//Create Firestore Task
+	function createFirestoreTask() {
+		var taskdb = firebase.firestore();
+		
+		var currTask = new Task();
+
+		currTask.title = "Take out the trash";
+		currTask.description = "Remember to replace the bag!";
+		currTask.dueDateTime = Date.now();
+		currTask.assignedMate = "Unique Mate ID"
+		currTask.completionStatus = true;
 	}
 }
