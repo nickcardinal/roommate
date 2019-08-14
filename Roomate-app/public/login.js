@@ -67,12 +67,14 @@ function redirLogin(user, authExpiration, database) {
       snapshot.forEach(ref => {
         //   console.log(ref.id);
         //   console.log(sessionStorage.getItem(0));
-        $.when(mateRef.doc(ref.id).update({
-            usrToken: sessionStorage.getItem(0),
+        sessionStorage.setItem(1, ref.id);
+        let token = sessionStorage.getItem(0);
+        mateRef.doc(ref.id).update({
+            usrToken: token,
             usrExpiration: authExpiration
-        }))
+        })
         .then(ref => {
-            //window.location.href = './overview.html';
+            window.location.href = './overview.html';
         });
       });
     });
