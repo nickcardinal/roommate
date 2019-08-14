@@ -81,29 +81,29 @@
 	getCompletionStatus(completionStatus) {
 		return this.completionStatus;
 	}
+}
 
-	//Create Firestore Task
-	function createFirestoreTask() {
-		var taskdb = firebase.firestore();
-		var currTask = new Task();
+//Create Firestore Task
+function createFirestoreTask() {
+	var taskdb = firebase.firestore();
+	var currTask = new Task();
 
-		currTask.title = "Take out the trash";
-		currTask.description = "Remember to replace the bag!";
-		currTask.dueYear = 0;
-		currTask.dueMonth = 0;
-		currTask.dueDay = 0;
-		currTask.dueTime = 0;
-		currTask.assignedMate = "Unique Mate ID"
-		currTask.completionStatus = true;
+	// currTask.title = "Take out the trash";
+	// currTask.description = "Remember to replace the bag!";
+	// currTask.dueYear = 0;
+	// currTask.dueMonth = 0;
+	// currTask.dueDay = 0;
+	// currTask.dueTime = 0;
+	// currTask.assignedMate = "Unique Mate ID"
+	// currTask.completionStatus = true;
 
-		taskdb.collection("Task").add({
-			tskTitle: $("#titleField").val(),
-			tskDescription: $("#descriptionField").val(),
+	taskdb.collection("Task").add({
+		tskTitle: $("#titleField").val(),
+		tskDescription: $("#descriptionField").val(),
 
-			tskDueYear: $("#dueYearField").val(),
-			tskDueMonth: $("#dueMonthField").val(),
-			tskDueDay: $("#dueDayField").val(),
-			tskDueTime: $("#dueTimeField").val(),
-		});
-	}
+		tskDueYear: $("#dueYearField").val(),
+		tskDueMonth: $("#dueMonthField").val(),
+		tskDueDay: $("#dueDayField").val(),
+		tskDueTime: $("#dueTimeField").val(),
+	});
 }
