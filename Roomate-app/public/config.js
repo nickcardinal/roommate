@@ -13,13 +13,14 @@ const firebaseConfig = {
 function validate(){
     firebase.initializeApp(firebaseConfig);
     database = firebase.firestore();
-    let query = database.collection('Mates').where('athToken', '==', sessionStorage.getItem(0)).get().then(snapshot =>{
+    let query = database.collection('Mates').where('usrToken', '==', sessionStorage.getItem(0)).get().then(snapshot =>{
         if(snapshot.empty){
             window.location.href = "./index.html";
-            console.log('Invalid Token : ', sessionStorage.getItem(0));
+            console.log('Invalid Token :')
+            console.log(sessionStorage.getItem(0));
         }else{
             snapshot.forEach(doc => {
-                if(new Date() < doc.data().athExpiration.toDate()){
+                if(new Date() < doc.data().usrExpiration.toDate()){
                     sessionStorage.setItem(1, doc.id);
                 }else{
                     window.location.href = "./index.html";

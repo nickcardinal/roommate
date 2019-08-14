@@ -40,15 +40,14 @@ function logout() {
     });
     localStorage.clear();
   sessionStorage.clear();
-  window.location.href = './index.html';
+  redirect('./index.html');
 }
 
 function redirLogin(user, authExpiration, database) {
+    firebase.firestore.setLogLevel('debug');
   let mateRef = database.collection("Mates");
-  let mate = mateRef
-    .where("usrEmail", "==", user.email)
-    .get()
-    .then(snapshot => {
+  let mateQuery = mateRef.where("usrEmail", "==", user.email);
+  mateQuery.get().then(snapshot => {
       if (snapshot.empty) {
         sessionStorage.setItem(2, user.displayName);
         mateRef
@@ -61,23 +60,33 @@ function redirLogin(user, authExpiration, database) {
             usrNickname: user.displayName
           })
           .then(ref => {
-            window.location.href = "./welcome.html";
+            redirect('./welcome.html');
           });
       }
+    });
+    updateTokenData(authExpiration, mateQuery, mateRef);
+    redirect('./overview.html');
+}
+
+function updateTokenData(authExpiration, mateQuery, mateRef, callback){
+  mateQuery.get().then(snapshot => {
+    if (!snapshot.empty) {
       snapshot.forEach(ref => {
-        //   console.log(ref.id);
-        //   console.log(sessionStorage.getItem(0));
         sessionStorage.setItem(1, ref.id);
         let token = sessionStorage.getItem(0);
         mateRef.doc(ref.id).update({
             usrToken: token,
             usrExpiration: authExpiration
-        })
-        .then(ref => {
-            window.location.href = './overview.html';
-        });
+          });
       });
-    });
+    }
+  }).catch(err => {
+    console.log(
+      "Error updating firestore:",
+      err.code,
+      err.message
+    )
+  });
 }
 
 function loginNewUser(redir) {
@@ -104,7 +113,7 @@ function loginNewUser(redir) {
       sessionStorage.removeItem(3);
     })
     .then(ref => {
-      window.location.href = redir;
+      redirect(redir);
     });
 }
 function initializeWelcome() {
@@ -117,13 +126,13 @@ function initializeWelcome() {
     .get()
     .then(snapshot => {
       if (snapshot.empty) {
-        window.location.href = "./index.html";
+        redirect('./index.html');
       } else {
         snapshot.forEach(doc => {
           if (new Date() < doc.data().usrExpiration.toDate()) {
             sessionStorage.setItem(4, doc.id);
           } else {
-            window.location.href = "./index.html";
+            redirect('./index.html');
           }
         });
       }
@@ -132,4 +141,8 @@ function initializeWelcome() {
       document.getElementById("userName").value = sessionStorage.getItem(2);
       document.getElementById("nickname").value = sessionStorage.getItem(2);
     });
+}
+
+function redirect(url){
+  window.location.href = url;
 }
