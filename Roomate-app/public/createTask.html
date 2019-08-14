@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+<!--        <script src="https://www.gstatic.com/firebasejs/4.1.3/firebase.js"></script>-->
+<!--        <script src="https://www.gstatic.com/firebasejs/4.1.3/firebase-auth.js"></script>-->
+        <script src="https://www.gstatic.com/firebasejs/5.10.1/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/5.10.1/firebase-firestore.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    </head>
+    <body onload="initialize()">
+        <h1>Create Task</h1>
+    
+        <form>
+            Task Title:
+	    <br>
+            <input type="text" id="titleField">
+            <br><br>
+ 
+	    Description:
+	    <br>
+	    <input type="text" id="descriptionField">
+            <br><br>
+ 
+	    Due Date/Time:
+	    <br>
+	    <input type="datetime-local" id="dueDateTimeField">
+            <br><br>
+
+            <br><br>
+            <button type="button" onclick="createFirestoreTask()">Create Task</button>
+            
+        </form>
+        
+        <script src="./Task.js"></script>
+        <script src="./config.js"></script>
+        <script src="./login.js"></script>
+        
+    </body>
+</html>
