@@ -13,15 +13,41 @@ const firebaseConfig = {
 function validate(){
     firebase.initializeApp(firebaseConfig);
     database = firebase.firestore();
-    let query = database.collection('Mates').where('usrToken', '==', sessionStorage.getItem(0)).get().then(snapshot =>{
+    if(sessionStorage.getItem('log') === 'true'){
+        sessionStorage.removeItem('log');
+        let mateRef = database.collection("Mates");
+        let mateQuery = mateRef.where("usrEmail", "==", sessionStorage.getItem('email'));
+        mateQuery.get().then(snapshot => {
+            if (!snapshot.empty) {
+              snapshot.forEach(ref => {
+                sessionStorage.setItem('user', ref.id);
+                let token = sessionStorage.getItem('token');
+                let date = new Date();
+                date.setTime(date.getTime() + 86400000);
+                mateRef.doc(ref.id).update({
+                    usrToken: token,
+                    usrExpiration: date
+                  });
+              });
+            }
+          }).catch(err => {
+            console.log(
+              "Error updating firestore:",
+              err.code,
+              err.message
+            )
+          });
+          return;
+    }
+    let query = database.collection('Mates').where('usrToken', '==', sessionStorage.getItem('token')).get().then(snapshot =>{
         if(snapshot.empty){
-            window.location.href = "./index.html";
+            //window.location.href = "./index.html";
             console.log('Invalid Token :')
-            console.log(sessionStorage.getItem(0));
+            console.log(sessionStorage.getItem('token'));
         }else{
             snapshot.forEach(doc => {
                 if(new Date() < doc.data().usrExpiration.toDate()){
-                    sessionStorage.setItem(1, doc.id);
+                    sessionStorage.setItem('user', doc.id);
                 }else{
                     window.location.href = "./index.html";
                 }
