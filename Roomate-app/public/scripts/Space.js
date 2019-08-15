@@ -92,11 +92,9 @@ class Space {
 	}
 
   nextAssignment(nickName) {
-
     if (this.mates[this.mates.size - 1].nickName == nickName) {
       return this.mates[0].nickName;
     }
-
 
     for (i = 0; i < matesArray.size; ++i) {
       if (this.mates[i].nickName == nickName) {
@@ -104,7 +102,7 @@ class Space {
       }
     }
   }
-
+  
 }
 
 function testSpace(){
