@@ -37,11 +37,12 @@ function logout() {
             usrToken: "",
             usrExpiration: new Date()
           });
+          localStorage.clear();
+          sessionStorage.clear();
       });
+    }).then(ref => {
+      redirect('./index.html');
     });
-    localStorage.clear();
-  sessionStorage.clear();
-  redirect('./index.html');
 }
 
 function redirLogin(user, authExpiration, database) {
