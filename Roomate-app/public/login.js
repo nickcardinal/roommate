@@ -66,7 +66,7 @@ function redirLogin(user, authExpiration, database) {
           });
       }
     });
-    redirect('./profile.html');
+    redirect('./overview.html');
 }
 
 function loginNewUser(redir) {
@@ -98,7 +98,6 @@ function loginNewUser(redir) {
 }
 function initializeWelcome() {
   initialize();
-  document.getElementById("nameField").value = sessionStorage.getItem(2);
   database = firebase.firestore();
   let query = database
     .collection("Mates")
@@ -117,6 +116,10 @@ function initializeWelcome() {
           }
         });
       }
+    })
+    .then(ref => {
+      document.getElementById("userName").value = sessionStorage.getItem(2);
+      document.getElementById("nickname").value = sessionStorage.getItem(2);
     });
 }
 

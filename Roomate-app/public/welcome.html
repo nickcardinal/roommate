@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Welcome to CheckMates</title>
+    <script src="https://www.gstatic.com/firebasejs/5.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.10.1/firebase-firestore.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="./login.js"></script>
+    <script src="./config.js"></script>
+    <script defer src="/__/firebase/6.3.4/firebase-auth.js"></script>
+</head>
+<body onload="initializeWelcome()">
+    <form id="userData" name="userData">
+        Name:<br>
+        <input type="text" id="userName" name="userName"><br>
+        Nickname:<br>
+        <input type="text" id="nickname" name="nickname"><br>
+    </form>
+    <button onclick="loginNewUser('./Create_Space.html')">Create a new Space</button>
+    <button onclick="loginNewUser('./Join_Space.html')">Join an existing Space</button>
+    <!--parameter is the link to be redirected to, may be changed to match the actual page name-->
+</body>
+</html>
