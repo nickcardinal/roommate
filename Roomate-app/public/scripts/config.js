@@ -41,7 +41,7 @@ function validate(){
     }
     let query = database.collection('Mates').where('usrToken', '==', sessionStorage.getItem('token')).get().then(snapshot =>{
         if(snapshot.empty){
-            window.location.href = "./index.html";
+            window.location.href = "../index.html";
             //console.log('Invalid Token :')
             //console.log(sessionStorage.getItem('token'));
         }else{
@@ -50,7 +50,7 @@ function validate(){
                     sessionStorage.setItem('user', doc.id);
                     updateExpiration(database, doc)
                 }else{
-                    window.location.href = "./index.html";
+                    window.location.href = "../index.html";
                 }
                 
             });
