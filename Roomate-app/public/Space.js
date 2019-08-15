@@ -46,4 +46,62 @@
     getTasks() {
       return this.tasks;
     }
+	
+	addMateToSpace(userDocID){
+		var db = firebase.firestore();
+		var spcDocRef = db.collection("Spaces").doc(this.spaceID);
+
+		db.runTransaction(transaction => {
+		  return transaction.get(spcDocRef).then(snapshot => {
+			const spcUserArray = snapshot.get('spcMates');
+			spcUserArray.push(userDocID);
+			transaction.update(spcDocRef, 'spcMates', spcUserArray);
+		  });
+		});	
+	}
+	isValidSpace(spaceDocID){
+		var db = firebase.firestore();
+		var spcDocRef = db.collection('Spaces').doc('sFSKvtwdCrpXCMGsdkHP');
+		
+		db.collection("Spaces").where("spcTitle","==","The Collective")
+							   .get()
+							   .then(function(snap) {
+									snap.forEach(function(doc) {
+										console.log(doc.id, " => ", doc.data());
+									});
+							   })
+							   .catch(function(error) {
+									console.log(error);
+							   });
+		
+		var test = spcDocRef.get()
+							.then(function(doc) {
+								if (doc.exists) {
+									return true;
+								} else {
+									return false;
+								}
+							})
+							.catch(function(error) {
+								console.log("Error getting document:", error);	
+								return false;
+							});
+							
+		
+	}
+	
+	outputMatesInSpace(){
+		var db = firebase.firestore();
+		var spcDocRef = db.collection('Spaces').doc('sFSKvtwdCrpXCMGsdkHP');
+	}
 }
+
+function testSpace(){
+	var newSpace = new Space();
+	//newSpace.addMateToSpace('NickTest');
+	console.log(newSpace.isValidSpace("sFSKvtwdCrpXCMGsdkHP"));
+	newSpace.outputMatesInASpace();
+	tester();
+}
+
+
