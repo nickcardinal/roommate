@@ -31,28 +31,12 @@
 	}
 
 	// Getters/Setters: Task Deadline Data
-	setDueYear(dueYear) {
-		this.dueYear = dueYear;
+	setDueDate(dueDate) {
+		this.dueDate = dueDate;
 	}
 
-	getDueYear(dueYear) {
-		return this.dueYear;
-	}
-
-	setDueMonth(dueMonth) {
-		this.dueMonth = dueMonth;
-	}
-
-	getDueMonth(dueMonth) {
-		return this.dueMonth;
-	}
-
-	setDueDay(dueDay) {
-		this.dueDay = dueDay;
-	}
-
-	getDueDay(dueDateDay) {
-		return this.dueDay;
+	getDueDate(dueDate) {
+		return this.dueDate;
 	}
 
 	setDueTime(dueTime) {
@@ -85,13 +69,6 @@
 function createFirestoreTask() {
 	var taskdb = firebase.firestore();
 	var currTask = new Task();
-
-	// currTask.title = "Take out the trash";
-	// currTask.description = "Remember to replace the bag!";
-	// currTask.dueYear = 0;
-	// currTask.dueMonth = 0;
-	// currTask.dueDay = 0;
-	// currTask.dueTime = 0;
 	currTask.assignedMate = "Unique Mate ID"
 	currTask.completionStatus = false;
 
