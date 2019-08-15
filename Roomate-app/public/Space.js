@@ -2,7 +2,7 @@
     constructor() {
         this.name;
         this.description;
-        this.spaceID = '9QTPOeRYm2bjerGWsCFf';
+        this.ID;
         this.mates = [];
         this.tasks = [];
     }
@@ -49,7 +49,7 @@
 	
 	addMateToSpace(userDocID){
 		var db = firebase.firestore();
-		var spcDocRef = db.collection("Spaces").doc(this.spaceID);
+		var spcDocRef = db.collection("Spaces").doc(this.ID);
 
 		db.runTransaction(transaction => {
 		  return transaction.get(spcDocRef).then(snapshot => {
