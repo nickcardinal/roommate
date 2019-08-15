@@ -98,8 +98,25 @@ class Space {
         ++numTasks;
       }
     }
-
     return numTasks;
+  }
+
+  mateLeastTasks() {
+
+    if (this.mates.length == 0) {
+      console.log("no mates in the living space");
+      return; //condition here just in case
+    }
+
+    var minNumTasks = mateNumTask(this.mates[0].nickName);
+    var minNumTasksNickName = this.mates[0].nickName;
+
+    for (var i = 1; i < this.mates.length; ++i) {
+      if (minNumTasks > mateNumTask(this.mates[i].nickName)) {
+        minNumTasksNickName = this.mates.[i].nickName;
+      }
+    }
+    return minNumTasksNickName;
   }
 
 }
