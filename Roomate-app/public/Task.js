@@ -5,10 +5,8 @@
 		this.description;
 
 		// Task Deadline Data
-		this.dueYear;
-		this.dueDay;
-		this.dueMonth;
-		this.dueTime; // 0000 to 2359
+		this.dueDate;
+		this.dueTime;
 
 		// Task Completion Details
 		this.assignedMate;
@@ -33,28 +31,12 @@
 	}
 
 	// Getters/Setters: Task Deadline Data
-	setDueYear(dueYear) {
-		this.dueYear = dueYear;
+	setDueDate(dueDate) {
+		this.dueDate = dueDate;
 	}
 
-	getDueYear(dueYear) {
-		return this.dueYear;
-	}
-
-	setDueMonth(dueMonth) {
-		this.dueMonth = dueMonth;
-	}
-
-	getDueMonth(dueMonth) {
-		return this.dueMonth;
-	}
-
-	setDueDay(dueDay) {
-		this.dueDay = dueDay;
-	}
-
-	getDueDay(dueDateDay) {
-		return this.dueDay;
+	getDueDate(dueDate) {
+		return this.dueDate;
 	}
 
 	setDueTime(dueTime) {
@@ -85,25 +67,24 @@
 
 //Create Firestore Task
 function createFirestoreTask() {
-	var taskdb = firebase.firestore();
-	var currTask = new Task();
-
-	// currTask.title = "Take out the trash";
-	// currTask.description = "Remember to replace the bag!";
-	// currTask.dueYear = 0;
-	// currTask.dueMonth = 0;
-	// currTask.dueDay = 0;
-	// currTask.dueTime = 0;
-	currTask.assignedMate = "Unique Mate ID"
-	currTask.completionStatus = false;
-
-	taskdb.collection("Task").add({
-		tskTitle: $("#titleField").val(),
-		tskDescription: $("#descriptionField").val(),
-
-		tskDueYear: $("#dueYearField").val(),
-		tskDueMonth: $("#dueMonthField").val(),
-		tskDueDay: $("#dueDayField").val(),
-		tskDueTime: $("#dueTimeField").val(),
-	});
+	var taskdb = firebase.firestore().collection("Task");
+	
+	let currTask = new Task();
+	currTask.setTitle($("#titleField").val());
+	currTask.setDescription($("#descriptionField").val());
+	currTask.setDueDate($("#dueDateField").val());
+	currTask.setDueTime($("#dueTimeField").val());
+	currTask.setAssignedMate("Unique Mate ID");
+	currTask.setCompletionStatus(false);
+	
+	let data = {
+		tskTitle: currTask.getTitle(),
+		tskDescription: currTask.getDescription(),
+		tskDueDate: currTask.getDueDate(),
+		tskDueTime: currTask.getDueTime(),
+		tskAssignedMate: currTask.getAssignedMate(),
+		tskCompletionStatus: currTask.getCompletionStatus(),
+	}
+	
+	taskdb.add(data);
 }

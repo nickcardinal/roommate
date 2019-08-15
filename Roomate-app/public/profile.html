@@ -1,7 +1,16 @@
 <!DOCTYPE html>
 
 <html>
-    <head>
+<head>
+    
+    <!-- Meta Tags -->
+    <meta charset="utf-8">
+    <!-- meta name="description" content="DESC" -->
+    <!-- meta name="author" content="COMPANY" -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        
+    <meta property="og:type" content="Website Applicaiton" />
+    
 <!--        <script src="https://www.gstatic.com/firebasejs/4.1.3/firebase.js"></script>-->
 <!--        <script src="https://www.gstatic.com/firebasejs/4.1.3/firebase-auth.js"></script>-->
         <script src="https://www.gstatic.com/firebasejs/5.10.1/firebase-app.js"></script>
@@ -19,10 +28,40 @@
             <button type="button" onclick="loginNewUser()">Add Me!</button>
             
         </form>
+    <script src="https://www.gstatic.com/firebasejs/5.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.10.1/firebase-firestore.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    
+    <link rel="stylesheet" type="text/css" href="./css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="./css/animate.css">
+    <link rel="stylesheet" type="text/css" href="./css/default.css">
         
-        <script src="./Mate.js"></script>
-        <script src="./config.js"></script>
-        <script src="./login.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,400i,700|Raleway:300,400,400i,700&display=swap" rel="stylesheet">
         
-    </body>
+    <link rel="icon" href="./images/logo_Chck_m.png">
+        
+        
+</head>
+<body onload="initialize()">
+    <div class="container page">
+        <div class="home-items-container">
+            <div class="home-items">
+                <h3>Enter Nick Name</h3>
+            
+                    <form>
+                        <input type="text" id="nameField">
+                    </form>
+                    
+                    <br><br>
+                    
+                <button class="login-btn" type="button" onclick="addNewMate()">Submit</button>
+            </div>
+        </div>
+    </div>
+    
+    <script src="./Mate.js"></script>
+    <script src="./config.js"></script>
+    <script src="./login.js"></script>
+    
+</body>
 </html>
