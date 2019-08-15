@@ -65,7 +65,7 @@ class Mate {
         this.email = mate.data().usrEmail;
         this.nickName = mate.data().usrNickName;
         this.fullName = mate.data().usrName;
-        this.photoURL = mate.data().userPhotoUrl;
+        this.photoURL = mate.data().usrPhotoUrl;
     }
 
 }
