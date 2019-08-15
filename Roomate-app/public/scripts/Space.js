@@ -93,7 +93,7 @@ class Space {
 
   nextAssignment(nickName) {
 
-    for (var i = 0; i < this.mates.size - 1; ++i) {
+    for (var i = 0; i < this.mates.length - 1; ++i) {
       if (this.mates[i].nickName == nickName) {
         return this.mates[i + 1].nickName;
       }
