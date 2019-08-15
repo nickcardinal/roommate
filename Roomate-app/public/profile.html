@@ -13,9 +13,21 @@
     
 <!--        <script src="https://www.gstatic.com/firebasejs/4.1.3/firebase.js"></script>-->
 <!--        <script src="https://www.gstatic.com/firebasejs/4.1.3/firebase-auth.js"></script>-->
-    <script src="https://www.gstatic.com/firebasejs/5.10.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/5.10.1/firebase-firestore.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/5.10.1/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/5.10.1/firebase-firestore.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    </head>
+    <body onload="initializeWelcome()">
+        <h1>Input Nick Name</h1>
+    
+        <form>
+            Nick Name:<br>
+            <input type="text" id="nameField">
+            <br>
+            <!--<button type="button" onclick="createFirestoreMate()">Add Me!</button> Fix the function please-->
+            <button type="button" onclick="loginNewUser()">Add Me!</button>
+            
+        </form>
     
     <link rel="stylesheet" type="text/css" href="./css/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="./css/animate.css">
