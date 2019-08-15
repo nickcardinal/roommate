@@ -56,11 +56,10 @@ class Space {
 function createFirestoreSpace() {
     let spacedb = firebase.firestore().collection("Spaces");
 
-    //test space
+    //testSpace
     let currSpace = new Space();
     currSpace.setTitle("My Space");
     currSpace.setDescription("This is my new space");
-    //currSpace.mates.push();
 
     let data = {
       spcTitle: currSpace.getTitle(),
@@ -71,18 +70,18 @@ function createFirestoreSpace() {
     spacedb.add(data);
 }
 
-function accessFirestoreSpace(ID) {
-  var space = new Space();
+function accessFirestoreSpace(ID, _callback) {
+  let space = new Space();
   let spacedb = firebase.firestore().collection("Spaces").doc(ID);
   let getSpace = spacedb.get().then(doc => {
     if (!doc.exists) {
       console.log('No such document!');
     } else {
-      console.log('Document data:', doc.data());
       space.setDescription(doc.data().spcDescription);
       space.setTitle(doc.data().spcTitle);
       space.setID(doc.id);
-      return space;
+
+      _callback(space);
     }
   })
   .catch(err => {
@@ -91,6 +90,7 @@ function accessFirestoreSpace(ID) {
 }
 
 function reWriteFirestoreSpace(ID, space) {
+  //not tested may not work
   let spacedb = firebase.firestore().collection("Spaces");
 
   let data = {
