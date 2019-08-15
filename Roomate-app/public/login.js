@@ -62,7 +62,7 @@ function redirLogin(user, authExpiration, database) {
             usrNickname: user.displayName
           })
           .then(ref => {
-            redirect('./welcome.html');
+            redirect('./profile.html');
           });
       }else{
         redirect('./overview.html');
@@ -83,10 +83,9 @@ function loginNewUser(redir) {
       snapshot.forEach(ref => {
         database
         .collection("Mates")
-        .doc(ref.id).set({
-          usrName: document.getElementById("userName").value,
-          usrNickname: document.getElementById("nickname").value,
-      }, {merge:true});
+        .doc(ref.id).update({
+          usrNickname: document.getElementById("nameField").value
+      });
       sessionStorage.setItem('user', ref.id);
     });
   
@@ -95,11 +94,14 @@ function loginNewUser(redir) {
       sessionStorage.removeItem(3);
     })
     .then(ref => {
-      redirect(redir);
+      if(redir){
+        redirect(redir);
+      }
     });
 }
 function initializeWelcome() {
   initialize();
+  document.getElementById("nameField").value = sessionStorage.getItem(2);
   database = firebase.firestore();
   let query = database
     .collection("Mates")
@@ -118,10 +120,6 @@ function initializeWelcome() {
           }
         });
       }
-    })
-    .then(ref => {
-      document.getElementById("userName").value = sessionStorage.getItem(2);
-      document.getElementById("nickname").value = sessionStorage.getItem(2);
     });
 }
 
