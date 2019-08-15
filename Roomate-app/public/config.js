@@ -41,13 +41,14 @@ function validate(){
     }
     let query = database.collection('Mates').where('usrToken', '==', sessionStorage.getItem('token')).get().then(snapshot =>{
         if(snapshot.empty){
-            //window.location.href = "./index.html";
-            console.log('Invalid Token :')
-            console.log(sessionStorage.getItem('token'));
+            window.location.href = "./index.html";
+            //console.log('Invalid Token :')
+            //console.log(sessionStorage.getItem('token'));
         }else{
             snapshot.forEach(doc => {
                 if(new Date() < doc.data().usrExpiration.toDate()){
                     sessionStorage.setItem('user', doc.id);
+                    updateExpiration(database, doc)
                 }else{
                     window.location.href = "./index.html";
                 }
@@ -55,4 +56,12 @@ function validate(){
             });
         }
     });
+  }
+
+  function updateExpiration(database, doc){
+    let date = new Date();
+    date.setTime(date.getTime() + 86400000);
+    database.collection('Mates').doc(doc).update({
+        usrExpiration: date
+    })
   }

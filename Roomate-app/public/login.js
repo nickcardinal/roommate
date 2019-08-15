@@ -75,7 +75,7 @@ function redirLogin(user, authExpiration, database) {
 function loginNewUser(redir) {
   sessionStorage.removeItem(2);
   let database = firebase.firestore();
-  console.log(sessionStorage.getItem('token'));
+  //console.log(sessionStorage.getItem('token'));
   database
     .collection("Mates")
     .where("usrToken", "==", sessionStorage.getItem('token'))
