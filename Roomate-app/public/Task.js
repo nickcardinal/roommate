@@ -5,10 +5,8 @@
 		this.description;
 
 		// Task Deadline Data
-		this.dueYear;
-		this.dueDay;
-		this.dueMonth;
-		this.dueTime; // 0000 to 2359
+		this.dueDate;
+		this.dueTime;
 
 		// Task Completion Details
 		this.assignedMate;
@@ -101,9 +99,7 @@ function createFirestoreTask() {
 		tskTitle: $("#titleField").val(),
 		tskDescription: $("#descriptionField").val(),
 
-		tskDueYear: $("#dueYearField").val(),
-		tskDueMonth: $("#dueMonthField").val(),
-		tskDueDay: $("#dueDayField").val(),
+		tskDueDate: $("#dueDateField").val(),
 		tskDueTime: $("#dueTimeField").val(),
 	});
 }
