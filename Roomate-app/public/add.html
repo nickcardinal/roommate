@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Data input</title>
+    <script src="https://www.gstatic.com/firebasejs/5.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.10.1/firebase-firestore.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</head>
+
+<body onload="initialize()">
+    <div id="message">
+        <h2>Welcome</h2>
+        <form id="userData" name="userData">
+            Name:<br>
+            <input type="text" name="usrName"><br>
+            Nickname:<br>
+            <input type="text" name="nickname"><br>
+            Email:<br>
+            <input type="text" name="email"><br>
+            <input type="button" value="Submit" onclick="addUser()">
+        </form>
+        <dr></dr>
+        <form id="taskData" name="taskData">
+            Task:<br>
+            <input type="text" name="tsk" required><br>
+            Description:<br>
+            <input type="textarea" name="desc" required><br>
+            Task due time:<br>
+            <input type="time" id="time" name="time" required><br>
+            Task due date:<br>
+            <input type="date" id="date" name="date" required><br>
+            <input type="button" value="Submit" onclick="addTask()">
+        </form>
+        <dr></dr>
+        <form id="spaceData" name="spaceData">
+            Name:<br>
+            <input type="text" name="name"><br>
+            <input type="button" value="Submit" onclick="addSpace()">
+        </form>
+        <!--<button id="viewButton" class="float-left submit-button">View Data</button>
+        <script type="text/javascript">
+            document.getElementById( "viewButton" ).onclick = function ()
+            {
+                location.href = "./view_data.html";
+            };
+        </script> -->
+        <script src="./config.js"></script>
+        <script src="./add.js"></script>
+        <script src="./firestore_sync.js"></script>
+        <script src="./login.js"></script>
+</body>
+
+</html>
