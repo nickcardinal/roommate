@@ -2,7 +2,7 @@
     constructor() {
         this.name;
         this.description;
-        this.spaceID;
+        this.spaceID = '9QTPOeRYm2bjerGWsCFf';
         this.mates = [];
         this.tasks = [];
     }
@@ -59,49 +59,42 @@
 		  });
 		});	
 	}
-	isValidSpace(spaceDocID){
+	
+	isValidSpace(spaceDocID, _callback){
 		var db = firebase.firestore();
-		var spcDocRef = db.collection('Spaces').doc('sFSKvtwdCrpXCMGsdkHP');
+		var spcDocRef = db.collection('Spaces').doc(spaceDocID);
 		
-		db.collection("Spaces").where("spcTitle","==","The Collective")
-							   .get()
-							   .then(function(snap) {
-									snap.forEach(function(doc) {
-										console.log(doc.id, " => ", doc.data());
-									});
-							   })
-							   .catch(function(error) {
-									console.log(error);
-							   });
-		
+		var exists = false;
 		var test = spcDocRef.get()
 							.then(function(doc) {
 								if (doc.exists) {
-									return true;
+									exists =  true;
 								} else {
-									return false;
+									exists =  false;
 								}
 							})
 							.catch(function(error) {
 								console.log("Error getting document:", error);	
-								return false;
+								exists =  false;
 							});
 							
-		
+		return _callback(exists);
 	}
 	
 	outputMatesInSpace(){
 		var db = firebase.firestore();
 		var spcDocRef = db.collection('Spaces').doc('sFSKvtwdCrpXCMGsdkHP');
 	}
+	
 }
 
 function testSpace(){
 	var newSpace = new Space();
-	//newSpace.addMateToSpace('NickTest');
-	console.log(newSpace.isValidSpace("sFSKvtwdCrpXCMGsdkHP"));
-	newSpace.outputMatesInASpace();
-	tester();
+	console.log(newSpace.isValidSpace("sFSKvtwdCrpXCMGsdkHP", outputFunction));
 }
+function outputFunction(exists){
+	return exists;
+}
+
 
 
