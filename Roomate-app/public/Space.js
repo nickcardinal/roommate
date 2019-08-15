@@ -51,8 +51,55 @@ class Space {
     getTasks() {
       return this.tasks;
     }
+	
+	addMateToSpace(userDocID){
+		var db = firebase.firestore();
+		var spcDocRef = db.collection("Spaces").doc(this.ID);
+
+		db.runTransaction(transaction => {
+		  return transaction.get(spcDocRef).then(snapshot => {
+			const spcUserArray = snapshot.get('spcMates');
+			spcUserArray.push(userDocID);
+			transaction.update(spcDocRef, 'spcMates', spcUserArray);
+		  });
+		});	
+	}
+	
+	isValidSpace(spaceDocID, _callback){
+		var db = firebase.firestore();
+		var spcDocRef = db.collection('Spaces').doc(spaceDocID);
+		
+		var exists = false;
+		var test = spcDocRef.get()
+							.then(function(doc) {
+								if (doc.exists) {
+									exists =  true;
+								} else {
+									exists =  false;
+								}
+							})
+							.catch(function(error) {
+								console.log("Error getting document:", error);	
+								exists =  false;
+							});
+							
+		return _callback(exists);
+	}
+	
+	outputMatesInSpace(){
+		var db = firebase.firestore();
+		var spcDocRef = db.collection('Spaces').doc('sFSKvtwdCrpXCMGsdkHP');
+	}
+	
 }
 
+function testSpace(){
+	var newSpace = new Space();
+	console.log(newSpace.isValidSpace("sFSKvtwdCrpXCMGsdkHP", outputFunction));
+}
+function outputFunction(exists){
+	return exists;
+}
 function createFirestoreSpace() {
     let spacedb = firebase.firestore().collection("Spaces");
 
