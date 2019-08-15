@@ -92,17 +92,15 @@ class Space {
 	}
 
   nextAssignment(nickName) {
-    if (this.mates[this.mates.size - 1].nickName == nickName) {
-      return this.mates[0].nickName;
-    }
 
-    for (i = 0; i < matesArray.size; ++i) {
+    for (var i = 0; i < this.mates.size - 1; ++i) {
       if (this.mates[i].nickName == nickName) {
         return this.mates[i + 1].nickName;
       }
     }
+    return this.mates[0].nickName;
   }
-  
+
 }
 
 function testSpace(){
