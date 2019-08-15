@@ -16,30 +16,18 @@
         <script src="https://www.gstatic.com/firebasejs/5.10.1/firebase-app.js"></script>
         <script src="https://www.gstatic.com/firebasejs/5.10.1/firebase-firestore.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    </head>
-    <body onload="initializeWelcome()">
-        <h1>Input Nick Name</h1>
-    
-        <form>
-            Nick Name:<br>
-            <input type="text" id="nameField">
-            <br>
-            <!--<button type="button" onclick="createFirestoreMate()">Add Me!</button> Fix the function please-->
-            <button type="button" onclick="loginNewUser()">Add Me!</button>
-            
-        </form>
-    
-    <link rel="stylesheet" type="text/css" href="./css/bootstrap.css">
-    <link rel="stylesheet" type="text/css" href="./css/animate.css">
-    <link rel="stylesheet" type="text/css" href="./css/default.css">
+    </head>    
+    <link rel="stylesheet" type="text/css" href="../css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../css/animate.css">
+    <link rel="stylesheet" type="text/css" href="../css/default.css">
         
     <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,400i,700|Raleway:300,400,400i,700&display=swap" rel="stylesheet">
         
-    <link rel="icon" href="./images/logo_Chck_m.png">
+    <link rel="icon" href="../images/logo_Chck_m.png">
         
         
 </head>
-<body onload="initialize()">
+<body onload="initializeWelcome()">
     <div class="container page">
         <div class="home-items-container">
             <div class="home-items">
@@ -51,14 +39,14 @@
                     
                     <br><br>
                     
-                <button class="login-btn" type="button" onclick="addNewMate()">Submit</button>
+                <button class="login-btn" type="button" onclick="loginNewUser('../html/joinOrCreateSpace.html')">Submit</button>
             </div>
         </div>
     </div>
     
-    <script src="./Mate.js"></script>
-    <script src="./config.js"></script>
-    <script src="./login.js"></script>
+    <script src="../scripts/Mate.js"></script>
+    <script src="../scripts/config.js"></script>
+    <script src="../scripts/login.js"></script>
     
 </body>
 </html>

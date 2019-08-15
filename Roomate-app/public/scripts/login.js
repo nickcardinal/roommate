@@ -41,7 +41,7 @@ function logout() {
           sessionStorage.clear();
       });
     }).then(ref => {
-      redirect('./index.html');
+      redirect('../index.html');
     });
 }
 
@@ -64,10 +64,10 @@ function redirLogin(user, authExpiration, database) {
             usrNickname: user.displayName
           })
           .then(ref => {
-            redirect('./profile.html');
+            redirect('../html/profile.html');
           });
       }else{
-        redirect('./overview.html');
+        redirect('../html/overview.html');
       }
     });
     
@@ -112,13 +112,13 @@ function initializeWelcome() {
     .get()
     .then(snapshot => {
       if (snapshot.empty) {
-        redirect('./index.html');
+        redirect('../index.html');
       } else {
         snapshot.forEach(doc => {
           if (new Date() < doc.data().usrExpiration.toDate()) {
             sessionStorage.setItem('user', doc.id);
           } else {
-            redirect('./index.html');
+            redirect('../index.html');
           }
         });
       }
