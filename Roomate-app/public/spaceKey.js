@@ -1,10 +1,10 @@
-function spaceKeyInitialize() {
-  //Make sure the user is logged in, also sets up firebase (could make a parameter that would allow it not to if nessessary)
-  validate();
-  var space = new Space();
-  space.setID(9876543);
-  space.setName("My Space");
 
-  document.getElementById('showName').innerHTML= space.getName();
-  document.getElementById('showID').innerHTML= space.getID();
+function spaceKeyInitialize() {
+  initialize();
+  //let spc = new Space();
+  let spc = accessFirestoreSpace('pucXA6FNUDQE2FLCMsic');;
+  spc.setTitle("My Space");
+  spc.setID(1234456);
+  document.getElementById('showName').innerHTML= spc.getTitle();
+  document.getElementById('showID').innerHTML= spc.getID();
 }

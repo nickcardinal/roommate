@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <meta property="og:type" content="Website Applicaiton" />
 
+    <link rel="icon" href="./images/logo_Chck_m.png">
+
     <!-- Stylesheets -->
     <link rel="stylesheet" type="text/css" href="./css/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="./css/animate.css">
@@ -13,20 +15,18 @@
 
     <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,400i,700|Raleway:300,400,400i,700&display=swap" rel="stylesheet">
 
+    <script src="https://www.gstatic.com/firebasejs/5.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.10.1/firebase-firestore.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
-
-    <title>CheckMates</title>
+<title>CheckMates</title>
 </head>
 <body onload = "spaceKeyInitialize()">
-    <div id="message">
-        <div class="container page">
-            <div class="home-items-container">
-                <div class="home-items">
-                  <h3 id='showName'></h3>
-                  <p class="home-slogan animated fadeIn slow">Send this key to your mates so they can join your space:</p>
-                  <h3 id='showID'></h3>
-                </div>
-            </div>
+    <div class="home-items-container">
+        <div class="home-items">
+            <h3 id='showName'></h3>
+            <p class="home-slogan animated fadeIn slow">Send this key to your mates so they can join your space:</p>
+            <h3 id='showID'></h3>
         </div>
     </div>
 
