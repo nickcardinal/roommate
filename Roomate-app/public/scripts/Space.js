@@ -93,16 +93,14 @@ class Space {
 
   nextAssignment(nickName) {
 
-    var db = firebase.firestore();
-    
-    if (this.mates[this.mates.size - 1] == nickName) {
-      return this.mates[0];
+    if (this.mates[this.mates.size - 1].nickName == nickName) {
+      return this.mates[0].nickName;
     }
 
 
     for (i = 0; i < matesArray.size; ++i) {
-      if (this.mates[i] == nickName) {
-        return matesArray[i + 1];
+      if (this.mates[i].nickName == nickName) {
+        return this.mates[i + 1].nickName;
       }
     }
   }
