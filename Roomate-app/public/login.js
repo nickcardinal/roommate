@@ -64,9 +64,11 @@ function redirLogin(user, authExpiration, database) {
           .then(ref => {
             redirect('./welcome.html');
           });
+      }else{
+        redirect('./overview.html');
       }
     });
-    redirect('./overview.html');
+    
 }
 
 function loginNewUser(redir) {
