@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+		<script src="https://www.gstatic.com/firebasejs/5.10.1/firebase-app.js"></script>
+		<script src="https://www.gstatic.com/firebasejs/5.10.1/firebase-firestore.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Data viewer</title>
+  </head>
+  <body onload="getData()">
+	<table style="width:100%" name="dataTable" id="dataTable">
+		<tr>
+			<th>Name</th>
+			<th>Age</th>
+			<th>Gender</th>
+			<th>Email</th>
+			<th>Nickname</th>
+		</tr>
+	</table>
+	<button id = "inputButton" class="float-left submit-button" >Input Data</button>
+	<script type="text/javascript">
+		document.getElementById("inputButton").onclick = function(){
+			location.href = "./data_in.html";
+		};
+	</script>
+  </body>
+  <script src="data_manage.js"></script>
+  <script src="firebaseConfig.js"></script>
+</html>

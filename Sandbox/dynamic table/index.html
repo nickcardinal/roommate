@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Data input</title>
+  </head>
+  <body>
+    <div id="message">
+      <h2>Welcome</h2>
+      <button id = "inputButton" class="float-left submit-button" >Input Data</button>
+	<script type="text/javascript">
+		document.getElementById("inputButton").onclick = function(){
+			location.href = "./data_in.html";
+		};
+	</script>
+
+	<button id = "viewButton" class="float-left submit-button" >View Data</button>
+	<script type="text/javascript">
+		document.getElementById("viewButton").onclick = function(){
+			location.href = "./view_data.html";
+		};
+	</script>
+  </body>
+</html>
