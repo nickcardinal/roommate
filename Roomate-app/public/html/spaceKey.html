@@ -1,33 +1,41 @@
 <!DOCTYPE html>
 <html>
-<head>
+  <head>
     <!-- Meta Tags -->
     <meta charset="utf-8">
+    <!-- meta name="description" content="DESC" -->
+    <!-- meta name="author" content="COMPANY" -->
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <meta property="og:type" content="Website Applicaiton" />
-
-    <link rel="icon" href="../images/logo_Chck_m.png">
+    <!-- meta property="og:title" content="TITLE" / -->
+    <!-- meta property="og:description" content="DESC" / -->
+    <!-- meta property="og:url" content="URL" / -->
 
     <!-- Stylesheets -->
+    <link rel="stylesheet" type="text/css" href="../css/joinOrCreatePage.css">
     <link rel="stylesheet" type="text/css" href="../css/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="../css/animate.css">
     <link rel="stylesheet" type="text/css" href="../css/default.css">
-
     <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,400i,700|Raleway:300,400,400i,700&display=swap" rel="stylesheet">
 
+    <!-- Favicon -->
+    <link rel="icon" href="../images/logo_Chck_m.png">
+
+    <!-- Scripts -->
     <script src="https://www.gstatic.com/firebasejs/5.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/5.10.1/firebase-firestore.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
-<title>CheckMates</title>
-</head>
+    <title>My Space Key</title>
+  </head>
 <body onload = "spaceKeyInitialize()">
-    <div class="home-items-container">
-        <div class="home-items">
-            <h3 id='showName'></h3>
-            <h3 id='showDescription'></h3>
-            <p class="home-slogan animated fadeIn slow">Send this key to your mates so they can join your space:</p>
-            <h3 id='showID'></h3>
+    <div class="center-items-container">
+        <div class="center-items">
+            <h3 id="showName"></h3>
+            <h4 id="showDescription"></h4>
+            <p>Send this key to your mates so they can join your space:</p>
+            <br><br>
+            <h3 class="animated fadeIn slower" id="showID"></h3>
         </div>
     </div>
 
