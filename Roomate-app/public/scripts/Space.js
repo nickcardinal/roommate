@@ -51,7 +51,7 @@ class Space {
     getTasks() {
       return this.tasks;
     }
-	
+
 	addMateToSpace(userDocID){
 		var db = firebase.firestore();
 		var spcDocRef = db.collection("Spaces").doc(this.ID);
@@ -62,13 +62,13 @@ class Space {
 			spcUserArray.push(userDocID);
 			transaction.update(spcDocRef, 'spcMates', spcUserArray);
 		  });
-		});	
+		});
 	}
-	
+
 	isValidSpace(spaceDocID, _callback){
 		var db = firebase.firestore();
 		var spcDocRef = db.collection('Spaces').doc(spaceDocID);
-		
+
 		var exists = false;
 		var test = spcDocRef.get()
 							.then(function(doc) {
@@ -79,18 +79,28 @@ class Space {
 								}
 							})
 							.catch(function(error) {
-								console.log("Error getting document:", error);	
+								console.log("Error getting document:", error);
 								exists =  false;
 							});
-							
+
 		return _callback(exists);
 	}
-	
+
 	outputMatesInSpace(){
 		var db = firebase.firestore();
 		var spcDocRef = db.collection('Spaces').doc('sFSKvtwdCrpXCMGsdkHP');
 	}
-	
+
+  getNextMateAssignedToRecurringTask(email) {
+
+    for (var i = 0; i < this.mates.length - 1; ++i) {
+      if (this.mates[i].getEmail() == email) {
+        return this.mates[i + 1].getEmail();
+      }
+    }
+    return this.mates[0].getEmail();
+  }
+
 }
 
 function testSpace(){
