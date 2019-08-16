@@ -91,6 +91,15 @@ class Space {
 		var spcDocRef = db.collection('Spaces').doc('sFSKvtwdCrpXCMGsdkHP');
 	}
 
+  getNumberOfTasksByMateEmail(email) {
+    var numTasks = 0;
+    for (var i = 0; i < this.tasks.length; ++i) {
+      if (this.tasks[i].assignedMate.getEmail() == email) {
+        ++numTasks;
+      }
+    }
+    return numTasks;
+    
   getNextMateAssignedToRecurringTask(email) {
 
     for (var i = 0; i < this.mates.length - 1; ++i) {
