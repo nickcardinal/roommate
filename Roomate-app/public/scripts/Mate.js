@@ -79,7 +79,7 @@ class Mate {
 function addNewMate() {
     var matedb = firebase.firestore();
 
-    var mate = db.collection('Mates').doc(sessionStorage.getItem(1));
+    var mate = matedb.collection('Mates').doc(sessionStorage.getItem(1));
     mate.update({
         userNickname: document.getElementById($("#nameField").val()),
     })
