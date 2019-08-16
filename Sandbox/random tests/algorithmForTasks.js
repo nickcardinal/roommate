@@ -54,7 +54,7 @@ function tester(){
 function main(){
     let list = new Array();
     let gap = 0;
-    for (let i = 0; i < 64; i++) {
+    for (let i = 0; i < 4; i++) {
         list.push({ tasks: 0, id: i });
     }
     for(let j = 0; j < 1000000; j++){
