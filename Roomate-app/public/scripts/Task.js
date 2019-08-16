@@ -68,7 +68,7 @@
 //Create Firestore Task
 function createFirestoreTask() {
 	var taskdb = firebase.firestore().collection("Task");
-	
+
 	let currTask = new Task();
 	currTask.setTitle($("#titleField").val());
 	currTask.setDescription($("#descriptionField").val());
@@ -76,7 +76,7 @@ function createFirestoreTask() {
 	currTask.setDueTime($("#dueTimeField").val());
 	currTask.setAssignedMate("Unique Mate ID");
 	currTask.setCompletionStatus(false);
-	
+
 	let data = {
 		tskTitle: currTask.getTitle(),
 		tskDescription: currTask.getDescription(),
@@ -85,6 +85,6 @@ function createFirestoreTask() {
 		tskAssignedMate: currTask.getAssignedMate(),
 		tskCompletionStatus: currTask.getCompletionStatus(),
 	}
-	
+
 	taskdb.add(data);
 }
