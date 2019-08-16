@@ -74,7 +74,7 @@ function validate(){
           });
   }
 
-  function updateNickName_JoinOrCreate(){
+  function updateNickName_JoinOrCreate(database){
     let nickname = sessionStorage.getItem('NickName');
     sessionStorage.removeItem('NickName');
     database
