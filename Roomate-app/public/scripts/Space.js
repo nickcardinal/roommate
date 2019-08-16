@@ -170,7 +170,7 @@ class Space {
     }
     for (let i = 0; i < list.length; i++) {
         list[i].tasks = list[i].tasks + 1 - min;
-        list[i].tasks *= list[i].tasks;
+        list[i].tasks = Math.pow(list.length / 1.1, list[i].tasks);
     }
     list.sort((a, b) => (a.email >= b.email) ? 1 : -1);
     let totalWeight = 0;

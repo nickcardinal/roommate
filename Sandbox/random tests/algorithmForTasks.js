@@ -16,7 +16,7 @@ function algorithm(list){
     }
     for (let i = 0; i < list.length; i++) {
         list[i].tasks = list[i].tasks + 1 - min;
-        list[i].tasks *= list[i].tasks;
+        list[i].tasks = Math.pow(list.length / 1.1, list[i].tasks);
     }
     list.sort((a, b) => (a.id >= b.id) ? 1 : -1);
 }
@@ -53,12 +53,27 @@ function tester(){
 
 function main(){
     let list = new Array();
-    for (let i = 0; i < 30; i++) {
+    let gap = 0;
+    for (let i = 0; i < 20; i++) {
         list.push({ tasks: 0, id: i });
     }
-    for(let j = 0; j < 10000; j++){
+    for(let j = 0; j < 1000000; j++){
         giveTask(list);
+        let min = list[0].tasks;
+        let max = list[0].tasks;
+        for(let k = 1; k < list.length; k++){
+            if(list[k].tasks < min){
+                min = list[k].tasks;
+            }
+            if(list[k].tasks > max){
+                max = list[k].tasks;
+            }
+        }
+        if(max - min > 2){
+            gap++;
+        }
     }
+    console.log(gap / 1000000);
     print(list);
 }
 
