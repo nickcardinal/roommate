@@ -91,7 +91,7 @@ class Space {
 		var spcDocRef = db.collection('Spaces').doc('sFSKvtwdCrpXCMGsdkHP');
 	}
 
-  mateNumTask(email) {
+  getNumberOfTasksByMateEmail(email) {
     var numTasks = 0;
     for (var i = 0; i < this.tasks.length; ++i) {
       if (this.tasks[i].assignedMate.email == email) {
@@ -101,18 +101,18 @@ class Space {
     return numTasks;
   }
 
-  mateLeastTasks() {
+  getMateToAssignToTask() {
 
     if (this.mates.length == 0) {
       console.log("no mates in the living space");
       return; //condition here just in case
     }
 
-    let minNumTasks = mateNumTask(this.mates[0].email);
+    let minNumTasks = this.getNumberOfTasksByMateEmail(this.mates[0].email);
     var minTaskMates = new Mate[this.mates[1]];
 
     for (var i = 1; i < this.mates.length; ++i) {
-      let j = this.mateNumTask(this.mates[i].email);//would be more efficient to get all the number of tasks in one shot...
+      let j = this.getNumberOfTasksByMateEmail(this.mates[i].email);//would be more efficient to get all the number of tasks in one shot...
       if(j < minNumTasks){
         minNumTasks = j;
         minTaskMates = new Mate[this.mates[i]];
