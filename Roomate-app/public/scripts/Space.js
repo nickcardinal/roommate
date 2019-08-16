@@ -91,14 +91,14 @@ class Space {
 		var spcDocRef = db.collection('Spaces').doc('sFSKvtwdCrpXCMGsdkHP');
 	}
 
-  nextAssignment(nickName) {
+  getNextMateAssignedToRecurringTask(email) {
 
     for (var i = 0; i < this.mates.length - 1; ++i) {
-      if (this.mates[i].nickName == nickName) {
-        return this.mates[i + 1].nickName;
+      if (this.mates[i].email == email) {
+        return this.mates[i + 1].email;
       }
     }
-    return this.mates[0].nickName;
+    return this.mates[0].email;
   }
 
 }
