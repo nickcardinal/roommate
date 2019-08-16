@@ -94,7 +94,7 @@ class Space {
   getNumberOfTasksByMateEmail(email) {
     var numTasks = 0;
     for (var i = 0; i < this.tasks.length; ++i) {
-      if (this.tasks[i].assignedMate.email == email) {
+      if (this.tasks[i].assignedMate.getEmail() == email) {
         ++numTasks;
       }
     }
