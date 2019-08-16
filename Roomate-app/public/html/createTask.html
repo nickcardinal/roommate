@@ -1,67 +1,65 @@
 <!DOCTYPE html>
 <html>
-<head>
+  <head>
     <!-- Meta Tags -->
     <meta charset="utf-8">
     <!-- meta name="description" content="DESC" -->
     <!-- meta name="author" content="COMPANY" -->
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-
     <meta property="og:type" content="Website Applicaiton" />
-    <!-- meta property="og:title" content="Carmina Jean" / -->
+    <!-- meta property="og:title" content="TITLE" / -->
     <!-- meta property="og:description" content="DESC" / -->
     <!-- meta property="og:url" content="URL" / -->
+
     <!-- Stylesheets -->
     <link rel="stylesheet" type="text/css" href="../css/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="../css/animate.css">
     <link rel="stylesheet" type="text/css" href="../css/default.css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,400i,700|Raleway:300,400,400i,700&display=swap" rel="stylesheet">
 
-    <!--favicon-->
+    <!-- Favicon -->
     <link rel="icon" href="../images/logo_Chck_m.png">
 
-    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,400i,700|Raleway:300,400,400i,700&display=swap" rel="stylesheet">
-    <!-- link rel="icon" href="IMG" -->
-
+    <!-- Scripts -->
     <script src="https://www.gstatic.com/firebasejs/5.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/5.10.1/firebase-firestore.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
-    <title>CheckMates</title>
-</head>
-<body onload="initialize()">
-    <div class="container page">
-        <div class="home-items-container">
-            <div class="home-items">
-              <h3>Create Task</h3>
+    <title>Create a Task</title>
+  </head>
+  <body onload="initialize()">
+      <div class="container page">
+          <div class="center-items-container">
+              <div class="center-items">
+                <h3>Create a Task</h3>
 
-              <form>
-                Task Title:
-                <br>
-                <input type="text" id="titleField">
-                <br><br>
+                <form>
+                  Task Title:
+                  <br>
+                  <input type="text" id="titleField">
+                  <br><br>
 
-                Description:
-                <br>
-                <input type="text" id="descriptionField">
-                <br><br>
+                  Description:
+                  <br>
+                  <input type="text" id="descriptionField">
+                  <br><br>
 
-                Due By:
-                <br>
-                <input type="date" name="dueDate" id="dueDateField">
-                <input type="time" name="dueTime"id="dueTimeField">
-                <br><br>
-              </form>
-              <button class="login-btn" type="button" onclick="createFirestoreTask()">Create Task</button>
-            </div>
-        </div>
-    </div>
+                  Due By:
+                  <br>
+                  <input type="date" name="dueDate" id="dueDateField">
+                  <input type="time" name="dueTime"id="dueTimeField">
+                  <br><br>
+                </form>
+                <button class="blue-btn" type="button" onclick="createFirestoreTask()">Create Task</button>
+              </div>
+          </div>
+      </div>
 
-    <!-- <p id="load">Firebase SDK Loading&hellip;</p> -->
-
-    <script src="../scripts/login.js"></script>
-    <script src="../scripts/config.js"></script>
-    <script src="../scripts/Mate.js"></script>
-    <script src="../scripts/Space.js"></script>
-    <script src="../scripts/Task.js"></script>
-</body>
+      <script src="../scripts/login.js"></script>
+      <script src="../scripts/config.js"></script>
+      <script src="../scripts/Mate.js"></script>
+      <script src="../scripts/Space.js"></script>
+      <script src="../scripts/Task.js"></script>
+      
+  </body>
 </html>
