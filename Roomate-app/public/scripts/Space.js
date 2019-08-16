@@ -257,6 +257,8 @@ function createFirestoreSpace() {
       console.log("Document written with ID: ", docRef.id);
       sessionStorage.setItem("Space", docRef.id);
       console.log(sessionStorage.getItem("Space"));
+    }).then(result =>{
+      window.location.href = 'spaceKey.html';
     })
     .catch(function(error) {
       console.error("Error adding document: ", error);
