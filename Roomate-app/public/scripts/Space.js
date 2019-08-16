@@ -131,6 +131,7 @@ class Space {
       task.assignedMate = this.mates[0];
       return;
     }
+    let matesNumTasks = new Array();
     this.mates.forEach(mate => {
       matesNumTasks.push({mateEmail:mate.email, tasks:0});//initialization
     });
