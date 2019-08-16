@@ -94,11 +94,11 @@ class Space {
   getNextMateAssignedToRecurringTask(email) {
 
     for (var i = 0; i < this.mates.length - 1; ++i) {
-      if (this.mates[i].email == email) {
-        return this.mates[i + 1].email;
+      if (this.mates[i].getEmail() == email) {
+        return this.mates[i + 1].getEmail();
       }
     }
-    return this.mates[0].email;
+    return this.mates[0].getEmail();
   }
 
 }
