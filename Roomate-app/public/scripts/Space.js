@@ -134,6 +134,7 @@ class Space {
         return this.mates[i + 1].getEmail();
       }
     }
+  }
 
   	addMateToSpace(userDocID){
   		var db = firebase.firestore();
@@ -178,12 +179,12 @@ class Space {
 function redirectCreateNewSpace(){
   window.location.href = "../html/createNewSpace.html";
 }
-  
+
 function testSpace() {
   var newSpace = new Space();
   console.log(newSpace.isValidSpace("sFSKvtwdCrpXCMGsdkHP", outputFunction));
 }
-  
+
 function outputFunction(exists) {
   return exists;
 }
