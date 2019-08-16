@@ -108,11 +108,11 @@ class Space {
       return; //condition here just in case
     }
 
-    let minNumTasks = this.getNumberOfTasksByMateEmail(this.mates[0].email);
-    var minTaskMates = new Mate[this.mates[1]];
+    let minNumTasks = this.getNumberOfTasksByMateEmail(this.mates[0].getEmail());
+    var minTaskMates = new Mate[this.mates[0]];
 
     for (var i = 1; i < this.mates.length; ++i) {
-      let j = this.getNumberOfTasksByMateEmail(this.mates[i].email);//would be more efficient to get all the number of tasks in one shot...
+      let j = this.getNumberOfTasksByMateEmail(this.mates[i].getEmail());//would be more efficient to get all the number of tasks in one shot...
       if(j < minNumTasks){
         minNumTasks = j;
         minTaskMates = new Mate[this.mates[i]];
