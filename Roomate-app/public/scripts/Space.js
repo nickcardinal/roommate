@@ -51,51 +51,49 @@ class Space {
     getTasks() {
       return this.tasks;
     }
-	
-	addMateToSpace(userDocID){
-		var db = firebase.firestore();
-		var spcDocRef = db.collection("Spaces").doc(this.ID);
 
-		db.runTransaction(transaction => {
-		  return transaction.get(spcDocRef).then(snapshot => {
-			const spcUserArray = snapshot.get('spcMates');
-			spcUserArray.push(userDocID);
-			transaction.update(spcDocRef, 'spcMates', spcUserArray);
-		  });
-		});	
-	}
-	
-	isValidSpace(spaceDocID, _callback){
-		var db = firebase.firestore();
-		var spcDocRef = db.collection('Spaces').doc(spaceDocID);
-		
-		var exists = false;
-		var test = spcDocRef.get()
-							.then(function(doc) {
-								if (doc.exists) {
-									exists =  true;
-								} else {
-									exists =  false;
-								}
-							})
-							.catch(function(error) {
-								console.log("Error getting document:", error);	
-								exists =  false;
-							});
-							
-		return _callback(exists);
-	}
-	
-	outputMatesInSpace(){
-		var db = firebase.firestore();
-		var spcDocRef = db.collection('Spaces').doc('sFSKvtwdCrpXCMGsdkHP');
-	}
-	
+  	addMateToSpace(userDocID){
+  		var db = firebase.firestore();
+  		var spcDocRef = db.collection("Spaces").doc(this.ID);
+
+  		db.runTransaction(transaction => {
+  		  return transaction.get(spcDocRef).then(snapshot => {
+  			const spcUserArray = snapshot.get('spcMates');
+  			spcUserArray.push(userDocID);
+  			transaction.update(spcDocRef, 'spcMates', spcUserArray);
+  		  });
+  		});
+  	}
+
+  	isValidSpace(spaceDocID, _callback){
+  		var db = firebase.firestore();
+  		var spcDocRef = db.collection('Spaces').doc(spaceDocID);
+
+  		var exists = false;
+  		var test = spcDocRef.get()
+  							.then(function(doc) {
+  								if (doc.exists) {
+  									exists =  true;
+  								} else {
+  									exists =  false;
+  								}
+  							})
+  							.catch(function(error) {
+  								console.log("Error getting document:", error);
+  								exists =  false;
+  							});
+
+  		return _callback(exists);
+  	}
+
+  	outputMatesInSpace(){
+  		var db = firebase.firestore();
+  		var spcDocRef = db.collection('Spaces').doc('sFSKvtwdCrpXCMGsdkHP');
+  	}
 }
 
-function testSpace(){
-	var newSpace = new Space();
-	console.log(newSpace.isValidSpace("sFSKvtwdCrpXCMGsdkHP", outputFunction));
+function redirectCreateNewSpace(){
+  window.location.href = "../html/createNewSpace.html";
 }
 function outputFunction(exists){
 	return exists;
@@ -103,18 +101,28 @@ function outputFunction(exists){
 function createFirestoreSpace() {
     let spacedb = firebase.firestore().collection("Spaces");
 
-    //testSpace
-    let currSpace = new Space();
-    currSpace.setTitle("My Space");
-    currSpace.setDescription("This is my new space");
+    let space = new Space();
+  	space.setTitle($("#spaceTitle").val());
+    space.setDescription($("#spaceDescription").val());
+    space.addMate(sessionStorage.getItem('user'));
+
 
     let data = {
-      spcTitle: currSpace.getTitle(),
-      spcDescription: currSpace.getDescription(),
-      spcMates: firebase.firestore.FieldValue.arrayUnion('/Mates/mnTsbYn8LSlug7JlYsxW')
+      spcTitle: space.getTitle(),
+      spcDescription: space.getDescription(),
+      spcMates: firebase.firestore.FieldValue.arrayUnion('/Mates/' + space.mates[0])
     }
 
-    spacedb.add(data);
+    spacedb.add(data).then(function(docRef) {
+      console.log("Document written with ID: ", docRef.id);
+      sessionStorage.setItem('Space', docRef.id);
+      console.log(sessionStorage.getItem('Space'));
+
+    }).catch(function(error) {
+      console.error("Error adding document: ", error);
+    });
+
+    //window.location.href = "../html/overview.html";
 }
 
 function accessFirestoreSpace(ID, _callback) {

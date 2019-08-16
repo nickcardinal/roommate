@@ -9,16 +9,16 @@
 		<script src="../scripts/login.js"></script>
 		<script src="../scripts/Space.js"></script>
 		<link rel="stylesheet" type="text/css" href="../css/joinOrCreatePage.css">
-		
+
 	</head>
 	<body onload="initialize()">
 		<div class="mainDialog">
 			<h1>Welcome to CheckMates!</h1>
 			<h3>How would you like to proceed?</h3>
-			
+
 			<div>
 				<button type="button" onclick="openForm()">Join an existing space</button>
-				<button type="button" onclick="testSpace()">Create a new space</button>
+				<button type="button" onclick="redirectCreateNewSpace()">Create a new space</button>
 			</div>
 		</div>
 		<div class="form-popup" id="frmSpaceIDPopup">
@@ -31,7 +31,7 @@
 			<button type="submit" class="btn cancel" onclick="closeForm()">Cancel</button>
 		  </form>
 		</div>
-		
+
 		<script>
 			function openForm() {
 			  document.getElementById("frmSpaceIDPopup").style.display = "block";
@@ -42,4 +42,4 @@
 			}
 		</script>
 	</body>
-</html>	
+</html>
