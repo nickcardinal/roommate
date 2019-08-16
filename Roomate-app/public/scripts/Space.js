@@ -91,14 +91,13 @@ class Space {
 		var spcDocRef = db.collection('Spaces').doc('sFSKvtwdCrpXCMGsdkHP');
 	}
 
-  mateNumTask(email) {
+  getNumberOfTasksByMateEmail(email) {
     var numTasks = 0;
     for (var i = 0; i < this.tasks.length; ++i) {
       if (this.tasks[i].assignedMate.email == email) {
         ++numTasks;
       }
     }
-
     return numTasks;
   }
 
