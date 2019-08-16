@@ -126,6 +126,66 @@ class Space {
     return minTaskMates[0];
   }
 
+  randomAssignMateToTask(task){
+    if(this.mates.length === 1){
+      task.assignedMate = this.mates[0];
+      return;
+    }
+    this.mates.forEach(mate => {
+      matesNumTasks.push({mateEmail:mate.email, tasks:0});//initialization
+    });
+    this.tasks.forEach(task => {//go through all the tasks
+      let assigned = task.assignedMate.email;
+      for(let i = 0; i < matesNumTasks.length; ++i){//find mate
+        if(matesNumTasks[i].mateEmail === assigned){
+          matesNumTasks[i].tasks++;
+          break;
+        }
+      }
+    });
+    matesNumTasks.sort((a, b) => (a.email > b.email) ? 1 : -1);//sort for algorithm
+    let email = this.getEmailForAssigningTask(matesNumTasks);
+    this.mates.forEach(mate => {
+      if(mate.email === email){
+        task.assignedMate = mate;
+        return;
+      }
+    })
+  }
+
+  getEmailForAssigningTask(taskList){
+    let list = new Array();
+    taskList.forEach(int => {
+        list.push(Object.assign({}, int));
+    })
+    list.sort((a, b) => (a.tasks >= b.tasks) ? 1 : -1);
+    let min = list[0].tasks;
+    let prev = list[0].tasks;
+    list[0].tasks = list[list.length - 1].tasks;
+    for (let i = 1; i < list.length; i++) {
+        let n = list[i].tasks;
+        list[i].tasks = list[i - 1].tasks - (list[i].tasks - prev);
+        prev = n;
+    }
+    for (let i = 0; i < list.length; i++) {
+        list[i].tasks = list[i].tasks + 1 - min;
+        list[i].tasks *= list[i].tasks;
+    }
+    list.sort((a, b) => (a.email >= b.email) ? 1 : -1);
+    let totalWeight = 0;
+    list.forEach(int => {
+        totalWeight += int.tasks;
+    });
+    let rand = Math.floor(Math.random()*totalWeight);
+    for(let i = 0;  i < list.length; i++){
+        rand -= list[i].tasks;
+        if(rand <= 0){
+            return taskList[i].email;
+        }
+    }
+}
+
+
 }
 
 function testSpace(){
