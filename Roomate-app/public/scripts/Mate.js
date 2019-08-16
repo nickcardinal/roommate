@@ -8,7 +8,6 @@ class Mate {
         this.fullName;
         this.email;
         this.photoURL;
-        //test commit
     }
 
 //    setToken(googleAuthToken) {
@@ -67,6 +66,13 @@ class Mate {
         this.fullName = mate.data().usrName;
         this.photoURL = mate.data().usrPhotoUrl;
     }
+	
+	outputMateProperties(){
+		console.log('email: ', this.email);
+		console.log('nickname: ', this.nickName);
+		console.log('fullName: ', this.fullName);
+		console.log('photoURL: ', this.photoURL);
+	}
 
 }
 
