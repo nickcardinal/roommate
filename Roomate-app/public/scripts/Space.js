@@ -101,23 +101,16 @@ function outputFunction(exists){
 function createFirestoreSpace() {
     let spacedb = firebase.firestore().collection("Spaces");
 
-    let space = new Space();
-  	space.setTitle($("#spaceTitle").val());
-    space.setDescription($("#spaceDescription").val());
-    space.addMate(sessionStorage.getItem('user'));
-
-
     let data = {
-      spcTitle: space.getTitle(),
-      spcDescription: space.getDescription(),
-      spcMates: firebase.firestore.FieldValue.arrayUnion('/Mates/' + space.mates[0])
+      spcTitle: $("#spaceTitle").val(),
+      spcDescription: $("#spaceDescription").val(),
+      spcMates: firebase.firestore.FieldValue.arrayUnion(sessionStorage.getItem('user'))
     }
 
     spacedb.add(data).then(function(docRef) {
       console.log("Document written with ID: ", docRef.id);
       sessionStorage.setItem('Space', docRef.id);
       console.log(sessionStorage.getItem('Space'));
-
     }).catch(function(error) {
       console.error("Error adding document: ", error);
     });
