@@ -74,32 +74,9 @@ function redirLogin(user, authExpiration, database) {
 }
 
 function loginNewUser(redir) {
-  sessionStorage.removeItem(2);
-  let database = firebase.firestore();
-  //console.log(sessionStorage.getItem('token'));
-  database
-    .collection("Mates")
-    .where("usrToken", "==", sessionStorage.getItem('token'))
-    .get()
-    .then(snapshot => {
-      snapshot.forEach(ref => {
-        database
-        .collection("Mates")
-        .doc(ref.id).update({
-          usrNickname: document.getElementById("nameField").value
-      });
-      sessionStorage.setItem('user', ref.id);
-    });
-  
-    })
-    .then(ref => {
-      sessionStorage.removeItem(3);
-    })
-    .then(ref => {
-      if(redir){
-        redirect(redir);
-      }
-    });
+  sessionStorage.setItem('NickName', document.getElementById("nameField").value);
+  sessionStorage.removeItem(2);  
+  redirect(redir);
 }
 function initializeWelcome() {
   initialize();
