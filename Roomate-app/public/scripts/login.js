@@ -75,10 +75,7 @@ function redirLogin(user, authExpiration, database) {
 
 function loginNewUser(redir) {
   sessionStorage.setItem('NickName', document.getElementById("nameField").value);
-  sessionStorage.removeItem(2);
-  sessionStorage.removeItem(3);
-  //console.log(sessionStorage.getItem('token'));
-  
+  sessionStorage.removeItem(2);  
   redirect(redir);
 }
 function initializeWelcome() {
