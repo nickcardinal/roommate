@@ -52,19 +52,6 @@ class Space {
     return this.tasks;
   }
 
-  addMateToSpace(userDocID) {
-    var db = firebase.firestore();
-    var spcDocRef = db.collection("Spaces").doc(this.ID);
-
-    db.runTransaction(transaction => {
-      return transaction.get(spcDocRef).then(snapshot => {
-        const spcUserArray = snapshot.get("spcMates");
-        spcUserArray.push(userDocID);
-        transaction.update(spcDocRef, "spcMates", spcUserArray);
-      });
-    });
-  }
-
   isValidSpace(spaceDocID, _callback) {
     var db = firebase.firestore();
     var spcDocRef = db.collection("Spaces").doc(spaceDocID);
@@ -85,21 +72,6 @@ class Space {
       });
 
     return _callback(exists);
-  }
-
-  outputMatesInSpace() {
-    var db = firebase.firestore();
-    var spcDocRef = db.collection("Spaces").doc("sFSKvtwdCrpXCMGsdkHP");
-  }
-
-  getNumberOfTasksByMateEmail(email) {
-    var numTasks = 0;
-    for (var i = 0; i < this.tasks.length; ++i) {
-      if (this.tasks[i].assignedMate.getEmail() == email) {
-        ++numTasks;
-      }
-    }
-    return numTasks;
   }
 
   getMateToAssignToTask() {
@@ -134,7 +106,6 @@ class Space {
         return this.mates[i + 1].getEmail();
       }
     }
-    return this.mates[0].getEmail();
   }
 
 	addMateToSpace(userDocID){
@@ -270,33 +241,37 @@ class Space {
         }
     }
 }
+}
 
+function redirectCreateNewSpace(){
+  window.location.href = "../html/createNewSpace.html";
+}
 
 
 function testSpace() {
   var newSpace = new Space();
   console.log(newSpace.isValidSpace("sFSKvtwdCrpXCMGsdkHP", outputFunction));
 }
+
 function outputFunction(exists) {
   return exists;
 }
 function createFirestoreSpace() {
-  let spacedb = firebase.firestore().collection("Spaces");
+    let spacedb = firebase.firestore().collection("Spaces");
 
-  //testSpace
-  let currSpace = new Space();
-  currSpace.setTitle("My Space");
-  currSpace.setDescription("This is my new space");
+    let data = {
+      spcTitle: $("#spaceTitle").val(),
+      spcDescription: $("#spaceDescription").val(),
+      spcMates: firebase.firestore.FieldValue.arrayUnion(sessionStorage.getItem('user'))
+    }
 
-  let data = {
-    spcTitle: currSpace.getTitle(),
-    spcDescription: currSpace.getDescription(),
-    spcMates: firebase.firestore.FieldValue.arrayUnion(
-      "/Mates/mnTsbYn8LSlug7JlYsxW"
-    )
-  };
-
-  spacedb.add(data);
+    spacedb.add(data).then(function(docRef) {
+      console.log("Document written with ID: ", docRef.id);
+      sessionStorage.setItem('Space', docRef.id);
+      console.log(sessionStorage.getItem('Space'));
+    }).catch(function(error) {
+      console.error("Error adding document: ", error);
+    });
 }
 
 function accessFirestoreSpace(ID, _callback) {
