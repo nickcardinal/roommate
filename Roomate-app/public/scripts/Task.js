@@ -76,7 +76,7 @@
 
 //Create Firestore Task
 function createFirestoreTask() {
-	var taskdb = firebase.firestore().collection("Task");
+	var taskdb = firebase.firestore().collection("Tasks");
 
 	//Setting local data
 	let currTask = new Task();
@@ -97,18 +97,26 @@ function createFirestoreTask() {
 		tskCompletionStatus: currTask.getCompletionStatus(),
 	}
 
+	taskdb.add(data);
 	taskdb
-		.add(taskData)
+		.add(data)
 		.then(function(docRef) {
+			console.log("Space in session: " + docRef);
 			//Add Task to Space
 			// var spaceID = sessionStorage.getItem("Spaces");
 			var spaceID = "1NBhfz2nl8cSk561ZaZH";
 			var spacedb = firebase.firestore().collection("Spaces").doc(spaceID);
 
-			let data = spacedb.update({
-				spcTasks: firebase.firestore.FieldValue.arrayUnion(docRef);
-			})
+			spacedb.update({
+				spcTasks: firebase.firestore.FieldValue.arrayUnion(docRef),
+			});
 
 			// spacedb.addTaskToSpace(docRef);
 		});
+
+	window.location.href = "../html/overview.html";
+}
+
+function redirectCreateTask() {
+	window.location.href = "../html/createTask.html";
 }
