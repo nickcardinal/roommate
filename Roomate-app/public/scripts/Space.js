@@ -237,9 +237,15 @@ class Space {
 function redirectCreateNewSpace() {
   window.location.href = "../html/createNewSpace.html";
 }
+
+function redirectSpaceKey() {
+  window.location.href = "../html/overview.html";
+}
+
 function outputFunction(exists) {
   return exists;
 }
+``
 function createFirestoreSpace() {
   let spacedb = firebase.firestore().collection("Spaces");
 
