@@ -124,6 +124,19 @@ class Space {
       });
     });
   }
+  
+// addTaskToSpace(taskDocID) {
+//   var db = firebase.firestore();
+//   var spcDocRef = db.collection("Spaces").doc(this.ID);
+//
+//   db.runTransaction(transaction => {
+//     return transaction.get(spcDocRef).then(snapshot => {
+//       const spcTaskArray = snapshot.get("spcTasks");
+//       spcTaskArray.push(taskDocID);
+//       transaction.update(spcDocRef, "spcTasks", spcTaskArray);
+//     });
+//   });
+// }
 
   outputMatesInSpace() {
     var db = firebase.firestore();
@@ -317,6 +330,7 @@ function testSpace() {
     });
   });
 }
+
 function outputMates(space) {
   space.getMates().forEach(function(mte) {
     mte.outputMateProperties();
