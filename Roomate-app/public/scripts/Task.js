@@ -77,34 +77,27 @@
 //Create Firestore Task
 function createFirestoreTask() {
 	var taskdb = firebase.firestore().collection("Tasks");
-
-	//Setting local data
-	let currTask = new Task();
-	currTask.setTitle($("#titleField").val());
-	currTask.setDescription($("#descriptionField").val());
-	currTask.setDueDate($("#dueDateField").val());
-	currTask.setDueTime($("#dueTimeField").val());
-	currTask.setAssignedMate("Unique Mate ID");
-	currTask.setCompletionStatus(false);
+	console.log("We're in the mainframe... Task data collection has commenced.");
 
 	//Setting firestore data
 	let data = {
-		tskTitle: currTask.getTitle(),
-		tskDescription: currTask.getDescription(),
-		tskDueDate: currTask.getDueDate(),
-		tskDueTime: currTask.getDueTime(),
-		tskAssignedMate: currTask.getAssignedMate(),
-		tskCompletionStatus: currTask.getCompletionStatus(),
+		tskTitle: $("#titleField").val(),
+		tskDescription: $("#descriptionField").val(),
+		tskDueDate: $("#dueDateField").val(),
+		tskDueTime: $("#dueTimeField").val(),
+		tskAssignedMate: "Unique Mate ID",
+		tskCompletionStatus: false,
 	}
 
-	taskdb.add(data);
+	// taskdb.add(data);
 	taskdb
 		.add(data)
 		.then(function(docRef) {
 			console.log("Space in session: " + docRef);
+
 			//Add Task to Space
 			// var spaceID = sessionStorage.getItem("Spaces");
-			var spaceID = "1NBhfz2nl8cSk561ZaZH";
+			var spaceID = "gkAhfI4OUR45Bk7a3Lcj";
 			var spacedb = firebase.firestore().collection("Spaces").doc(spaceID);
 
 			spacedb.update({
@@ -114,7 +107,8 @@ function createFirestoreTask() {
 			// spacedb.addTaskToSpace(docRef);
 		});
 
-	window.location.href = "../html/overview.html";
+	// Waits for 1000ms before redirecting
+	setTimeout(function() {window.location.href = "../html/overview.html";}, 1000);
 }
 
 function redirectCreateTask() {
