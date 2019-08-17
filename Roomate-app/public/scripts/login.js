@@ -102,10 +102,10 @@ function initializeWelcome() {
     });
 }
 
-// function displayUserInfo() {
-//   //document.getElementById('FullName').innerHTML= sessionStorage.getItem('usrName');
-//   document.getElementById('Email').innerHTML= sessionStorage.getItem(2);
-// }
+function displayUserInfo() {
+  document.getElementById('FullName').innerHTML= sessionStorage.getItem(2);
+  document.getElementById('Email').innerHTML= sessionStorage.getItem('email');
+}
 
 function redirect(url){
   window.location.href = url;
