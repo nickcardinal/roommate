@@ -1,6 +1,7 @@
 ﻿class Task {
-	constructor(taskId, spaceId) {
+	constructor() {
 		// Task Descriptors
+		this.task_ID;
 		this.title;
 		this.description;
 
@@ -14,6 +15,14 @@
 	}
 
 	// Getters/Setters: Task Descriptors
+	setTaskID(task_ID) {
+		this.task_ID = task_ID;
+	}
+
+	getTaskID() {
+		return this.task_ID;
+	}
+
 	setTitle(title) {
 		this.title = title;
 	}
@@ -69,6 +78,7 @@
 function createFirestoreTask() {
 	var taskdb = firebase.firestore().collection("Task");
 
+	//Setting local data
 	let currTask = new Task();
 	currTask.setTitle($("#titleField").val());
 	currTask.setDescription($("#descriptionField").val());
@@ -77,6 +87,7 @@ function createFirestoreTask() {
 	currTask.setAssignedMate("Unique Mate ID");
 	currTask.setCompletionStatus(false);
 
+	//Setting firestore data
 	let data = {
 		tskTitle: currTask.getTitle(),
 		tskDescription: currTask.getDescription(),
@@ -86,5 +97,18 @@ function createFirestoreTask() {
 		tskCompletionStatus: currTask.getCompletionStatus(),
 	}
 
-	taskdb.add(data);
+	taskdb
+		.add(taskData)
+		.then(function(docRef) {
+			//Add Task to Space
+			// var spaceID = sessionStorage.getItem("Spaces");
+			var spaceID = "1NBhfz2nl8cSk561ZaZH";
+			var spacedb = firebase.firestore().collection("Spaces").doc(spaceID);
+
+			let data = spacedb.update({
+				spcTasks: firebase.firestore.FieldValue.arrayUnion(docRef);
+			})
+
+			// spacedb.addTaskToSpace(docRef);
+		});
 }
