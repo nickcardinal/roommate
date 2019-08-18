@@ -1,5 +1,5 @@
-const Space = require("./Space.js");
-const Mate = require("./Mate.js");
+const Space = require("../public/scripts/Space.js");
+const Mate = require("../public/scripts/Mate.js");
 //create some data;
 
 let spaces = new Space[new Space(), Space(), Space(), Space(), Space()];//length = 5
