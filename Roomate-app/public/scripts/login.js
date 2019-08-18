@@ -94,14 +94,6 @@ function redirLoginToSpace(user, database) {
     });
   }
 
-function checkIfInSpace(mateSpaces, _callback) {
-
-}
-
-function makeRedirect(hasSpace) {
-
-}
-
 function loginNewUser(redir) {
   sessionStorage.setItem('NickName', document.getElementById("nameField").value);
   redirect(redir);
