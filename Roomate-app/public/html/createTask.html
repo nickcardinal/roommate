@@ -82,6 +82,15 @@
 						</label>
 					</div>
 				
+                  Due By:
+                  <br>
+                  <input type="date" name="dueDate" id="dueDateField">
+                  <input type="time" name="dueTime" id="dueTimeField">
+                  <br><br>
+
+                  Recurring Weekly:
+                  <input type="checkbox" name="isRecurring" id="isRecurringField">
+                  <br><br>
                 </form>
                 <button class="blue-btn" type="button" onclick="createFirestoreTask()">Create Task</button>
               </div>
@@ -106,6 +115,6 @@
       <script src="../scripts/Mate.js"></script>
       <script src="../scripts/Space.js"></script>
       <script src="../scripts/Task.js"></script>
-      
+
   </body>
 </html>

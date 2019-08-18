@@ -119,21 +119,9 @@ class Space {
                 spcUserArray.push(userDocID);
                 transaction.update(spcDocRef, "spcMates", spcUserArray);
             });
-  }
+        });
+    }
 
-  addMateToSpace(userDocID) {
-    var db = firebase.firestore();
-    var spcDocRef = db.collection("Spaces").doc(this.ID);
-
-    db.runTransaction(transaction => {
-      return transaction.get(spcDocRef).then(snapshot => {
-        const spcUserArray = snapshot.get("spcMates");
-        spcUserArray.push(userDocID);
-        transaction.update(spcDocRef, "spcMates", spcUserArray);
-      });
-    });
-  }
-  
 // addTaskToSpace(taskDocID) {
 //   var db = firebase.firestore();
 //   var spcDocRef = db.collection("Spaces").doc(this.ID);
@@ -147,39 +135,9 @@ class Space {
 //   });
 // }
 
-  outputMatesInSpace() {
-    var db = firebase.firestore();
-    var spcDocRef = db.collection("Spaces").doc("sFSKvtwdCrpXCMGsdkHP");
-  }
-
-  async fillMatesArray() {
-    // if(typeof this.ID === "undefined" ){
-    // console.log("Space ID is empty.");
-    // return;
-    // }
-    var mtePromiseArray = [];
-    var db = firebase.firestore();
-    var spcSpaceRef = db.collection("Spaces").doc("0yAZm9Ny0Fka6TGI7PZr");
-    return spcSpaceRef.get().then(function(spcDoc) {
-      if (spcDoc.exists) {
-        spcDoc.data().spcMates.forEach(mate => {
-          var mteMateRef = db.collection("Mates").doc(mate);
-          var newMate = mteMateRef.get().then(function(mateRecord) {
-            var currMate = new Mate();
-            currMate.setID(mateRecord.id);
-            currMate.setNickName(mateRecord.data().usrNickname);
-            currMate.setFullName(mateRecord.data().usrName);
-            currMate.setEmail(mateRecord.data().usrEmail);
-            currMate.setPhotoURL(mateRecord.data().usrPhotoUrl);
-            return currMate;
-          });
-          mtePromiseArray.push(newMate);
-        });
-    }
-
     outputMatesInSpace() {
-        var db = firebase.firestore();
-        var spcDocRef = db.collection("Spaces").doc("sFSKvtwdCrpXCMGsdkHP");
+      var db = firebase.firestore();
+      var spcDocRef = db.collection("Spaces").doc("sFSKvtwdCrpXCMGsdkHP");
     }
 
     async fillMatesArray() {
@@ -286,7 +244,10 @@ class Space {
             }
         }
     }
+//**End of Space Class**//
 }
+
+
 function testSpace() {
     //Run this function to show that Mates pulled from Spaces firestore and into newSpace object.
     var newSpace = new Space();
@@ -297,11 +258,13 @@ function testSpace() {
         });
     });
 }
+
 function outputMates(space) {
     space.getMates().forEach(function (mte) {
         mte.outputMateProperties();
     });
 }
+
 function redirectCreateNewSpace() {
     window.location.href = "../html/createNewSpace.html";
 }
@@ -313,23 +276,26 @@ function redirectSpaceKey() {
 function outputFunction(exists) {
     return exists;
 }
-``
+
 function createFirestoreSpace() {
     let spacedb = firebase.firestore().collection("Spaces");
+
+    let currMateID = sessionStorage.getItem("user");
+    let matedb = firebase.firestore().collection("Mates").doc(currMateID);
 
     let data = {
         spcTitle: $("#spaceTitle").val(),
         spcDescription: $("#spaceDescription").val(),
-        spcMates: firebase.firestore.FieldValue.arrayUnion(
-            sessionStorage.getItem("user"))
+        spcMates: firebase.firestore.FieldValue.arrayUnion(currMateID)
     };
 
     spacedb
     .add(data)
     .then(function(docRef) {
-      console.log("Document written with ID: ", docRef.id);
       sessionStorage.setItem("Space", docRef.id);
-      console.log(sessionStorage.getItem("Space"));
+      matedb.update({
+        usrSpaces: firebase.firestore.FieldValue.arrayUnion(docRef),
+      });
     }).then(result =>{
       window.location.href = 'spaceKey.html';
     })
