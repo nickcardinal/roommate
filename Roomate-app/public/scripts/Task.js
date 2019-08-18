@@ -101,7 +101,7 @@ function createFirestoreTask() {
 		.add(data)
 		.then(function(docRef) {
 			//Add Task to Space
-			var spaceID = sessionStorage.getItem("Spaces");
+			var spaceID = sessionStorage.getItem("Space");
 			console.log("Space in session: " + spaceID);
 			// var spaceID = "gkAhfI4OUR45Bk7a3Lcj";
 			var spacedb = firebase.firestore().collection("Spaces").doc(spaceID);
@@ -113,7 +113,7 @@ function createFirestoreTask() {
 		});
 
 	// Waits for 1000ms before redirecting
-	setTimeout(function() {window.location.href = "../html/overview.html";}, 1000);
+	// setTimeout(function() {window.location.href = "../html/overview.html";}, 1000);
 }
 
 function redirectCreateTask() {
