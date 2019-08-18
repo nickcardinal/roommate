@@ -53,6 +53,10 @@
 		this.dueTime = dueTime;
 	}
 
+	getDueTime() {
+		return this.dueTime;
+	}
+
 	getIsRecurring(isRecurring) {
 		return this.isRecurring;
 	}
@@ -99,7 +103,7 @@ function createFirestoreTask() {
 	taskdb
 		.add(data)
 		.then(function(docRef) {
-			console.log("Space in session: " + docRef.id);
+			console.log("Task in session: " + docRef.id);
 			//Add Task to Space
 			var spaceID = sessionStorage.getItem("Space");
 			console.log("Space in session: " + spaceID);
@@ -113,9 +117,11 @@ function createFirestoreTask() {
 		});
 
 	// Waits for 1000ms before redirecting
-	// setTimeout(function() {window.location.href = "../html/overview.html";}, 1000);
+	setTimeout(function() {window.location.href = "../html/overview.html";}, 1000);
 }
 
 function redirectCreateTask() {
 	window.location.href = "../html/createTask.html";
 }
+
+module.exports = Task;
