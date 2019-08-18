@@ -85,21 +85,13 @@ function createFirestoreTask() {
 	var taskdb = firebase.firestore().collection("Tasks");
 	console.log("We're in the mainframe... Task data collection has commenced.");
 
-	// Collect boolean for recurring field
-	var boolRecurring = $("#isRecurringField").val();
-	if(boolRecurring == "on") {
-		boolRecurring = true;
-	} else {
-		boolRecurring = false;
-	}
-
-	//Setting firestore data
+	// Setting firestore data
 	let data = {
 		tskTitle: $("#titleField").val(),
 		tskDescription: $("#descriptionField").val(),
 		tskDueDate: $("#dueDateField").val(),
 		tskDueTime: $("#dueTimeField").val(),
-		tskIsRecurring: boolRecurring,
+		tskIsRecurring: $('#isRecurringField').is(':checked'),
 		tskAssignedMate: "Unique Mate ID",
 		tskCompletionStatus: false,
 	}
@@ -108,17 +100,15 @@ function createFirestoreTask() {
 	taskdb
 		.add(data)
 		.then(function(docRef) {
-			console.log("Space in session: " + docRef);
-
 			//Add Task to Space
 			var spaceID = sessionStorage.getItem("Spaces");
+			console.log("Space in session: " + spaceID);
 			// var spaceID = "gkAhfI4OUR45Bk7a3Lcj";
 			var spacedb = firebase.firestore().collection("Spaces").doc(spaceID);
 
 			spacedb.update({
 				spcTasks: firebase.firestore.FieldValue.arrayUnion(docRef),
 			});
-
 			// spacedb.addTaskToSpace(docRef);
 		});
 
