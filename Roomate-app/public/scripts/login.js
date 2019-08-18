@@ -70,12 +70,12 @@ function redirLogin(user, authExpiration, database) {
         redirect('../html/overview.html');
       }
     });
-    
+
 }
 
 function loginNewUser(redir) {
   sessionStorage.setItem('NickName', document.getElementById("nameField").value);
-  sessionStorage.removeItem(2);  
+  sessionStorage.removeItem(2);
   redirect(redir);
 }
 function initializeWelcome() {
@@ -100,6 +100,11 @@ function initializeWelcome() {
         });
       }
     });
+}
+
+function displayUserInfo() {
+  document.getElementById('FullName').innerHTML= sessionStorage.getItem(2);
+  document.getElementById('Email').innerHTML= sessionStorage.getItem('email');
 }
 
 function redirect(url){
