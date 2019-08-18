@@ -9,6 +9,7 @@
 		// Task Deadline Data
 		this.dueDate;
 		this.dueTime;
+		this.isRecurring;
 
 		// Task Completion Details
 		this.assignedMate;
@@ -53,8 +54,12 @@
 		this.dueTime = dueTime;
 	}
 
-	getDueTime(dueTime) {
-		return this.dueTime;
+	getIsRecurring(isRecurring) {
+		return this.isRecurring;
+	}
+
+	setIsRecurring(isRecurring) {
+		this.isRecurring = isRecurring;
 	}
 
 	// Getters/Setters: Task Completion Details
@@ -80,12 +85,21 @@ function createFirestoreTask() {
 	var taskdb = firebase.firestore().collection("Tasks");
 	console.log("We're in the mainframe... Task data collection has commenced.");
 
+	// Collect boolean for recurring field
+	var boolRecurring = $("#isRecurringField").val();
+	if(boolRecurring == "on") {
+		boolRecurring = true;
+	} else {
+		boolRecurring = false;
+	}
+
 	//Setting firestore data
 	let data = {
 		tskTitle: $("#titleField").val(),
 		tskDescription: $("#descriptionField").val(),
 		tskDueDate: $("#dueDateField").val(),
 		tskDueTime: $("#dueTimeField").val(),
+		tskIsRecurring: boolRecurring,
 		tskAssignedMate: "Unique Mate ID",
 		tskCompletionStatus: false,
 	}
@@ -97,8 +111,8 @@ function createFirestoreTask() {
 			console.log("Space in session: " + docRef);
 
 			//Add Task to Space
-			// var spaceID = sessionStorage.getItem("Spaces");
-			var spaceID = "gkAhfI4OUR45Bk7a3Lcj";
+			var spaceID = sessionStorage.getItem("Spaces");
+			// var spaceID = "gkAhfI4OUR45Bk7a3Lcj";
 			var spacedb = firebase.firestore().collection("Spaces").doc(spaceID);
 
 			spacedb.update({
