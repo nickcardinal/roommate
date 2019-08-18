@@ -139,7 +139,39 @@ class Space {
       var db = firebase.firestore();
       var spcDocRef = db.collection("Spaces").doc("sFSKvtwdCrpXCMGsdkHP");
     }
-
+  randomAssignMateToTask(task) {
+    if(this.mates.length === 0){
+      console.log('Invalid space, no mates present.');
+      return;
+    }
+    if (this.mates.length === 1) {
+      task.setAssignedMate(this.mates[0]);
+      return;
+    }
+    let matesNumTasks = new Array();
+    this.mates.forEach(mate => {
+      matesNumTasks.push({ mateEmail: mate.getEmail(), tasks: 0 }); //initialization
+    });
+    this.tasks.forEach(task => {
+      //go through all the tasks
+      let assigned = task.getAssignedMate().getEmail();
+      for (let i = 0; i < matesNumTasks.length; ++i) {
+        //find mate
+        if (matesNumTasks[i].mateEmail === assigned) {
+          matesNumTasks[i].tasks++;
+          break;
+        }
+      }
+    });
+    matesNumTasks.sort((a, b) => (a.mateEmail > b.mateEmail ? 1 : -1)); //sort for algorithm
+    let email = this.getEmailForAssigningTask(matesNumTasks);
+    this.mates.forEach(mate => {
+      if (mate.email === email) {
+        task.setAssignedMate(mate);
+        return;
+      }
+    });
+  }
     async fillMatesArray() {
         // if(typeof this.ID === "undefined" ){
         // console.log("Space ID is empty.");
@@ -177,7 +209,6 @@ class Space {
         }
         return numTasks;
     }
-
     randomAssignMateToTask(task) {
         if (this.mates.length === 1) {
             task.assignedMate = this.mates[0];
@@ -244,6 +275,19 @@ class Space {
             }
         }
     }
+    list.sort((a, b) => (a.mateEmail >= b.mateEmail ? 1 : -1));
+    let totalWeight = 0;
+    list.forEach(int => {
+      totalWeight += int.tasks;
+    });
+    let rand = Math.floor(Math.random() * totalWeight);
+    for (let i = 0; i < list.length; i++) {
+      rand -= list[i].tasks;
+      if (rand <= 0) {
+        return taskList[i].mateEmail;
+      }
+    }
+  }
 //**End of Space Class**//
 }
 
@@ -337,4 +381,28 @@ function reWriteFirestoreSpace(ID, space) {
         spcDescription: space.getDescription()
     };
     spacedb.doc(ID).set(data);
+}
+
+function testAssignTask(){
+  let user1 = new Mate();
+  let user2 = new Mate();
+  let user3 = new Mate();
+  let space = new Space();
+  user1.setEmail('user1@mail.com');
+  user2.setEmail('user2@mail.com');
+  user3.setEmail('user3@mail.com');
+  user1.setFullName('user1');
+  user2.setFullName('user2');
+  user3.setFullName('user3');
+  space.setTitle('Space');
+  space.addMate(user1);
+  space.addMate(user2);
+  space.addMate(user3);
+  for(let i = 0; i < 50; i++){
+    let task = new Task();
+    task.setTitle('Task # ' + i);
+    space.randomAssignMateToTask(task);
+    console.log(task.getAssignedMate(), 'assigned.');
+    space.addTask(task);
+  }
 }
