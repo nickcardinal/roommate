@@ -15,6 +15,7 @@
     <link rel="stylesheet" type="text/css" href="../css/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="../css/animate.css">
     <link rel="stylesheet" type="text/css" href="../css/default.css">
+	<link rel="stylesheet" type="text/css" href="../css/createTask.css">
     <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,400i,700|Raleway:300,400,400i,700&display=swap" rel="stylesheet">
 
     <!-- Favicon -->
@@ -24,7 +25,7 @@
     <script src="https://www.gstatic.com/firebasejs/5.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/5.10.1/firebase-firestore.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-
+	
     <title>Create a Task</title>
   </head>
   <body onload="initialize()">
@@ -32,28 +33,72 @@
           <div class="center-items-container">
               <div class="center-items">
                 <h3>Create a Task</h3>
-
                 <form>
-                  Task Title:
-                  <br>
-                  <input type="text" id="titleField">
-                  <br><br>
+				
+					Task Title:
+					<br>
+					<input type="text" id="titleField">
+					<br><br>
 
-                  Description:
-                  <br>
-                  <input type="text" id="descriptionField">
-                  <br><br>
+					Description:
+					<br>
+					<input type="text" id="descriptionField">
+					<br><br>
 
-                  Due By:
-                  <br>
-                  <input type="date" name="dueDate" id="dueDateField">
-                  <input type="time" name="dueTime"id="dueTimeField">
-                  <br><br>
+					<!-- Task Type Switch -->
+					<label>Recurring Task:</label>
+					<label class="switch">
+						<input id="dateSwitch" type="checkbox" onClick="testMe()">
+						<span class="slider round"></span>
+					</label>
+					<br><br>
+					
+					<!-- Div For One Time Task -->
+					<div id="oneTimeTask">
+						<label>
+							Due By:
+							<br>
+							<input type="date" name="dueDate" id="dueDateField">
+							<input type="time" name="dueTime"id="dueTimeField">
+							<br><br>
+						</label>
+					</div>
+					
+					<!-- Div For Recurring Tasks -->
+					<div class="recurringControls" id="recurringTask">
+						<label>
+							Period:
+							<br>
+							<div class="periodControl">
+								<input type="radio" id="Daily" name="period" value="daily">
+								<label for="louie">Daily</label>
+								<input type="radio" id="Weekly" name="period" value="weekly">
+								<label for="louie">Weekly</label>
+								<input type="radio" id="Monthly" name="period" value="monthly">
+								<label for="louie">Monthly</label>
+							</div>
+							<br>
+						</label>
+					</div>
+				
                 </form>
                 <button class="blue-btn" type="button" onclick="createFirestoreTask()">Create Task</button>
               </div>
           </div>
       </div>
+	  
+	  <script type="text/javascript">
+		function testMe(){
+			if(document.getElementById("dateSwitch").checked === true){
+				document.getElementById("oneTimeTask").style.display = "none";
+				document.getElementById("recurringTask").style.display = "inline";
+			}
+			else{
+				document.getElementById("oneTimeTask").style.display = "inline";
+				document.getElementById("recurringTask").style.display = "none";
+			}
+		}
+	</script>
 
       <script src="../scripts/login.js"></script>
       <script src="../scripts/config.js"></script>
