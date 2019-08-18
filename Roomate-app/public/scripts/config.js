@@ -12,6 +12,7 @@ const firebaseConfig = {
 };
 function validate(){
     firebase.initializeApp(firebaseConfig);
+	return;
     database = firebase.firestore();
     if(sessionStorage.getItem('log') === 'true'){
       updateToken_Overview(database);  
