@@ -1,6 +1,7 @@
 ﻿class Task {
-	constructor(taskId, spaceId) {
+	constructor() {
 		// Task Descriptors
+		this.task_ID;
 		this.title;
 		this.description;
 
@@ -14,6 +15,14 @@
 	}
 
 	// Getters/Setters: Task Descriptors
+	setTaskID(task_ID) {
+		this.task_ID = task_ID;
+	}
+
+	getTaskID() {
+		return this.task_ID;
+	}
+
 	setTitle(title) {
 		this.title = title;
 	}
@@ -67,24 +76,41 @@
 
 //Create Firestore Task
 function createFirestoreTask() {
-	var taskdb = firebase.firestore().collection("Task");
+	var taskdb = firebase.firestore().collection("Tasks");
+	console.log("We're in the mainframe... Task data collection has commenced.");
 
-	let currTask = new Task();
-	currTask.setTitle($("#titleField").val());
-	currTask.setDescription($("#descriptionField").val());
-	currTask.setDueDate($("#dueDateField").val());
-	currTask.setDueTime($("#dueTimeField").val());
-	currTask.setAssignedMate("Unique Mate ID");
-	currTask.setCompletionStatus(false);
-
+	//Setting firestore data
 	let data = {
-		tskTitle: currTask.getTitle(),
-		tskDescription: currTask.getDescription(),
-		tskDueDate: currTask.getDueDate(),
-		tskDueTime: currTask.getDueTime(),
-		tskAssignedMate: currTask.getAssignedMate(),
-		tskCompletionStatus: currTask.getCompletionStatus(),
+		tskTitle: $("#titleField").val(),
+		tskDescription: $("#descriptionField").val(),
+		tskDueDate: $("#dueDateField").val(),
+		tskDueTime: $("#dueTimeField").val(),
+		tskAssignedMate: "Unique Mate ID",
+		tskCompletionStatus: false,
 	}
 
-	taskdb.add(data);
+	// taskdb.add(data);
+	taskdb
+		.add(data)
+		.then(function(docRef) {
+			console.log("Space in session: " + docRef);
+
+			//Add Task to Space
+			// var spaceID = sessionStorage.getItem("Spaces");
+			var spaceID = "gkAhfI4OUR45Bk7a3Lcj";
+			var spacedb = firebase.firestore().collection("Spaces").doc(spaceID);
+
+			spacedb.update({
+				spcTasks: firebase.firestore.FieldValue.arrayUnion(docRef),
+			});
+
+			// spacedb.addTaskToSpace(docRef);
+		});
+
+	// Waits for 1000ms before redirecting
+	setTimeout(function() {window.location.href = "../html/overview.html";}, 1000);
+}
+
+function redirectCreateTask() {
+	window.location.href = "../html/createTask.html";
 }

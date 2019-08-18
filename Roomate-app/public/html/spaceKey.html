@@ -25,6 +25,7 @@
     <script src="https://www.gstatic.com/firebasejs/5.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/5.10.1/firebase-firestore.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="../scripts/config.js"></script>
 
     <title>My Space Key</title>
   </head>
@@ -33,9 +34,11 @@
         <div class="center-items">
             <h3 id="showName"></h3>
             <h4 id="showDescription"></h4>
-            <p>Send this key to your mates so they can join your space:</p>
             <br><br>
+            <p>Send this key to your mates so they can join your space:</p>
             <h3 class="animated fadeIn slower" id="showID"></h3>
+            <br><br>
+            <button class="blue-btn" type="button" onclick="redirectSpaceKey()">Continue</button>
         </div>
     </div>
 

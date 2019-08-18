@@ -1,7 +1,7 @@
 
 function spaceKeyInitialize() {
   initialize();
-  accessFirestoreSpace('0yAZm9Ny0Fka6TGI7PZr', spaceKeyShowElements);
+  accessFirestoreSpace(sessionStorage.getItem('Space'), spaceKeyShowElements);
 }
 
 function spaceKeyShowElements(spc) {
