@@ -82,8 +82,15 @@
 //Create Firestore Task
 function createFirestoreTask() {
 	var taskdb = firebase.firestore().collection("Tasks");
-	var boolRecurring = $("#isRecurringField").val();
 	console.log("We're in the mainframe... Task data collection has commenced.");
+
+	// Collect boolean for recurring field
+	var boolRecurring = $("#isRecurringField").val();
+	if(boolRecurring == "on") {
+		boolRecurring = true;
+	} else {
+		boolRecurring = false;
+	}
 
 	//Setting firestore data
 	let data = {
@@ -91,7 +98,7 @@ function createFirestoreTask() {
 		tskDescription: $("#descriptionField").val(),
 		tskDueDate: $("#dueDateField").val(),
 		tskDueTime: $("#dueTimeField").val(),
-		tskIsRecurring: $("#isRecurringField").val(),
+		tskIsRecurring: boolRecurring,
 		tskAssignedMate: "Unique Mate ID",
 		tskCompletionStatus: false,
 	}
