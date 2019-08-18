@@ -4,7 +4,6 @@
 		this.task_ID;
 		this.title;
 		this.description;
-		this.recurring;
 
 		// Task Deadline Data
 		this.dueDate;
