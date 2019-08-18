@@ -70,7 +70,7 @@
 		this.assignedMate = assignedMate;
 	}
 
-	getAssignedMate(assignedMate) {
+	getAssignedMate() {
 		return this.assignedMate;
 	}
 

@@ -98,19 +98,21 @@ class Space {
 
     let minNumTasks = this.getNumberOfTasksByMateEmail(
                       this.mates[0].getEmail());
-    var minTaskMates = new Mate[this.mates[0]]();
+    var minTaskMates = [];
+    minTaskMates.push(this.mates[0]);
 
     for (var i = 1; i < this.mates.length; ++i) {
       let j = this.getNumberOfTasksByMateEmail(this.mates[i].getEmail()); //would be more efficient to get all the number of tasks in one shot...
       if (j < minNumTasks) {
         minNumTasks = j;
-        minTaskMates = new Mate[this.mates[i]]();
+        minTaskMates = [];
+        minTaskMates.push(this.mates[i]);
       } else if (j === minNumTasks) {
         minTaskMates.push(this.mates[i]);
       }
     }
     if (minTaskMates.length > 1) {
-      return minTaskMates[Math.random() * minTaskMates.length];
+      return minTaskMates[Math.floor(Math.random() * minTaskMates.length)];
     }
     return minTaskMates[0];
   }
