@@ -182,6 +182,10 @@ class Space {
   }
 
   randomAssignMateToTask(task) {
+    if(this.mates.length === 0){
+      console.log('Invalid space, no mates present.');
+      return;
+    }
     if (this.mates.length === 1) {
       task.setAssignedMate(this.mates[0]);
       return;
@@ -201,7 +205,7 @@ class Space {
         }
       }
     });
-    matesNumTasks.sort((a, b) => (a.email > b.email ? 1 : -1)); //sort for algorithm
+    matesNumTasks.sort((a, b) => (a.mateEmail > b.mateEmail ? 1 : -1)); //sort for algorithm
     let email = this.getEmailForAssigningTask(matesNumTasks);
     this.mates.forEach(mate => {
       if (mate.email === email) {
@@ -232,7 +236,7 @@ class Space {
         list[i].tasks
       );
     }
-    list.sort((a, b) => (a.email >= b.email ? 1 : -1));
+    list.sort((a, b) => (a.mateEmail >= b.mateEmail ? 1 : -1));
     let totalWeight = 0;
     list.forEach(int => {
       totalWeight += int.tasks;
@@ -241,7 +245,7 @@ class Space {
     for (let i = 0; i < list.length; i++) {
       rand -= list[i].tasks;
       if (rand <= 0) {
-        return taskList[i].email;
+        return taskList[i].mateEmail;
       }
     }
   }
@@ -258,7 +262,7 @@ function redirectSpaceKey() {
 function outputFunction(exists) {
   return exists;
 }
-``
+
 function createFirestoreSpace() {
   let spacedb = firebase.firestore().collection("Spaces");
 
@@ -335,4 +339,28 @@ function outputMates(space) {
   space.getMates().forEach(function(mte) {
     mte.outputMateProperties();
   });
+}
+
+function testAssignTask(){
+  let user1 = new Mate();
+  let user2 = new Mate();
+  let user3 = new Mate();
+  let space = new Space();
+  user1.setEmail('user1@mail.com');
+  user2.setEmail('user2@mail.com');
+  user3.setEmail('user3@mail.com');
+  user1.setFullName('user1');
+  user2.setFullName('user2');
+  user3.setFullName('user3');
+  space.setTitle('Space');
+  space.addMate(user1);
+  space.addMate(user2);
+  space.addMate(user3);
+  for(let i = 0; i < 50; i++){
+    let task = new Task();
+    task.setTitle('Task # ' + i);
+    space.randomAssignMateToTask(task);
+    console.log(task.getAssignedMate(), 'assigned.');
+    space.addTask(task);
+  }
 }
