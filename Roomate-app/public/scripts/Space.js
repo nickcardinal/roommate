@@ -406,3 +406,5 @@ function testAssignTask(){
     space.addTask(task);
   }
 }
+
+module.exports = Space;
