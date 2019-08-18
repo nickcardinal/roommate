@@ -68,7 +68,7 @@ class Space {
 							return mate.exists;
 						});
     }
-	
+
     addMateToSpace(userDocID) {
         var userDocID = sessionStorage.getItem("user");
         var userSpaceID = $("#userSpaceID").val();
@@ -94,29 +94,31 @@ class Space {
         });
     }
 
-    getMateToAssignToTask() {
-        if (this.mates.length == 0) {
-            console.log("no mates in the living space");
-            return; //condition here just in case
-        }
+    getMateToAssignToNonRecurringTask() {
+      if (this.mates.length == 0) {
+        console.log("no mates in the living space");
+        return; //condition here just in case
+      }
 
-        let minNumTasks = this.getNumberOfTasksByMateEmail(
-                this.mates[0].getEmail());
-        var minTaskMates = new Mate[this.mates[0]]();
+      let minNumTasks = this.getNumberOfTasksByMateEmail(
+                        this.mates[0].getEmail());
+      var minTaskMates = [];
+      minTaskMates.push(this.mates[0]);
 
-        for (var i = 1; i < this.mates.length; ++i) {
-            let j = this.getNumberOfTasksByMateEmail(this.mates[i].getEmail()); //would be more efficient to get all the number of tasks in one shot...
-            if (j < minNumTasks) {
-                minNumTasks = j;
-                minTaskMates = new Mate[this.mates[i]]();
-            } else if (j === minNumTasks) {
-                minTaskMates.push(this.mates[i]);
-            }
+      for (var i = 1; i < this.mates.length; ++i) {
+        let j = this.getNumberOfTasksByMateEmail(this.mates[i].getEmail()); //would be more efficient to get all the number of tasks in one shot...
+        if (j < minNumTasks) {
+          minNumTasks = j;
+          minTaskMates = [];
+          minTaskMates.push(this.mates[i]);
+        } else if (j === minNumTasks) {
+          minTaskMates.push(this.mates[i]);
         }
-        if (minTaskMates.length > 1) {
-            return minTaskMates[Math.random() * minTaskMates.length];
-        }
-        return minTaskMates[0];
+      }
+      if (minTaskMates.length > 1) {
+        return minTaskMates[Math.floor(Math.random() * minTaskMates.length)];
+      }
+      return minTaskMates[0];
     }
 
     getNextMateAssignedToRecurringTask(email) {
@@ -138,6 +140,8 @@ class Space {
     //     });
     //   });
     // }
+
+    /*
     randomAssignMateToTask(task) {
         if (this.mates.length === 0) {
             console.log("Invalid space, no mates present.");
@@ -208,6 +212,9 @@ class Space {
             }
         }
     }
+
+    */
+
     async fillMatesArray() {
         // if(typeof this.ID === "undefined" ){
         // console.log("Space ID is empty.");
@@ -237,13 +244,16 @@ class Space {
     }
 
     getNumberOfTasksByMateEmail(email) {
-        var numTasks = 0;
-        for (var i = 0; i < this.tasks.length; ++i) {
-            if (this.tasks[i].assignedMate.email == email) {
-                ++numTasks;
-            }
+      var numTasks = 0;
+      for (var i = 0; i < this.tasks.length; ++i) {
+        tempTask = this.tasks[i];
+        if (tempTask.assignedMate.email == email &&
+           !tempTask.isRecurring &&
+           !tempTask.completionStatus) {
+          ++numTasks;
         }
-        return numTasks;
+      }
+      return numTasks;
     }
     //**End of Space Class**//
 }
