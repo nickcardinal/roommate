@@ -90,7 +90,7 @@ class Space {
     return numTasks;
   }
 
-  getMateToAssignToTask() {
+  getMateToAssignToNonRecurringTask() {
     if (this.mates.length == 0) {
       console.log("no mates in the living space");
       return; //condition here just in case
