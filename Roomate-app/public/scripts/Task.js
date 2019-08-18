@@ -8,6 +8,7 @@
 		// Task Deadline Data
 		this.dueDate;
 		this.dueTime;
+		this.isRecurring;
 
 		// Task Completion Details
 		this.assignedMate;
@@ -52,8 +53,12 @@
 		this.dueTime = dueTime;
 	}
 
-	getDueTime(dueTime) {
-		return this.dueTime;
+	getIsRecurring(isRecurring) {
+		return this.isRecurring;
+	}
+
+	setIsRecurring(isRecurring) {
+		this.isRecurring = isRecurring;
 	}
 
 	// Getters/Setters: Task Completion Details
