@@ -124,6 +124,19 @@ class Space {
       });
     });
   }
+  
+// addTaskToSpace(taskDocID) {
+//   var db = firebase.firestore();
+//   var spcDocRef = db.collection("Spaces").doc(this.ID);
+//
+//   db.runTransaction(transaction => {
+//     return transaction.get(spcDocRef).then(snapshot => {
+//       const spcTaskArray = snapshot.get("spcTasks");
+//       spcTaskArray.push(taskDocID);
+//       transaction.update(spcDocRef, "spcTasks", spcTaskArray);
+//     });
+//   });
+// }
 
   outputMatesInSpace() {
     var db = firebase.firestore();
@@ -237,9 +250,15 @@ class Space {
 function redirectCreateNewSpace() {
   window.location.href = "../html/createNewSpace.html";
 }
+
+function redirectSpaceKey() {
+  window.location.href = "../html/overview.html";
+}
+
 function outputFunction(exists) {
   return exists;
 }
+``
 function createFirestoreSpace() {
   let spacedb = firebase.firestore().collection("Spaces");
 
@@ -257,6 +276,8 @@ function createFirestoreSpace() {
       console.log("Document written with ID: ", docRef.id);
       sessionStorage.setItem("Space", docRef.id);
       console.log(sessionStorage.getItem("Space"));
+    }).then(result =>{
+      window.location.href = 'spaceKey.html';
     })
     .catch(function(error) {
       console.error("Error adding document: ", error);
@@ -309,6 +330,7 @@ function testSpace() {
     });
   });
 }
+
 function outputMates(space) {
   space.getMates().forEach(function(mte) {
     mte.outputMateProperties();
