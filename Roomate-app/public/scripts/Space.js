@@ -79,7 +79,6 @@ class Space {
 				return;
 			}
 			else{
-				console.log("fuckers");
 				var db = firebase.firestore();
 				var spcDocRef = db.collection("Spaces").doc(userSpaceID);
 
