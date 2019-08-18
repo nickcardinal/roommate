@@ -15,7 +15,7 @@
     <link rel="stylesheet" type="text/css" href="../css/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="../css/animate.css">
     <link rel="stylesheet" type="text/css" href="../css/default.css">
-	<link rel="stylesheet" type="text/css" href="../css/createTask.css">
+    <link rel="stylesheet" type="text/css" href="../css/createTask.css">
     <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,400i,700|Raleway:300,400,400i,700&display=swap" rel="stylesheet">
 
     <!-- Favicon -->
@@ -35,7 +35,7 @@
               <div class="center-items">
                 <h3>Create a Task</h3>
                 <form>
-				
+
 					Task Title:
 					<br>
 					<input type="text" id="titleField">
@@ -49,11 +49,11 @@
 					<!-- Task Type Switch -->
 					<label>Recurring Task:</label>
 					<label class="switch">
-						<input id="dateSwitch" type="checkbox" onClick="testMe()">
+						<input id="isRecurringField" type="checkbox" onClick="testMe()">
 						<span class="slider round"></span>
 					</label>
-					<br><br>
-					
+					<br>
+
 					<!-- Div For One Time Task -->
 					<div id="oneTimeTask">
 						<label>
@@ -64,7 +64,7 @@
 							<br><br>
 						</label>
 					</div>
-					
+
 					<!-- Div For Recurring Tasks -->
 					<div class="recurringControls" id="recurringTask">
 						<label>
@@ -81,25 +81,16 @@
 							<br>
 						</label>
 					</div>
-				
-                  Due By:
-                  <br>
-                  <input type="date" name="dueDate" id="dueDateField">
-                  <input type="time" name="dueTime" id="dueTimeField">
-                  <br><br>
 
-                  Recurring Weekly:
-                  <input type="checkbox" name="isRecurring" id="isRecurringField">
-                  <br><br>
-                </form>
-                <button class="blue-btn" type="button" onclick="createFirestoreTask()">Create Task</button>
-              </div>
-          </div>
+        </form>
+        <button class="blue-btn" type="button" onclick="createFirestoreTask()">Create Task</button>
       </div>
-	  
+    </div>
+</div>
+
 	  <script type="text/javascript">
 		function testMe(){
-			if(document.getElementById("dateSwitch").checked === true){
+			if(document.getElementById("isRecurringField").checked === true){
 				document.getElementById("oneTimeTask").style.display = "none";
 				document.getElementById("recurringTask").style.display = "inline";
 			}
