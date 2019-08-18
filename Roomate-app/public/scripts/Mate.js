@@ -96,9 +96,4 @@ function assignMateInfo(docId, db) {
     this.photoURL = mate.data().usrPhotoUrl;
 }
 
-
-//this.user_ID;
-//this.nickName;
-//this.fullName;
-//this.email;
-//this.photoURL;
+module.exports = Mate;
