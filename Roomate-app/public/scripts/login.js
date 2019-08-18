@@ -52,7 +52,7 @@ function redirLogin(user, authExpiration, database) {
   let mateQuery = mateRef.where("usrEmail", "==", user.email);
   mateQuery.get().then(snapshot => {
       if (snapshot.empty) {
-        sessionStorage.setItem(2, user.displayName);
+        sessionStorage.setItem('name', user.displayName);
         sessionStorage.removeItem('log');
         mateRef
           .add({
@@ -75,7 +75,6 @@ function redirLogin(user, authExpiration, database) {
 
 function loginNewUser(redir) {
   sessionStorage.setItem('NickName', document.getElementById("nameField").value);
-  sessionStorage.removeItem(2);
   redirect(redir);
 }
 function initializeWelcome() {
@@ -103,7 +102,7 @@ function initializeWelcome() {
 }
 
 function displayUserInfo() {
-  document.getElementById('FullName').innerHTML= sessionStorage.getItem(2);
+  document.getElementById('FullName').innerHTML= sessionStorage.getItem('name');
   document.getElementById('Email').innerHTML= sessionStorage.getItem('email');
 }
 
