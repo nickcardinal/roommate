@@ -26,11 +26,7 @@
     <script src="https://www.gstatic.com/firebasejs/5.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/5.10.1/firebase-firestore.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	  <script src="../scripts/config.js"></script>
-  	<script src="../scripts/login.js"></script>
-  	<script src="../scripts/Space.js"></script>
-  	<script src="../scripts/Mate.js"></script>
-
+	
     <title>Create/Join a Space</title>
 	</head>
 	<body onload="validate()">
@@ -41,25 +37,19 @@
 								<p>How would you like to proceed?</p>
 								<br><br>
 								<div class="center-items">
-									<button type="button" class="blue-btn" onclick="openForm()">Join an existing space</button>
-									<p> </p>
 									<button type="button" class="blue-btn" onclick="redirectCreateNewSpace()">Create a new space</button>
 									<p> </p>
-									<button type="button" class="blue-btn" onclick="testSpace()">Test Button</button>
+									<button type="button" class="blue-btn" onclick="openForm()">Join an existing space</button>
 								</div>
-								
 								<div class="form-popup" id="frmSpaceIDPopup">
-									<form action="/action_page.php" class="form-container">
-										<h2>Join Your Mates Space</h2>
-
+									<form class="form-container">
+										<h3>Join Your Mates Space</h3>
 										<label for="SpaceID"><b>Enter Space ID</b></label>
-										<input type="text" placeholder="Space ID" name="SpaceID" required>
-										<button type="submit" class="btn">Join Space</button>
-										<button type="submit" class="btn cancel" onclick="closeForm()">Cancel</button>
+										<input id="userSpaceID" type="text" placeholder="Space ID" name="SpaceID" required>
+										<button type="button" class="btn" onclick="testSpace()">Join Space</button>
+										<button type="button" class="btn cancel" onclick="closeForm()">Cancel</button>
 									</form>
 								</div>
-								<!-- <button type="button" onclick="login()">Login with Google</button>
-								<button type="button" onclick="redirLogin()">Redirect to Google</button> -->
 						</div>
         </div>
 		</div>
@@ -77,5 +67,6 @@
 		<script src="../scripts/config.js"></script>
 		<script src="../scripts/login.js"></script>
 		<script src="../scripts/Space.js"></script>
+		<script src="../scripts/Mate.js"></script>
 	</body>
 </html>
