@@ -93,7 +93,7 @@ function createFirestoreTask() {
 	taskdb
 		.add(data)
 		.then(function(docRef) {
-			console.log("Space in session: " + docRef);
+			console.log("Space in session: " + docRef.id);
 
 			//Add Task to Space
 			// var spaceID = sessionStorage.getItem("Spaces");

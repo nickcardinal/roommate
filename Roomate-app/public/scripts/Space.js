@@ -183,16 +183,16 @@ class Space {
 
   randomAssignMateToTask(task) {
     if (this.mates.length === 1) {
-      task.assignedMate = this.mates[0];
+      task.setAssignedMate(this.mates[0]);
       return;
     }
     let matesNumTasks = new Array();
     this.mates.forEach(mate => {
-      matesNumTasks.push({ mateEmail: mate.email, tasks: 0 }); //initialization
+      matesNumTasks.push({ mateEmail: mate.getEmail(), tasks: 0 }); //initialization
     });
     this.tasks.forEach(task => {
       //go through all the tasks
-      let assigned = task.assignedMate.email;
+      let assigned = task.getAssignedMate().getEmail();
       for (let i = 0; i < matesNumTasks.length; ++i) {
         //find mate
         if (matesNumTasks[i].mateEmail === assigned) {
@@ -205,7 +205,7 @@ class Space {
     let email = this.getEmailForAssigningTask(matesNumTasks);
     this.mates.forEach(mate => {
       if (mate.email === email) {
-        task.assignedMate = mate;
+        task.setAssignedMate(mate);
         return;
       }
     });
