@@ -50,7 +50,10 @@ function redirLogin(user, authExpiration, database) {
   firebase.firestore.setLogLevel('debug');
   let mateRef = database.collection("Mates");
   let mateQuery = mateRef.where("usrEmail", "==", user.email);
-  mateQuery.get().then(snapshot => {
+
+  mateQuery
+    .get()
+    .then(snapshot => {
       if (snapshot.empty) {
         sessionStorage.setItem('name', user.displayName);
         sessionStorage.removeItem('log');
@@ -66,17 +69,36 @@ function redirLogin(user, authExpiration, database) {
           .then(ref => {
             redirect('../html/profile.html');
           });
-      }else{
-        redirect('../html/overview.html');
+      } else {
+        redirLoginToSpace(user, database);
       }
     });
-
 }
+
+function redirLoginToSpace(user, database) {
+  let matedb = database.collection("Mates").where("usrEmail", "==", user.email);
+
+  matedb
+    .get()
+    .then(function(snapshot){
+      sessionStorage.setItem('user', snapshot.docs[0].id);
+      let user = snapshot.docs[0].data();
+      let spaces = user.usrSpaces;
+      if(spaces != undefined) {
+        let spaceID = spaces[0].id;
+        sessionStorage.setItem('Space', spaceID);
+        redirect('../html/overview.html')
+      }else {
+        redirect('../html/joinOrCreateSpace.html')
+      }
+    });
+  }
 
 function loginNewUser(redir) {
   sessionStorage.setItem('NickName', document.getElementById("nameField").value);
   redirect(redir);
 }
+
 function initializeWelcome() {
   initialize();
   document.getElementById("nameField").value = sessionStorage.getItem(2);
