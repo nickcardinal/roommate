@@ -244,13 +244,16 @@ class Space {
     }
 
     getNumberOfTasksByMateEmail(email) {
-        var numTasks = 0;
-        for (var i = 0; i < this.tasks.length; ++i) {
-            if (this.tasks[i].assignedMate.email == email) {
-                ++numTasks;
-            }
+      var numTasks = 0;
+      for (var i = 0; i < this.tasks.length; ++i) {
+        tempTask = this.tasks[i];
+        if (tempTask.assignedMate.email == email &&
+           !tempTask.isRecurring &&
+           !tempTask.completionStatus) {
+          ++numTasks;
         }
-        return numTasks;
+      }
+      return numTasks;
     }
     //**End of Space Class**//
 }
