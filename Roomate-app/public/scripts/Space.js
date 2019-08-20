@@ -73,7 +73,7 @@ class Space {
 						});
     }
 
-    addMateToSpace(userDocID) {
+    addMateToSpace() {
         var userDocID = sessionStorage.getItem("user");
         var userSpaceID = $("#userSpaceID").val();
         this.isValidSpace(userSpaceID).then(function (exists) {
@@ -234,7 +234,10 @@ function outputMatesAndTasksInSpace() {
 		});
     });
 }
-
+function joinExistingSpace(){
+	var newSpace = new Space();
+	newSpace.addMateToSpace();
+}
 function redirectCreateNewSpace() {
     window.location.href = "../html/createNewSpace.html";
 }

@@ -122,11 +122,11 @@ function createFirestoreTask() {
 			var spacedb = firebase.firestore().collection("Spaces").doc(spaceID);
 			spacedb.update({
 				spcTasks: firebase.firestore.FieldValue.arrayUnion(docRef.id),
+			}).
+			then(none => {
+				redirectOverview();
 			});
 		});
-
-	// Waits for 1000ms before redirecting
-	setTimeout(redirectOverview(), 1000);
 }
 
 function redirectCreateTask() {
