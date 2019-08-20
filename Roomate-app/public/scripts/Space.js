@@ -51,7 +51,7 @@ class Space {
         this.tasks.push(task);
     }
 
-	setTasksArray(tasks) {
+    setTasksArray(tasks) {
         this.tasks = tasks;
     }
 
@@ -98,7 +98,7 @@ class Space {
         });
     }
 
-    getMateToAssignToNonRecurringTask() {
+    setMateToAssignToNonRecurringTask() {
       if (this.mates.length == 0) {
         console.log("No mates in the living space.");
         return;
@@ -126,11 +126,11 @@ class Space {
       }
     }
 
-    getFirstMateAssignedToRecurringTask() {
+    setFirstMateAssignedToRecurringTask() {
       return this.mates[Math.floor(Math.random() * this.mates.length)];
     }
 
-    getNextMateAssignedToRecurringTask(mate) {
+    setNextMateAssignedToRecurringTask(mate) {
       for (var i = 0; i < this.mates.length - 1; ++i) {
         if (this.mates[i] == mate) {
             return this.mates[i + 1];
