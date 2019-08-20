@@ -35,7 +35,7 @@ task1.setIsComplete(false);
 
 //console.log(testSpace.getMateToAssignToNonRecurringTask())
 
-task1.setAssignedMate(testSpace.getMateToAssignToNonRecurringTask());
+task1.setAssignedMate(testSpace.setMateToAssignToNonRecurringTask());
 
 testSpace.addTask(task1);
 
@@ -73,7 +73,7 @@ recurTask.setTaskID("67890");
 recurTask.setIsRecurring(true);
 recurTask.setIsComplete(false);
 
-recurTask.setAssignedMate(testSpace.getFirstMateAssignedToRecurringTask());
+recurTask.setAssignedMate(testSpace.setFirstMateAssignedToRecurringTask());
 
 console.log(recurTask);
 
@@ -91,12 +91,12 @@ console.log(recurTask);
 
 //testSpace.addTask(recurTask);
 
-recurTask.setAssignedMate(testSpace.getNextMateAssignedToRecurringTask(recurTask.getAssignedMate()));
+recurTask.setAssignedMate(testSpace.setNextMateAssignedToRecurringTask(recurTask.getAssignedMate()));
 
 console.log(recurTask);
 
 
-recurTask.setAssignedMate(testSpace.getNextMateAssignedToRecurringTask(recurTask.getAssignedMate()));
+recurTask.setAssignedMate(testSpace.setNextMateAssignedToRecurringTask(recurTask.getAssignedMate()));
 
 console.log(recurTask);
 // test('testing getNextMateAssignedToRecurringTask function', function(){
