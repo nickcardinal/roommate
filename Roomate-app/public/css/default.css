@@ -116,13 +116,6 @@ button {
 }
 
 /* OVERVIEW */
-.overview-container {
-  width: 90vw;
-  padding: 0px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
 .top-bar-logo {
   width: auto;
   height: 80px;
@@ -132,7 +125,22 @@ button {
   height: 80px;
   display: flex;
   align-items: center;
-  margin-top: 50px;
+  margin-top: 40px;
+}
+
+.space {
+  min-width: 90%;
+  min-width: 90vw;
+
+  padding: 0;
+
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.space-content {
+  min-height: 50%;
+  min-height: 50vh;
 }
 
 .space-information {
