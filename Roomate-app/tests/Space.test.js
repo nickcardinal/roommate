@@ -30,7 +30,7 @@ task1.setTitle("Wash Dishes");
 task1.setDescription("Hand Wash Pots and Pans");
 task1.setTaskID("123456");
 task1.setIsRecurring(false);
-task1.setCompletionStatus(false);
+task1.setIsComplete(false);
 
 //console.log(testSpace.getMateToAssignToNonRecurringTask())
 

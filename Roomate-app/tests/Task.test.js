@@ -18,8 +18,8 @@ test('Getter/Setter Test', function(){
 	testTask.setDueTime(dueTime);
 	testTask.setIsRecurring(isRecurring);
 	testTask.setAssignedMate(assignedMate);
-	testTask.setCompletionStatus(completionStatus);
+	testTask.setIsComplete(completionStatus);
 
-	expect([testTask.getTaskID(), testTask.getTitle(), testTask.getDescription(), testTask.getDueDate(), testTask.getDueTime(), testTask.getIsRecurring(), testTask.getAssignedMate(), testTask.getCompletionStatus()])
+	expect([testTask.getTaskID(), testTask.getTitle(), testTask.getDescription(), testTask.getDueDate(), testTask.getDueTime(), testTask.getIsRecurring(), testTask.getAssignedMate(), testTask.getIsComplete()])
 		.toEqual([task_ID, title, description, dueDate, dueTime, isRecurring, assignedMate, completionStatus]);
 });
