@@ -9,6 +9,7 @@
 		this.dueDate;
 		this.dueTime;
 		this.isRecurring;
+		this.recurringPeriod;
 
 		// Task Completion Details
 		this.assignedMate;
@@ -106,31 +107,34 @@ function createFirestoreTask() {
 		tskDueDate: $("#dueDateField").val(),
 		tskDueTime: $("#dueTimeField").val(),
 		tskIsRecurring: $('#isRecurringField').is(':checked'),
+		tskRecurringPeriod: $('#recurringPeriodField').val(),
 		tskAssignedMate: "Unique Mate ID",
 		tskIsComplete: false
 	}
-	
+
+	// Add Task to Space
 	taskdb
 		.add(data)
 		.then(function(docRef) {
 			console.log("Task in session: " + docRef.id);
-			//Add Task to Space
 			var spaceID = sessionStorage.getItem("Space");
 			console.log("Space in session: " + spaceID);
 			var spacedb = firebase.firestore().collection("Spaces").doc(spaceID);
-
 			spacedb.update({
 				spcTasks: firebase.firestore.FieldValue.arrayUnion(docRef.id),
 			});
-			// spacedb.addTaskToSpace(docRef);
 		});
 
 	// Waits for 1000ms before redirecting
-	setTimeout(function() {window.location.href = "../html/overview.html";}, 1000);
+	setTimeout(redirectOverview(), 1000);
 }
 
 function redirectCreateTask() {
 	window.location.href = "../html/createTask.html";
+}
+
+function redirectOverview() {
+	window.location.href = "../html/overview.html";
 }
 
 module.exports = Task;
