@@ -33,21 +33,32 @@
   <!-- <body onload="validate()"> -->
   <body>
     <div class="container page test">
-      <div class="test">
-        <h3 id="showName">Space Name</h3>
-        <h4 id="showDescription">Space Description</h4>
-      </div>
-      <div class="test">
-        <button class="blue-btn" type="button" onclick="redirectSpaceKey()">Invite a Mate</button>
-        <br>
-        <button class="blue-btn" type="button" onclick="logout()">Logout</button>
+        <div class="top-bar test">
+          <div class="top-bar-logo test">
+            <img class ="bar-logo" src="../images/logoCheckMates.png" alt="Checkmates Logo">
+          </div>
+          <div>
+              <h3 id="showName">Space Name</h3>
+              <h4 id="showDescription">Space Description</h4>
+          </div>
+          <div class="test">
+            <button class="blue-btn" type="button" onclick="redirectSpaceKey()">Invite a Mate</button>
+            <br>
+            <button class="blue-btn" type="button" onclick="logout()">Logout</button>
+          </div>
       </div>
 
       <div class="center-items-container test">
         <br>
         <button class="blue-btn" type="button" onclick="redirectCreateTask()">Create a Task</button>
+        <div id="Mates List">
+          <li>Mate 1</li>
+          <li>Mate 2</li>
+          <li>Mate 2</li>
+        </div>
       </div>
     </div>
+
 
     <script src="../scripts/login.js"></script>
     <script src="../scripts/config.js"></script>
