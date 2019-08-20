@@ -25,4 +25,7 @@ function appendTask(task) {
 
 function completeTask(taskID){
     //marks task with id taskID as completed
+    firebase.firestore().collection('Tasks').doc(taskID).update({tskComplete:true}).then(result =>{
+        location.reload()
+    }); 
 }
