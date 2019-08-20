@@ -50,8 +50,8 @@ class Space {
     addTask(task) {
         this.tasks.push(task);
     }
-	
-	setTasksArray(tasks) {
+
+    setTasksArray(tasks) {
         this.tasks = tasks;
     }
 
@@ -95,21 +95,21 @@ class Space {
 					})
 				});
 			}
-        });
-    }
+    });
+  }
 
-    getMateToAssignToNonRecurringTask() {
+    setMateToNonRecurringTask() {
       if (this.mates.length == 0) {
         console.log("No mates in the living space.");
         return;
       }
 
-      let minNumTasks = this.getNumberOfTasksByMateEmail(this.mates[0].getEmail());
+      let minNumTasks = this.getNumberOfMatesNonRecurringTasks(this.mates[0]);
       var minTaskMates = [];
       minTaskMates.push(this.mates[0]);
 
       for (var i = 1; i < this.mates.length; ++i) {
-        let j = this.getNumberOfTasksByMateEmail(this.mates[i].getEmail()); //would be more efficient to get all the number of tasks in one shot...
+        let j = this.getNumberOfMatesNonRecurringTasks(this.mates[i]); //would be more efficient to get all the number of tasks in one shot...
         if (j < minNumTasks) {
           minNumTasks = j;
           minTaskMates = [];
@@ -117,22 +117,51 @@ class Space {
         } else if (j === minNumTasks) {
           minTaskMates.push(this.mates[i]);
         }
+        //console.log(minTaskMates);
       }
-	  
+
       if (minTaskMates.length > 1) {
         return minTaskMates[Math.floor(Math.random() * minTaskMates.length)];
+      } else {
+        return minTaskMates[0];
       }
-	  else{
-		return minTaskMates[0];
-	  }
     }
 
-    getNextMateAssignedToRecurringTask(email) {
-        for (var i = 0; i < this.mates.length - 1; ++i) {
-            if (this.mates[i].getEmail() == email) {
-                return this.mates[i + 1].getEmail();
-            }
+    setFirstMateAssignedToRecurringTask() {
+      if (this.mates.length == 0) {
+        alert("No mates in the living space.");
+        return;
+      }
+
+      let minNumTasks = this.getNumberOfMatesRecurringTasks(this.mates[0]);
+      var minTaskMates = [];
+      minTaskMates.push(this.mates[0]);
+
+      for (var i = 1; i < this.mates.length; ++i) {
+        let j = this.getNumberOfMatesRecurringTasks(this.mates[i]); //would be more efficient to get all the number of tasks in one shot...
+        if (j < minNumTasks) {
+          minNumTasks = j;
+          minTaskMates = [];
+          minTaskMates.push(this.mates[i]);
+        } else if (j == minNumTasks) {
+          minTaskMates.push(this.mates[i]);
         }
+      }
+
+      if (minTaskMates.length > 1) {
+        return minTaskMates[Math.floor(Math.random() * minTaskMates.length)];
+      } else {
+        return minTaskMates[0];
+      }
+    }
+
+    setNextMateAssignedToRecurringTask(mate) {
+      for (var i = 0; i < this.mates.length - 1; ++i) {
+        if (this.mates[i] == mate) {
+            return this.mates[i + 1];
+        }
+      }
+      return this.mates[0];
     }
     // addTaskToSpace(taskDocID) {
     //   var db = firebase.firestore();
@@ -146,17 +175,31 @@ class Space {
     //     });
     //   });
     // }
-	getNumberOfTasksByMateEmail(email) {
+
+    getNumberOfMatesNonRecurringTasks(mate) {
       var numTasks = 0;
       for (var i = 0; i < this.tasks.length; ++i) {
-        tempTask = this.tasks[i];
-        if (tempTask.assignedMate.email == email &&
+        var tempTask = this.tasks[i];
+        //console.log(tempTask);
+        if (tempTask.assignedMate == mate &&
            !tempTask.isRecurring &&
            !tempTask.completionStatus) {
-          ++numTasks;
+             ++numTasks;
         }
       }
       return numTasks;
+    }
+
+    getNumberOfMatesRecurringTasks(mate) {
+      var numTasks = 0;
+      for (var i = 0; i < this.tasks.length; ++i) {
+        var tempTask = this.tasks[i];
+        if (tempTask.assignedMate == mate &&
+            tempTask.isRecurring &&
+           !tempTask.completionStatus) {
+             ++numTasks;
+        }
+      }
     }
 
     fillMatesArray() {
@@ -186,6 +229,7 @@ class Space {
             return Promise.all(mtePromiseArray);
         });
     }
+
 	fillTasksArray() {
         if(typeof this.ID === "undefined" ){
 			console.log("Space ID is empty.");
