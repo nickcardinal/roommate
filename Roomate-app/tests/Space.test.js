@@ -44,9 +44,6 @@ console.log('Initialized');
 
 //console.log(task1.getAssignedMate().fullName);
 
-
-
-
 test('Set Title set proper title for Space', function(){
     expect(testSpace.getTitle()).toEqual("Andre's Space");
 });
@@ -61,4 +58,26 @@ test('Set ID set proper ID for Space', function(){
 
 test('add Mate set proper mate 3 for Space', function(){
     expect(testSpace.getMates()[3].getEmail()).toEqual('mate3@test.com');
+});
+
+
+
+//New Tests
+
+
+var recurTask = new Task();
+recurTask.setTitle("Trash Day");
+recurTask.setDescription("Throw out trash and replace trash bags");
+recurTask.setTaskID("67890");
+recurTask.setIsRecurring(true);
+recurTask.setIsComplete(false);
+
+recurTask.setAssignedMate(testSpace.getNextMateAssignedToRecurringTask(""));
+
+testSpace.addTask(recurTask);
+
+console.log(testSpace.tasks[1]);
+
+test('testing getNextMateAssignedToRecurringTask function', function(){
+    expect(recurTask.getAssignedMate()).toEqual(testSpace.mates[0]);
 });

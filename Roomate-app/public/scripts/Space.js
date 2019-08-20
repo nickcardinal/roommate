@@ -50,7 +50,7 @@ class Space {
     addTask(task) {
         this.tasks.push(task);
     }
-	
+
 	setTasksArray(tasks) {
         this.tasks = tasks;
     }
@@ -118,16 +118,22 @@ class Space {
           minTaskMates.push(this.mates[i]);
         }
       }
-	  
+
       if (minTaskMates.length > 1) {
         return minTaskMates[Math.floor(Math.random() * minTaskMates.length)];
+      } else {
+        return minTaskMates[0];
       }
-	  else{
-		return minTaskMates[0];
-	  }
+    }
+
+    getFirstMateAssignedToRecurringTask() {
+      return mates[Math.floor(Math.random() * mates.length)];
     }
 
     getNextMateAssignedToRecurringTask(email) {
+      if (email == "") {
+        return this.mates[0].getEmail();
+      }
         for (var i = 0; i < this.mates.length - 1; ++i) {
             if (this.mates[i].getEmail() == email) {
                 return this.mates[i + 1].getEmail();
