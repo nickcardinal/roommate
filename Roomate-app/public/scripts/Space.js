@@ -104,12 +104,12 @@ class Space {
         return;
       }
 
-      let minNumTasks = this.getNumberOfTasksByMateEmail(this.mates[0].getEmail());
+      let minNumTasks = this.getNumberOfTasksByMate(this.mates[0]);
       var minTaskMates = [];
       minTaskMates.push(this.mates[0]);
 
       for (var i = 1; i < this.mates.length; ++i) {
-        let j = this.getNumberOfTasksByMateEmail(this.mates[i].getEmail()); //would be more efficient to get all the number of tasks in one shot...
+        let j = this.getNumberOfTasksByMate(this.mates[i]); //would be more efficient to get all the number of tasks in one shot...
         if (j < minNumTasks) {
           minNumTasks = j;
           minTaskMates = [];
@@ -127,18 +127,16 @@ class Space {
     }
 
     getFirstMateAssignedToRecurringTask() {
-      return mates[Math.floor(Math.random() * mates.length)];
+      return this.mates[Math.floor(Math.random() * this.mates.length)];
     }
 
-    getNextMateAssignedToRecurringTask(email) {
-      if (email == "") {
-        return this.mates[0].getEmail();
-      }
-        for (var i = 0; i < this.mates.length - 1; ++i) {
-            if (this.mates[i].getEmail() == email) {
-                return this.mates[i + 1].getEmail();
-            }
+    getNextMateAssignedToRecurringTask(mate) {
+      for (var i = 0; i < this.mates.length - 1; ++i) {
+        if (this.mates[i] == mate) {
+            return this.mates[i + 1];
         }
+      }
+      return this.mates[0];
     }
     // addTaskToSpace(taskDocID) {
     //   var db = firebase.firestore();
