@@ -98,7 +98,7 @@ class Space {
         });
     }
 
-    setMateToAssignToNonRecurringTask() {
+    setMateToNonRecurringTask() {
       if (this.mates.length == 0) {
         console.log("No mates in the living space.");
         return;
@@ -127,6 +127,32 @@ class Space {
     }
 
     setFirstMateAssignedToRecurringTask() {
+      if (this.mates.length == 0) {
+        alert("No mates in the living space.");
+        return;
+      }
+
+      let minNumTasks = this.getNumberOfMatesRecurringTasks(this.mates[0]);
+      var minTaskMates = [];
+      minTaskMates.push(this.mates[0]);
+
+      for (var i = 1; i < this.mates.length; ++i) {
+        let j = this.getNumberOfMatesRecurringTasks(this.mates[i]); //would be more efficient to get all the number of tasks in one shot...
+        if (j < minNumTasks) {
+          minNumTasks = j;
+          minTaskMates = [];
+          minTaskMates.push(this.mates[i]);
+        } else if (j === minNumTasks) {
+          minTaskMates.push(this.mates[i]);
+        }
+      }
+
+      if (minTaskMates.length > 1) {
+        return minTaskMates[Math.floor(Math.random() * minTaskMates.length)];
+      } else {
+        return minTaskMates[0];
+      }
+
       return this.mates[Math.floor(Math.random() * this.mates.length)];
     }
 
@@ -154,7 +180,8 @@ class Space {
     getNumberOfMatesNonRecurringTasks(mate) {
       var numTasks = 0;
       for (var i = 0; i < this.tasks.length; ++i) {
-        tempTask = this.tasks[i];
+        var tempTask = this.tasks[i];
+        //console.log(tempTask);
         if (tempTask.assignedMate == mate &&
            !tempTask.isRecurring &&
            !tempTask.completionStatus) {
@@ -167,7 +194,7 @@ class Space {
     getNumberOfMatesRecurringTasks(mate) {
       var numTasks = 0;
       for (var i = 0; i < this.tasks.length; ++i) {
-        tempTask = this.tasks[i];
+        var tempTask = this.tasks[i];
         if (tempTask.assignedMate == mate &&
             tempTask.isRecurring &&
            !tempTask.completionStatus) {
