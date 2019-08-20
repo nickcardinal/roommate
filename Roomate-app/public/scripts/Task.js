@@ -9,10 +9,11 @@
 		this.dueDate;
 		this.dueTime;
 		this.isRecurring;
+		this.recurringPeriod;
 
 		// Task Completion Details
 		this.assignedMate;
-		this.completionStatus;
+		this.isComplete;
 	}
 
 	// Getters/Setters: Task Descriptors
@@ -74,12 +75,23 @@
 		return this.assignedMate;
 	}
 
-	setCompletionStatus(completionStatus) {
-		this.completionStatus = completionStatus;
+	setIsComplete(completionStatus) {
+		this.isComplete = completionStatus;
 	}
 
-	getCompletionStatus(completionStatus) {
-		return this.completionStatus;
+	getIsComplete(completionStatus) {
+		return this.isComplete;
+	}
+	
+	outputTaskProperties(){
+		console.log('task_ID: ', this.task_ID);
+		console.log('title: ', this.title);
+		console.log('description: ', this.description);
+		console.log('dueDate: ', this.dueDate);
+		console.log('dueTime: ', this.dueTime);
+		console.log('isRecurring: ', this.isRecurring);
+		console.log('assignedMate: ', this.assignedMate);
+		console.log('isComplete: ', this.isComplete);
 	}
 }
 
@@ -95,33 +107,34 @@ function createFirestoreTask() {
 		tskDueDate: $("#dueDateField").val(),
 		tskDueTime: $("#dueTimeField").val(),
 		tskIsRecurring: $('#isRecurringField').is(':checked'),
+		tskRecurringPeriod: $('#recurringPeriodField').val(),
 		tskAssignedMate: "Unique Mate ID",
-		tskCompletionStatus: false,
+		tskIsComplete: false
 	}
 
-	// taskdb.add(data);
+	// Add Task to Space
 	taskdb
 		.add(data)
 		.then(function(docRef) {
 			console.log("Task in session: " + docRef.id);
-			//Add Task to Space
 			var spaceID = sessionStorage.getItem("Space");
 			console.log("Space in session: " + spaceID);
-			// var spaceID = "gkAhfI4OUR45Bk7a3Lcj";
 			var spacedb = firebase.firestore().collection("Spaces").doc(spaceID);
-
 			spacedb.update({
-				spcTasks: firebase.firestore.FieldValue.arrayUnion(docRef),
+				spcTasks: firebase.firestore.FieldValue.arrayUnion(docRef.id),
 			});
-			// spacedb.addTaskToSpace(docRef);
 		});
 
 	// Waits for 1000ms before redirecting
-	setTimeout(function() {window.location.href = "../html/overview.html";}, 1000);
+	setTimeout(redirectOverview(), 1000);
 }
 
 function redirectCreateTask() {
 	window.location.href = "../html/createTask.html";
+}
+
+function redirectOverview() {
+	window.location.href = "../html/overview.html";
 }
 
 module.exports = Task;

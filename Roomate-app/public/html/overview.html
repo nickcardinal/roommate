@@ -15,7 +15,7 @@
     <link rel="stylesheet" type="text/css" href="../css/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="../css/animate.css">
     <link rel="stylesheet" type="text/css" href="../css/default.css">
-    
+
     <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,400i,700|Raleway:300,400,400i,700&display=swap" rel="stylesheet">
 
     <!-- Favicon -->
@@ -31,14 +31,21 @@
     <title>CheckMates</title>
   </head>
   <body onload="validate()">
-    <div class="container page">
-        <div class="center-items-container">
-            <div class="center-items">
-                <button class="blue-btn" type="button" onclick="logout()">Logout</button>
-                <br>
-                <button class="blue-btn" type="button" onclick="redirectCreateTask()">Create Task</button>
-            </div>
-        </div>
+    <div class="container page test">
+      <div class="test">
+        <h3 id="showName">Space Name</h3>
+        <h4 id="showDescription">Space Description</h4>
+      </div>
+      <div class="test">
+        <button class="blue-btn" type="button" onclick="redirectSpaceKey()">Invite a Mate</button>
+        <br>
+        <button class="blue-btn" type="button" onclick="logout()">Logout</button>
+      </div>
+
+      <div class="center-items-container test">
+        <br>
+        <button class="blue-btn" type="button" onclick="redirectCreateTask()">Create a Task</button>
+      </div>
     </div>
     <div>
       <table id="TaskList">
