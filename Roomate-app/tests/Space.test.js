@@ -72,7 +72,7 @@ recurTask.setTaskID("67890");
 recurTask.setIsRecurring(true);
 recurTask.setIsComplete(false);
 
-recurTask.setAssignedMate(testSpace.getNextMateAssignedToRecurringTask(""));
+recurTask.setAssignedMate(testSpace.getFirstMateAssignedToRecurringTask());
 
 testSpace.addTask(recurTask);
 

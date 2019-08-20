@@ -152,11 +152,11 @@ class Space {
     //     });
     //   });
     // }
-	getNumberOfTasksByMateEmail(email) {
+	getNumberOfTasksByMate(mate) {
       var numTasks = 0;
       for (var i = 0; i < this.tasks.length; ++i) {
         tempTask = this.tasks[i];
-        if (tempTask.assignedMate.email == email &&
+        if (tempTask.assignedMate == mate &&
            !tempTask.isRecurring &&
            !tempTask.completionStatus) {
           ++numTasks;
