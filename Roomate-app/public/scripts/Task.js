@@ -13,7 +13,7 @@
 
 		// Task Completion Details
 		this.assignedMate;
-		this.completionStatus;
+		this.isComplete;
 	}
 
 	// Getters/Setters: Task Descriptors
@@ -75,12 +75,23 @@
 		return this.assignedMate;
 	}
 
-	setCompletionStatus(completionStatus) {
-		this.completionStatus = completionStatus;
+	setIsComplete(completionStatus) {
+		this.isComplete = completionStatus;
 	}
 
-	getCompletionStatus(completionStatus) {
-		return this.completionStatus;
+	getIsComplete(completionStatus) {
+		return this.isComplete;
+	}
+	
+	outputTaskProperties(){
+		console.log('task_ID: ', this.task_ID);
+		console.log('title: ', this.title);
+		console.log('description: ', this.description);
+		console.log('dueDate: ', this.dueDate);
+		console.log('dueTime: ', this.dueTime);
+		console.log('isRecurring: ', this.isRecurring);
+		console.log('assignedMate: ', this.assignedMate);
+		console.log('isComplete: ', this.isComplete);
 	}
 }
 
@@ -98,7 +109,7 @@ function createFirestoreTask() {
 		tskIsRecurring: $('#isRecurringField').is(':checked'),
 		tskRecurringPeriod: $('#recurringPeriodField').val(),
 		tskAssignedMate: "Unique Mate ID",
-		tskCompletionStatus: false,
+		tskIsComplete: false
 	}
 
 	// Add Task to Space
@@ -110,7 +121,7 @@ function createFirestoreTask() {
 			console.log("Space in session: " + spaceID);
 			var spacedb = firebase.firestore().collection("Spaces").doc(spaceID);
 			spacedb.update({
-				spcTasks: firebase.firestore.FieldValue.arrayUnion(docRef),
+				spcTasks: firebase.firestore.FieldValue.arrayUnion(docRef.id),
 			});
 		});
 
