@@ -23,6 +23,7 @@ for(let j = 0; j < 5; j++){
     mate.setEmail('mate' + j + '@test.com');
     mate.setPhotoURL('mate' + j +'ulr');
     testSpace.addMate(mate);
+    console.log(mate);
 }
 
 var task1 = new Task();
@@ -62,7 +63,7 @@ test('add Mate set proper mate 3 for Space', function(){
 
 
 
-//New Tests
+//New Tests for recurring Assignment
 
 
 var recurTask = new Task();
@@ -74,10 +75,30 @@ recurTask.setIsComplete(false);
 
 recurTask.setAssignedMate(testSpace.getFirstMateAssignedToRecurringTask());
 
-testSpace.addTask(recurTask);
+console.log(recurTask);
 
-console.log(testSpace.tasks[1]);
+// var nextMate = recurTask.getAssignedMate();
+// var currMate = nextMate;
+//
+// for (var i = 0; i < testSpace.mates.length - 1; ++i) {
+//   if (testSpace.mates[i] == nextMate) {
+//     nextMate == testSpace.mates[i + 1];
+//   }
+// }
+// if (i == testSpace.mates.length) {
+//   nextMate == testSpace.mates[0];
+// }
 
-test('testing getNextMateAssignedToRecurringTask function', function(){
-    expect(recurTask.getAssignedMate()).toEqual(testSpace.mates[0]);
-});
+//testSpace.addTask(recurTask);
+
+recurTask.setAssignedMate(testSpace.getNextMateAssignedToRecurringTask(recurTask.getAssignedMate()));
+
+console.log(recurTask);
+
+
+recurTask.setAssignedMate(testSpace.getNextMateAssignedToRecurringTask(recurTask.getAssignedMate()));
+
+console.log(recurTask);
+// test('testing getNextMateAssignedToRecurringTask function', function(){
+//     expect(recurTask.getAssignedMate()).toEqual(nextMate);
+// });
