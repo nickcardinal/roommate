@@ -95,8 +95,8 @@ class Space {
 					})
 				});
 			}
-        });
-    }
+    });
+  }
 
     setMateToNonRecurringTask() {
       if (this.mates.length == 0) {
@@ -117,6 +117,7 @@ class Space {
         } else if (j === minNumTasks) {
           minTaskMates.push(this.mates[i]);
         }
+        //console.log(minTaskMates);
       }
 
       if (minTaskMates.length > 1) {
@@ -142,7 +143,7 @@ class Space {
           minNumTasks = j;
           minTaskMates = [];
           minTaskMates.push(this.mates[i]);
-        } else if (j === minNumTasks) {
+        } else if (j == minNumTasks) {
           minTaskMates.push(this.mates[i]);
         }
       }
@@ -152,8 +153,6 @@ class Space {
       } else {
         return minTaskMates[0];
       }
-
-      return this.mates[Math.floor(Math.random() * this.mates.length)];
     }
 
     setNextMateAssignedToRecurringTask(mate) {
