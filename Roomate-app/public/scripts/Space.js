@@ -51,6 +51,10 @@ class Space {
         this.tasks.push(task);
     }
 
+    setTaskArray(task) {
+        this.task = task;
+    }
+
     getTasks() {
         return this.tasks;
     }
