@@ -82,7 +82,7 @@
 	getIsComplete(completionStatus) {
 		return this.isComplete;
 	}
-	
+
 	outputTaskProperties(){
 		console.log('task_ID: ', this.task_ID);
 		console.log('title: ', this.title);
@@ -136,5 +136,18 @@ function redirectCreateTask() {
 function redirectOverview() {
 	window.location.href = "../html/overview.html";
 }
+
+function calcNewDate(currDate, recurPeriod) {
+    var newdate = new Date(currDate);
+    newdate.setDate(newdate.getDate() + recurPeriod);
+
+    var dd = newdate.getDate();
+    var mm = newdate.getMonth() + 1;
+    var y = newdate.getFullYear();
+
+    var formattedDate = mm + '/' + dd + '/' + y;
+    return formattedDate;
+}
+
 
 module.exports = Task;
