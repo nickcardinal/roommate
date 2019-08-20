@@ -15,11 +15,14 @@ function appendTask(task) {
   row = table.insertRow(rows.length);
   let tskDue = row.insertCell(0);
   row = table.insertRow(rows.length);
+  let tskMate = row.insertCell(0);
+  row = table.insertRow(rows.length);
   let br = row.insertCell(0);
   tskTitle.innerHTML = task.getTitle();
-  tskComplete.innerHTML = '<button onclick=completeTask(' + task.getTaskID() + ')>Mark Complete</button>';
+  tskComplete.innerHTML = '<input type="checkbox" onclick="completeTask(' + task.getTaskID() + ')"><br>';
   tskDesc.innerHTML = task.getDescription();
   tskDue.innerHTML = 'Due by ' + task.getDueDate() + ' ' + task.getDueTime();
+  tskMate.innerHTML = 'Task assigned to ' + task.getAssignedMate();
   br.innerHTML = '<br></br>'
 }
 

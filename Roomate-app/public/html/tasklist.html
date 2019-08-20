@@ -36,11 +36,14 @@
             <div class="center-items">
                 <button class="blue-btn" type="button" onclick="logout()">Logout</button>
                 <br>
-                <button class="blue-btn" type="button" onclick="redirectCreateTask()">Create Task</button>
+                <button class="blue-btn" type="button" onclick="redirect('./html/overview.html')">Overview</button>
+                <table id="taskList" onload="displayTasks()">
+                  </table>
             </div>
         </div>
     </div>
-
+        
+    <script src="../scripts/displayScripts.js"></script>
     <script src="../scripts/login.js"></script>
     <script src="../scripts/config.js"></script>
     <script src="../scripts/Mate.js"></script>
