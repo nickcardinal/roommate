@@ -1,6 +1,6 @@
 
 function spaceKeyInitialize() {
-  initialize();
+  validate();
   accessFirestoreSpace(sessionStorage.getItem('Space'), spaceKeyShowElements);
 }
 
