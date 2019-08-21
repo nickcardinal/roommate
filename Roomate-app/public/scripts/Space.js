@@ -385,9 +385,4 @@ function testAssignTask() {
     }
 }
 
-function joinSpace() {
-    var newSpace = new Space();
-    newSpace.addMateToSpace();
-}
-
 module.exports = Space;
