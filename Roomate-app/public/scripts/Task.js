@@ -82,7 +82,7 @@
 	getIsComplete(completionStatus) {
 		return this.isComplete;
 	}
-	
+
 	outputTaskProperties(){
 		console.log('task_ID: ', this.task_ID);
 		console.log('title: ', this.title);
@@ -124,17 +124,33 @@ function createFirestoreTask() {
 				spcTasks: firebase.firestore.FieldValue.arrayUnion(docRef.id),
 			}).
 			then(none => {
-				redirectOverview();
+				redirect("../html/overview.html");
 			});
 		});
 }
 
-function redirectCreateTask() {
-	window.location.href = "../html/createTask.html";
+function calcNewDate(currDate, recurPeriod) {
+		var currDate = currDate.split("-");
+		currFormatedDate = currDate[1] + "/" + currDate[2] + "/" + currDate[0];
+
+    var newDate = new Date(currFormatedDate);
+
+		var today = new Date();
+		today.getDate();
+
+    newDate.setDate(newDate.getDate() + recurPeriod);
+
+		while(newDate < today) {
+			newDate.setDate(newDate.getDate() + recurPeriod);
+		}
+
+    var dd = newDate.getDate();
+    var mm = newDate.getMonth() + 1;
+    var y = newDate.getFullYear();
+
+    var formattedDate = y + '-' + mm + '-' + dd;
+    return formattedDate;
 }
 
-function redirectOverview() {
-	window.location.href = "../html/overview.html";
-}
 
 module.exports = Task;

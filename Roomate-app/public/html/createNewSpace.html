@@ -1,71 +1,70 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<!-- Global site tag (gtag.js) - Google Analytics -->
-	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-146101638-1"></script>
-	<script>
-		window.dataLayer = window.dataLayer || [];
-		function gtag(){dataLayer.push(arguments);}
-		gtag('js', new Date());
-		gtag('config', 'UA-146101638-1');
-	</script>
+	<head>
+		<!-- Global site tag (gtag.js) - Google Analytics -->
+		<script async src="https://www.googletagmanager.com/gtag/js?id=UA-146101638-1"></script>
+		<script>
+			window.dataLayer = window.dataLayer || [];
+			function gtag(){dataLayer.push(arguments);}
+			gtag('js', new Date());
+			gtag('config', 'UA-146101638-1');
+		</script>
 
     <!-- Meta Tags -->
-    <meta charset="utf-8">
-    <!-- meta name="description" content="DESC" -->
-    <!-- meta name="author" content="COMPANY" -->
+		<meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-
+    <meta name="description" content="Keep your roommates in check with CheckMates.">
+    <meta name="author" content="Mates Co.">
     <meta property="og:type" content="Website Applicaiton" />
-    <!-- meta property="og:title" content="Carmina Jean" / -->
-    <!-- meta property="og:description" content="DESC" / -->
-    <!-- meta property="og:url" content="URL" / -->
-    <!-- Stylesheets -->
+    <meta property="og:title" content="CheckMates" />
+    <meta property="og:description" content="Keep your roommates in check" />
+
+		<!-- Stylesheets -->
     <link rel="stylesheet" type="text/css" href="../css/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="../css/animate.css">
     <link rel="stylesheet" type="text/css" href="../css/default.css">
 
-    <!--favicon-->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,400i,700|Raleway:300,400,400i,700&display=swap" rel="stylesheet">
+
+    <!-- Favicon -->
     <link rel="icon" href="../images/logo_Chck_m.png">
 
-    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,400i,700|Raleway:300,400,400i,700&display=swap" rel="stylesheet">
-    <!-- link rel="icon" href="IMG" -->
-
+    <!-- Scripts -->
     <script src="https://www.gstatic.com/firebasejs/5.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/5.10.1/firebase-firestore.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="../scripts/config.js"></script>
 
-    <title>CheckMates</title>
-</head>
-<body onload="validate()">
+		<script src="../scripts/config.js"></script>
+		<script src="../scripts/login.js"></script>
+		<script src="../scripts/pageInitsAndRedirs.js"></script>
+    <script src="../scripts/displayScripts.js"></script>
+		<script src="../scripts/Space.js"></script>
+		<script src="../scripts/Mate.js"></script>
+		<script src="../scripts/Task.js"></script>
+
+    <title>Create a Space</title>
+	</head>
+	<body onload="validate()">
     <div class="container">
-        <div class="center-items-container">
-            <div class="center-items">
-              <h3>Create Space</h3>
+      <div class="center-items-container">
+        <div class="center-items">
+          <h3>Create Space</h3>
 
-              <form>
-                Space Title:
-                <br>
-                <input type="text" id="spaceTitle">
-                <br><br>
+          <form>
+            Space Title:
+            <br>
+            <input type="text" id="spaceTitle">
+            <br><br>
 
-                Description:
-                <br>
-                <input type="text" id="spaceDescription">
-                <br><br>
-              </form>
-              <button type="button" class="blue-btn" onclick="createFirestoreSpace()">Create Space</button>
-            </div>
+            Description:
+            <br>
+            <input type="text" id="spaceDescription">
+            <br><br>
+          </form>
+
+          <button type="button" class="blue-btn" onclick="createFirestoreSpace()">Create Space</button>
         </div>
+      </div>
     </div>
-
-    <!-- <p id="load">Firebase SDK Loading&hellip;</p> -->
-
-    <script src="../scripts/login.js"></script>
-    <script src="../scripts/config.js"></script>
-    <script src="../scripts/Mate.js"></script>
-    <script src="../scripts/Space.js"></script>
-    <script src="../scripts/Task.js"></script>
-</body>
+	</body>
 </html>

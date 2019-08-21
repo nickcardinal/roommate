@@ -1,7 +1,4 @@
-﻿function initialize() {
-    firebase.initializeApp(firebaseConfig);
-}
-const firebaseConfig = {
+﻿const firebaseConfig = {
     apiKey: "AIzaSyCmyzsBoBimz_LSIKGBVPqYb9-Ngq4aW38",
     authDomain: "roommate-a0823.firebaseapp.com",
     databaseURL: "https://roommate-a0823.firebaseio.com",
@@ -10,6 +7,7 @@ const firebaseConfig = {
     messagingSenderId: "941174280385",
     appId: "1:941174280385:web:0ee7547beb6089b7"
 };
+
 function validate(){
     firebase.initializeApp(firebaseConfig);
     database = firebase.firestore();
@@ -125,5 +123,5 @@ function populateSpaceCallback(type, value){
           usrNickname: nickname
       });
     });});
-    
+
   }

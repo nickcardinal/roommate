@@ -95,6 +95,7 @@ function redirLoginToSpace(user, database) {
     });
   }
 
+
 function loginNewUser(redir) {
   sessionStorage.setItem('NickName', document.getElementById("nameField").value);
   redirect(redir);

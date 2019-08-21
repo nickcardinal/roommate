@@ -1,23 +1,23 @@
 <!DOCTYPE html>
 <html>
   <head>
-	<!-- Global site tag (gtag.js) - Google Analytics -->
-	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-146101638-1"></script>
-	<script>
-		window.dataLayer = window.dataLayer || [];
-		function gtag(){dataLayer.push(arguments);}
-		gtag('js', new Date());
-		gtag('config', 'UA-146101638-1');
-	</script>
+  	<!-- Global site tag (gtag.js) - Google Analytics -->
+  	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-146101638-1"></script>
+  	<script>
+  		window.dataLayer = window.dataLayer || [];
+  		function gtag(){dataLayer.push(arguments);}
+  		gtag('js', new Date());
+  		gtag('config', 'UA-146101638-1');
+  	</script>
+
     <!-- Meta Tags -->
-    <meta charset="utf-8">
-    <!-- meta name="description" content="DESC" -->
-    <!-- meta name="author" content="COMPANY" -->
+		<meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="Keep your roommates in check with CheckMates.">
+    <meta name="author" content="Mates Co.">
     <meta property="og:type" content="Website Applicaiton" />
-    <!-- meta property="og:title" content="TITLE" / -->
-    <!-- meta property="og:description" content="DESC" / -->
-    <!-- meta property="og:url" content="URL" / -->
+    <meta property="og:title" content="CheckMates" />
+    <meta property="og:description" content="Keep your roommates in check" />
 
     <!-- Stylesheets -->
     <link rel="stylesheet" type="text/css" href="../css/bootstrap.css">
@@ -33,98 +33,98 @@
     <script src="https://www.gstatic.com/firebasejs/5.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/5.10.1/firebase-firestore.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
     <script src="../scripts/config.js"></script>
+		<script src="../scripts/login.js"></script>
+		<script src="../scripts/pageInitsAndRedirs.js"></script>
+    <script src="../scripts/displayScripts.js"></script>
+		<script src="../scripts/Space.js"></script>
+		<script src="../scripts/Mate.js"></script>
+		<script src="../scripts/Task.js"></script>
 
     <title>Create a Task</title>
   </head>
   <body onload="validate()">
-      <div class="container">
-          <div class="center-items-container">
-              <div class="center-items">
-                <h3>Create a Task</h3>
-                <form style="height:450px">
+    <div class="container">
+      <div class="center-items-container">
+        <div class="center-items">
+        <h3>Create a Task</h3>
+        <form style="height:450px">
+          Task Title:
+          <br>
+          <input type="text" id="titleField">
+          <br><br>
 
-					Task Title:
-					<br>
-					<input type="text" id="titleField">
-					<br><br>
+          Description:
+          <br>
+          <input type="text" id="descriptionField">
+          <br><br>
 
-					Description:
-					<br>
-					<input type="text" id="descriptionField">
-					<br><br>
+          <!-- Div For One Time Task -->
+          <div id="oneTimeTask">
+            <label>
+              Due By:
+              <br>
+              <input type="date" name="dueDate" id="dueDateField">
+              <input type="time" name="dueTime"id="dueTimeField">
+              <br><br>
+            </label>
+          </div>
 
-					<!-- Div For One Time Task -->
-					<div id="oneTimeTask">
-						<label>
-							Due By:
-							<br>
-							<input type="date" name="dueDate" id="dueDateField">
-							<input type="time" name="dueTime"id="dueTimeField">
-							<br><br>
-						</label>
-					</div>
-					
-					<!-- Task Type Switch -->
-					<label>Recurring Task:</label>
-					<label class="switch">
-						<input id="isRecurringField" type="checkbox" onClick="toggleRecurring()">
-						<span class="slider round"></span>
-					</label>
-					<br>
+          <!-- Task Type Switch -->
+          <label>Recurring Task:</label>
+          <label class="switch">
+            <input id="isRecurringField" type="checkbox" onClick="toggleRecurring()">
+            <span class="slider round"></span>
+          </label>
+          <br>
 
-					<!-- Div For Recurring Tasks -->
-					<div class="recurringControls" id="recurringTask">
-						<label>
-							Period:
-							<br>
-							<div class="periodControl">
-								<input type="radio" id="Daily" name="period" value="daily" onclick="setNumDays()">
-								<label for="Daily">Daily</label>
-								<input type="radio" id="Weekly" name="period" value="weekly" onclick="setNumDays()">
-								<label for="Weekly">Weekly</label>
-								<input type="radio" id="Monthly" name="period" value="monthly" onclick="setNumDays()">
-								<label for="Monthly">Monthly</label>
-								<br>
-								<input id="recurringPeriodField" type="number" name="quantity" min="1" max="100">
-								<label>Day(s)</label>
-							</div>
-							<br>
-						</label>
-					</div>
+            <!-- Div For Recurring Tasks -->
+          <div class="recurringControls" id="recurringTask">
+            <label>
+            Period:
+              <br>
+              <div class="periodControl">
+                <input type="radio" id="Daily" name="period" value="daily" onclick="setNumDays()">
+                <label for="Daily">Daily</label>
+                <input type="radio" id="Weekly" name="period" value="weekly" onclick="setNumDays()">
+                <label for="Weekly">Weekly</label>
+                <input type="radio" id="Monthly" name="period" value="monthly" onclick="setNumDays()">
+                <label for="Monthly">Monthly</label>
+                <br>
+                <input id="recurringPeriodField" type="number" name="quantity" min="1" max="100">
+                <label>Day(s)</label>
+              </div>
+              <br>
+            </label>
+          </div>
         </form>
+
         <button class="blue-btn" type="button" onclick="createFirestoreTask()" style="position:sticky;">Create Task</button>
+        </div>
       </div>
     </div>
-</div>
 
 	  <script type="text/javascript">
-		function toggleRecurring(){
-			if(document.getElementById("isRecurringField").checked === true){
-				document.getElementById("recurringTask").style.display = "inline";
-			}
-			else{
-				document.getElementById("recurringTask").style.display = "none";
-			}
-		}
-		function setNumDays(){
-			if($('#Daily').is(':checked')){
-				$('#recurringPeriodField').val('1');
-			}
-			else if($('#Weekly').is(':checked')){
-				$('#recurringPeriodField').val('7');
-			}
-			else if($('#Monthly').is(':checked')){
-				$('#recurringPeriodField').val('30');
-			}
-		}
-	</script>
-
-      <script src="../scripts/login.js"></script>
-      <script src="../scripts/config.js"></script>
-      <script src="../scripts/Mate.js"></script>
-      <script src="../scripts/Space.js"></script>
-      <script src="../scripts/Task.js"></script>
-
+  		function toggleRecurring(){
+  			if(document.getElementById("isRecurringField").checked === true){
+  				document.getElementById("recurringTask").style.display = "inline";
+  			}
+  			else{
+  				document.getElementById("recurringTask").style.display = "none";
+  			}
+  		}
+  		function setNumDays(){
+  			if($('#Daily').is(':checked')){
+  				$('#recurringPeriodField').val('1');
+  			}
+  			else if($('#Weekly').is(':checked')){
+  				$('#recurringPeriodField').val('7');
+  			}
+  			else if($('#Monthly').is(':checked')){
+  				$('#recurringPeriodField').val('30');
+  			}
+  		}
+  	</script>
   </body>
 </html>

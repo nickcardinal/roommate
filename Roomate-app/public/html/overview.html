@@ -2,28 +2,28 @@
 <html>
   <head>
     <!-- Global site tag (gtag.js) - Google Analytics -->
-	  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-146101638-1"></script>
-	  <script>
-		  window.dataLayer = window.dataLayer || [];
-		  function gtag(){dataLayer.push(arguments);}
-		  gtag('js', new Date());
-		  gtag('config', 'UA-146101638-1');
-	  </script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-146101638-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-146101638-1');
+    </script>
+
     <!-- Meta Tags -->
     <meta charset="utf-8">
-    <!-- meta name="description" content="DESC" -->
-    <!-- meta name="author" content="COMPANY" -->
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="Keep your roommates in check with CheckMates.">
+    <meta name="author" content="Mates Co.">
     <meta property="og:type" content="Website Applicaiton" />
-    <!-- meta property="og:title" content="TITLE" / -->
-    <!-- meta property="og:description" content="DESC" / -->
-    <!-- meta property="og:url" content="URL" / -->
+    <meta property="og:title" content="CheckMates" />
+    <meta property="og:description" content="Keep your roommates in check" />
 
     <!-- Stylesheets -->
     <link rel="stylesheet" type="text/css" href="../css/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="../css/animate.css">
     <link rel="stylesheet" type="text/css" href="../css/default.css">
-
+    <link rel="stylesheet" type="text/css" href="../css/createTask.css">
     <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,400i,700|Raleway:300,400,400i,700&display=swap" rel="stylesheet">
 
     <!-- Favicon -->
@@ -33,6 +33,14 @@
     <script src="https://www.gstatic.com/firebasejs/5.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/5.10.1/firebase-firestore.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <script src="../scripts/config.js"></script>
+		<script src="../scripts/login.js"></script>
+		<script src="../scripts/pageInitsAndRedirs.js"></script>
+    <script src="../scripts/displayScripts.js"></script>
+		<script src="../scripts/Space.js"></script>
+		<script src="../scripts/Mate.js"></script>
+		<script src="../scripts/Task.js"></script>
 
     <title>CheckMates</title>
   </head>
@@ -51,24 +59,16 @@
 
       <br>
 
-      <div class="center-items-container space-content ">
+      <div class="center-items-container space-content">
         <div class="">
           <button class="blue-btn" type="button" onclick="redirect('../html/spaceKey.html')">Invite a Mate</button>
-          <button class="blue-btn" type="button" target="_blank" href="matelist.html">View Mates</button>
+          <button class="blue-btn" type="button" onclick="openMateList()">View Mates</button>
         </div>
         <div class="">
           <button class="blue-btn" type="button" onclick="redirectCreateTask()">Create a Task</button>
-          <button class="blue-btn" type="button" target="_blank" href="tasklist.html">View Tasks</button>
+          <button class="blue-btn" type="button" onclick="openTaskList()">View Tasks</button>
         </div>
       </div>
     </div>
-
-
-    <script src="../scripts/login.js"></script>
-    <script src="../scripts/config.js"></script>
-    <script src="../scripts/Mate.js"></script>
-    <script src="../scripts/Space.js"></script>
-    <script src="../scripts/Task.js"></script>
-
   </body>
 </html>

@@ -93,7 +93,7 @@ class Space {
 						const spcUserArray = snapshot.get("spcMates");
 						spcUserArray.push(userDocID);
 						transaction.update(spcDocRef, "spcMates", spcUserArray);
-						window.location.href = "../html/overview.html";
+						redirectOverview();;
 					})
 				});
 			}
@@ -292,16 +292,10 @@ function outputMatesAndTasksInSpace() {
 		});
     });
 }
+
 function joinExistingSpace(){
 	var newSpace = new Space();
 	newSpace.addMateToSpace();
-}
-function redirectCreateNewSpace() {
-    window.location.href = "../html/createNewSpace.html";
-}
-
-function redirectSpaceKey() {
-    window.location.href = "../html/overview.html";
 }
 
 function outputFunction(exists) {
@@ -332,7 +326,7 @@ function createFirestoreSpace() {
         });
     })
     .then(result => {
-        window.location.href = "spaceKey.html";
+        redirect("./spaceKey.html");
     })
     .catch(function (error) {
         console.error("Error adding document: ", error);
