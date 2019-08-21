@@ -7,14 +7,13 @@
     messagingSenderId: "941174280385",
     appId: "1:941174280385:web:0ee7547beb6089b7"
 };
-
-  function updateExpiration(database, doc){
+function updateExpiration(database, doc){
     let date = new Date();
     date.setTime(date.getTime() + 86400000);
     database.collection('Mates').doc(doc).update({
         usrExpiration: date
     })
-  }
+}
 
   function updateToken_Overview(database){
     sessionStorage.removeItem('log');
