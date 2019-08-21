@@ -1,6 +1,4 @@
-const Space = require("../public/scripts/Space.js");
-const Mate = require("../public/scripts/Mate.js");
-const Task = require("../public/scripts/Task.js")
+
 //create some data;
 
 /*
@@ -9,41 +7,51 @@ test('some description', function(){
 });
 */
 
-let testSpace = new Space();
+const Space = require("../public/scripts/Space.js");
+const Mate = require("../public/scripts/Mate.js");
+const Task = require("../public/scripts/Task.js")
 
-testSpace.setTitle("Andre's Space");
-testSpace.setDescription("The Collective");
-testSpace.setID("88RYZING");
+// Getter/Setter tests
+var title = "The Collective";
+var description = "A Co-Living Space";
+var space_ID = "OFWGKTA";
 
-for(let j = 0; j < 5; j++){
-    let mate = new Mate();
-    mate.setID('MATEID' + j + 'SPACEID');
-    mate.setNickName('m' + j);
-    mate.setFullName('Mate ' + j);
-    mate.setEmail('mate' + j + '@test.com');
-    mate.setPhotoURL('mate' + j +'ulr');
-    testSpace.addMate(mate);
-}
+test("Space Setter Test", function() {
+  var space = new Space();
+  space.setTitle(title);
+  space.setDescription(description);
+  space.setID(space_ID);
 
-console.log('Initialized');
-
-test('Set Title set proper title for Space', function(){
-    expect(testSpace.getTitle()).toEqual("Andre's Space");
+  expect([space.title, space.description, space.ID])
+    .toEqual([title, description, space_ID]);
 });
 
-test('Set Description set proper description for Space', function(){
-    expect(testSpace.getDescription()).toEqual("The Collective");
+test("Space Getter Test", function() {
+  var space = new Space();
+  space.title = title;
+  space.description = description;
+  space.ID = space_ID;
+
+  expect([space.getTitle(), space.getDescription(), space.getID()])
+    .toEqual([title, description, space_ID]);
 });
 
-test('Set ID set proper ID for Space', function(){
-    expect(testSpace.getID()).toEqual('88RYZING');
-});
-
+let space = new Space();
 test('add Mate set proper mate 3 for Space', function(){
-    expect(testSpace.getMates()[3].getEmail()).toEqual('mate3@test.com');
+  for(let j = 0; j < 5; j++){
+      let mate = new Mate();
+      mate.setID('MATEID' + j + 'SPACEID');
+      mate.setNickName('m' + j);
+      mate.setFullName('Mate ' + j);
+      mate.setEmail('mate' + j + '@test.com');
+      mate.setPhotoURL('mate' + j +'ulr');
+      space.addMate(mate);
+  }
+
+  expect(space.getMates()[3].getEmail()).toEqual('mate3@test.com');
 });
 
-
+let testSpace = new Space();
 
 //Tests for recurring Assignment
 
