@@ -98,36 +98,3 @@ function loginNewUser(redir) {
   sessionStorage.setItem('NickName', document.getElementById("nameField").value);
   redirect(redir);
 }
-
-function initializeWelcome() {
-  initialize();
-  document.getElementById("nameField").value = sessionStorage.getItem(2);
-  database = firebase.firestore();
-  let query = database
-    .collection("Mates")
-    .where("usrToken", "==", sessionStorage.getItem('token'));
-  query
-    .get()
-    .then(snapshot => {
-      if (snapshot.empty) {
-        redirect('../index.html');
-      } else {
-        snapshot.forEach(doc => {
-          if (new Date() < doc.data().usrExpiration.toDate()) {
-            sessionStorage.setItem('user', doc.id);
-          } else {
-            redirect('../index.html');
-          }
-        });
-      }
-    });
-}
-
-function displayUserInfo() {
-  document.getElementById('FullName').innerHTML= sessionStorage.getItem('name');
-  document.getElementById('Email').innerHTML= sessionStorage.getItem('email');
-}
-
-function redirect(url){
-  window.location.href = url;
-}

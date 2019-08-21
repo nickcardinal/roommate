@@ -33,16 +33,18 @@
     <script src="https://www.gstatic.com/firebasejs/5.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/5.10.1/firebase-firestore.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="../scripts/spaceKey.js"></script>
+
     <script src="../scripts/config.js"></script>
-    <script src="../scripts/login.js"></script>
-    <script src="../scripts/Space.js"></script>
-    <script src="../scripts/Mate.js"></script>
-    <script src="../scripts/Task.js"></script>
+		<script src="../scripts/login.js"></script>
+		<script src="../scripts/pageInits.js"></script>
+    <script src="../scripts/displayScripts.js"></script>
+		<script src="../scripts/Space.js"></script>
+		<script src="../scripts/Mate.js"></script>
+		<script src="../scripts/Task.js"></script>
 
     <title>Space Key</title>
   </head>
-  <body onload="spaceKeyInitialize()">
+  <body onload="validate(); displaySpaceInfo()">
     <div class="container center-items-container">
       <div class="center-items">
         <h3 id="showName"></h3>

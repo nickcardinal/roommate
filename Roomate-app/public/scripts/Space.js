@@ -163,18 +163,6 @@ class Space {
       }
       return this.mates[0];
     }
-    // addTaskToSpace(taskDocID) {
-    //   var db = firebase.firestore();
-    //   var spcDocRef = db.collection("Spaces").doc(this.ID);
-    //
-    //   db.runTransaction(transaction => {
-    //     return transaction.get(spcDocRef).then(snapshot => {
-    //       const spcTaskArray = snapshot.get("spcTasks");
-    //       spcTaskArray.push(taskDocID);
-    //       transaction.update(spcDocRef, "spcTasks", spcTaskArray);
-    //     });
-    //   });
-    // }
 
     getNumberOfMatesNonRecurringTasks(mate) {
       var numTasks = 0;
@@ -278,10 +266,12 @@ function outputMatesAndTasksInSpace() {
 		});
     });
 }
+
 function joinExistingSpace(){
 	var newSpace = new Space();
 	newSpace.addMateToSpace();
 }
+
 function redirectCreateNewSpace() {
     window.location.href = "../html/createNewSpace.html";
 }
