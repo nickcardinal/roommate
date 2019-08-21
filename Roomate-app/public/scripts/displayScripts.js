@@ -15,7 +15,11 @@ function displaySpaceInfo() {
 function spaceKeyShowElements(spc) {
   document.getElementById('showName').innerHTML= spc.getTitle();
   document.getElementById('showDescription').innerHTML= spc.getDescription();
-  document.getElementById('showID').innerHTML= spc.getID();
+  try{
+    document.getElementById('showID').innerHTML= spc.getID();
+  }catch(e){
+    
+  }
 }
 
 // Task Display Functions
