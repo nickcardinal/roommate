@@ -1,10 +1,11 @@
 class Space {
     constructor() {
+		this.ID;
         this.title;
         this.description;
-        this.ID;
         this.mates = [];
         this.tasks = [];
+		this.isLoaded = false;
     }
 
     //Title Functions
@@ -59,7 +60,7 @@ class Space {
         return this.tasks;
     }
 
-    isValidSpace(spaceDocID, _callback) {
+    isValidSpace(spaceDocID) {
         var db = firebase.firestore();
         var spcDocRef = db.collection("Spaces").doc(spaceDocID);
 
@@ -164,19 +165,6 @@ class Space {
       }
       return this.mates[0];
     }
-    // addTaskToSpace(taskDocID) {
-    //   var db = firebase.firestore();
-    //   var spcDocRef = db.collection("Spaces").doc(this.ID);
-    //
-    //   db.runTransaction(transaction => {
-    //     return transaction.get(spcDocRef).then(snapshot => {
-    //       const spcTaskArray = snapshot.get("spcTasks");
-    //       spcTaskArray.push(taskDocID);
-    //       transaction.update(spcDocRef, "spcTasks", spcTaskArray);
-    //     });
-    //   });
-    // }
-
     getNumberOfMatesNonRecurringTasks(mate) {
       var numTasks = 0;
       for (var i = 0; i < this.tasks.length; ++i) {
@@ -190,7 +178,6 @@ class Space {
       }
       return numTasks;
     }
-
     getNumberOfMatesRecurringTasks(mate) {
       var numTasks = 0;
       for (var i = 0; i < this.tasks.length; ++i) {
@@ -202,10 +189,37 @@ class Space {
         }
       }
     }
-
+	async populateSpace(space_ID, _callback){
+		 if(space_ID === "undefined" ){
+			alert("Space ID is empty.");
+			return;
+		 }
+		 else{
+			this.setID(space_ID);
+		 }
+		 
+		var db = firebase.firestore();
+        var spcSpaceRef = db.collection("Spaces").doc(this.ID);
+		await spcSpaceRef.get().then(function (spcDoc) {
+			if(spcDoc.exists){
+				_callback('title', spcDoc.data().spcTitle);
+				_callback('description', spcDoc.data().spcDescription);
+			}
+		}).then(async none => {
+			await this.fillMatesArray().then(function(matesArray) {
+				_callback('mates', matesArray);
+			});
+		
+			await this.fillTasksArray().then(function(tasksArray) {
+				_callback('tasks', tasksArray);
+			});	
+		}).then(none => {
+			this.isLoaded = true;
+		})
+	}
     fillMatesArray() {
         if(typeof this.ID === "undefined" ){
-			console.log("Space ID is empty.");
+			alert("Space ID is empty.");
 			return;
         }
         var mtePromiseArray = [];
@@ -230,10 +244,9 @@ class Space {
             return Promise.all(mtePromiseArray);
         });
     }
-
 	fillTasksArray() {
         if(typeof this.ID === "undefined" ){
-			console.log("Space ID is empty.");
+			alert("Space ID is empty.");
 			return;
         }
         var tskPromiseArray = [];
