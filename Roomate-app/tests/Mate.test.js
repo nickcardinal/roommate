@@ -1,12 +1,12 @@
 var Mate = require("../public/scripts/Mate.js")
 
-test('Mate Setter Test', function(){
-	var user_ID = 'gjh43rt43tghrj';
-	var nickName = 'Tommy Salami';
-	var fullName = 'Alan Turing';
-	var email = 'alanturntup@oal.com';
-	var photoURL = 'https://google.com/images/theBestImage.png';
+var user_ID = 'gjh43rt43tghrj';
+var nickName = 'Tommy Salami';
+var fullName = 'Alan Turing';
+var email = 'alanturntup@oal.com';
+var photoURL = 'https://google.com/images/theBestImage.png';
 
+test('Mate Setter Test', function(){
 	var mate = new Mate();
 	mate.setID(user_ID);
 	mate.setNickName(nickName);
@@ -19,12 +19,6 @@ test('Mate Setter Test', function(){
 });
 
 test('Mate Getter Test', function(){
-	var user_ID = 'gjh43rt43tghrj';
-	var nickName = 'Tommy Salami';
-	var fullName = 'Alan Turing';
-	var email = 'alanturntup@oal.com';
-	var photoURL = 'https://google.com/images/theBestImage.png';
-
 	var mate = new Mate();
 	mate.user_ID = user_ID;
 	mate.nickName = nickName;
