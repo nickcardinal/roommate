@@ -102,7 +102,7 @@ class Space {
                             const spcUserArray = snapshot.get("spcMates");
                             spcUserArray.push(userDocID);
                             transaction.update(spcDocRef, "spcMates", spcUserArray);
-                            redirectOverview();;
+                            redirectOverview();
                         })
                     });
                 });
