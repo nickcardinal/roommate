@@ -1,10 +1,11 @@
 class Space {
     constructor() {
+		this.ID;
         this.title;
         this.description;
-        this.ID;
         this.mates = [];
         this.tasks = [];
+		this.isLoaded = false;
     }
 
     //Title Functions
@@ -51,15 +52,15 @@ class Space {
         this.tasks.push(task);
     }
 
-    setTaskArray(task) {
-        this.task = task;
+    setTasksArray(tasks) {
+        this.tasks = tasks;
     }
 
     getTasks() {
         return this.tasks;
     }
 
-    isValidSpace(spaceDocID, _callback) {
+    isValidSpace(spaceDocID) {
         var db = firebase.firestore();
         var spcDocRef = db.collection("Spaces").doc(spaceDocID);
 
@@ -73,7 +74,7 @@ class Space {
 						});
     }
 
-    addMateToSpace(userDocID) {
+    addMateToSpace() {
         var userDocID = sessionStorage.getItem("user");
         var userSpaceID = $("#userSpaceID").val();
         this.isValidSpace(userSpaceID).then(function (exists) {
@@ -83,6 +84,7 @@ class Space {
 				return;
 			}
 			else{
+                sessionStorage.setItem('Space', userSpaceID);
 				var db = firebase.firestore();
 				var spcDocRef = db.collection("Spaces").doc(userSpaceID);
 
@@ -91,26 +93,25 @@ class Space {
 						const spcUserArray = snapshot.get("spcMates");
 						spcUserArray.push(userDocID);
 						transaction.update(spcDocRef, "spcMates", spcUserArray);
-						window.location.href = "../html/createTask.html";
+						redirectOverview();;
 					})
 				});
 			}
-        });
-    }
+    });
+  }
 
-    getMateToAssignToNonRecurringTask() {
+    setMateToNonRecurringTask() {
       if (this.mates.length == 0) {
-        console.log("no mates in the living space");
-        return; //condition here just in case
+        console.log("No mates in the living space.");
+        return;
       }
 
-      let minNumTasks = this.getNumberOfTasksByMateEmail(
-                        this.mates[0].getEmail());
+      let minNumTasks = this.getNumberOfMatesNonRecurringTasks(this.mates[0]);
       var minTaskMates = [];
       minTaskMates.push(this.mates[0]);
 
       for (var i = 1; i < this.mates.length; ++i) {
-        let j = this.getNumberOfTasksByMateEmail(this.mates[i].getEmail()); //would be more efficient to get all the number of tasks in one shot...
+        let j = this.getNumberOfMatesNonRecurringTasks(this.mates[i]); //would be more efficient to get all the number of tasks in one shot...
         if (j < minNumTasks) {
           minNumTasks = j;
           minTaskMates = [];
@@ -118,115 +119,112 @@ class Space {
         } else if (j === minNumTasks) {
           minTaskMates.push(this.mates[i]);
         }
+        //console.log(minTaskMates);
       }
+
       if (minTaskMates.length > 1) {
         return minTaskMates[Math.floor(Math.random() * minTaskMates.length)];
+      } else {
+        return minTaskMates[0];
       }
-      return minTaskMates[0];
     }
 
-    getNextMateAssignedToRecurringTask(email) {
-        for (var i = 0; i < this.mates.length - 1; ++i) {
-            if (this.mates[i].getEmail() == email) {
-                return this.mates[i + 1].getEmail();
-            }
-        }
-    }
-    // addTaskToSpace(taskDocID) {
-    //   var db = firebase.firestore();
-    //   var spcDocRef = db.collection("Spaces").doc(this.ID);
-    //
-    //   db.runTransaction(transaction => {
-    //     return transaction.get(spcDocRef).then(snapshot => {
-    //       const spcTaskArray = snapshot.get("spcTasks");
-    //       spcTaskArray.push(taskDocID);
-    //       transaction.update(spcDocRef, "spcTasks", spcTaskArray);
-    //     });
-    //   });
-    // }
+    setFirstMateAssignedToRecurringTask() {
+      if (this.mates.length == 0) {
+        alert("No mates in the living space.");
+        return;
+      }
 
-    /*
-    randomAssignMateToTask(task) {
-        if (this.mates.length === 0) {
-            console.log("Invalid space, no mates present.");
-            return;
+      let minNumTasks = this.getNumberOfMatesRecurringTasks(this.mates[0]);
+      var minTaskMates = [];
+      minTaskMates.push(this.mates[0]);
+
+      for (var i = 1; i < this.mates.length; ++i) {
+        let j = this.getNumberOfMatesRecurringTasks(this.mates[i]); //would be more efficient to get all the number of tasks in one shot...
+        if (j < minNumTasks) {
+          minNumTasks = j;
+          minTaskMates = [];
+          minTaskMates.push(this.mates[i]);
+        } else if (j == minNumTasks) {
+          minTaskMates.push(this.mates[i]);
         }
-        if (this.mates.length === 1) {
-            task.setAssignedMate(this.mates[0]);
-            return;
-        }
-        let matesNumTasks = new Array();
-        this.mates.forEach(mate => {
-            matesNumTasks.push({
-                mateEmail: mate.getEmail(),
-                tasks: 0
-            }); //initialization
-        });
-        this.tasks.forEach(task => {
-            //go through all the tasks
-            let assigned = task.getAssignedMate().getEmail();
-            for (let i = 0; i < matesNumTasks.length; ++i) {
-                //find mate
-                if (matesNumTasks[i].mateEmail === assigned) {
-                    matesNumTasks[i].tasks++;
-                    break;
-                }
-            }
-        });
-        matesNumTasks.sort((a, b) => (a.mateEmail > b.mateEmail ? 1 : -1)); //sort for algorithm
-        let email = this.getEmailForAssigningTask(matesNumTasks);
-        this.mates.forEach(mate => {
-            if (mate.email === email) {
-                task.setAssignedMate(mate);
-                return;
-            }
-        });
+      }
+
+      if (minTaskMates.length > 1) {
+        return minTaskMates[Math.floor(Math.random() * minTaskMates.length)];
+      } else {
+        return minTaskMates[0];
+      }
     }
 
-    getEmailForAssigningTask(taskList) {
-        let list = new Array();
-        taskList.forEach(int => {
-            list.push(Object.assign({}, int));
-        });
-        list.sort((a, b) => (a.tasks >= b.tasks ? 1 : -1));
-        let min = list[0].tasks;
-        let prev = list[0].tasks;
-        list[0].tasks = list[list.length - 1].tasks;
-        for (let i = 1; i < list.length; i++) {
-            let n = list[i].tasks;
-            list[i].tasks = list[i - 1].tasks - (list[i].tasks - prev);
-            prev = n;
+    setNextMateAssignedToRecurringTask(mate) {
+      for (var i = 0; i < this.mates.length - 1; ++i) {
+        if (this.mates[i] == mate) {
+            return this.mates[i + 1];
         }
-        for (let i = 0; i < list.length; i++) {
-            list[i].tasks = list[i].tasks + 1 - min;
-            list[i].tasks = Math.pow(
-                    Math.pow(list.length, 1 / 3) * 3 - 2,
-                    list[i].tasks);
-        }
-        list.sort((a, b) => (a.mateEmail >= b.mateEmail ? 1 : -1));
-        let totalWeight = 0;
-        list.forEach(int => {
-            totalWeight += int.tasks;
-        });
-        let rand = Math.random() * totalWeight;
-        for (let i = 0; i < list.length; i++) {
-            rand -= list[i].tasks;
-            if (rand <= 0) {
-                return taskList[i].mateEmail;
-            }
-        }
+      }
+      return this.mates[0];
     }
+    getNumberOfMatesNonRecurringTasks(mate) {
+      var numTasks = 0;
+      for (var i = 0; i < this.tasks.length; ++i) {
+        var tempTask = this.tasks[i];
+        //console.log(tempTask);
+        if (tempTask.assignedMate == mate &&
+           !tempTask.isRecurring &&
+           !tempTask.completionStatus) {
+             ++numTasks;
+        }
+      }
+      return numTasks;
+    }
+    getNumberOfMatesRecurringTasks(mate) {
+      var numTasks = 0;
+      for (var i = 0; i < this.tasks.length; ++i) {
+        var tempTask = this.tasks[i];
+        if (tempTask.assignedMate == mate &&
+            tempTask.isRecurring &&
+           !tempTask.completionStatus) {
+             ++numTasks;
+        }
+      }
+    }
+	async populateSpace(space_ID, _callback){
+		 if(space_ID === "undefined" ){
+			alert("Space ID is empty.");
+			return;
+		 }
+		 else{
+			this.setID(space_ID);
+		 }
 
-    */
+		var db = firebase.firestore();
+        var spcSpaceRef = db.collection("Spaces").doc(this.ID);
+		await spcSpaceRef.get().then(function (spcDoc) {
+			if(spcDoc.exists){
+				_callback('title', spcDoc.data().spcTitle);
+				_callback('description', spcDoc.data().spcDescription);
+			}
+		}).then(async none => {
+			await this.fillMatesArray().then(function(matesArray) {
+				_callback('mates', matesArray);
+			});
 
-    async fillMatesArray() {
-        // if(typeof this.ID === "undefined" ){
-        // console.log("Space ID is empty.");
-        // return;
-        // }
+			await this.fillTasksArray().then(function(tasksArray) {
+				_callback('tasks', tasksArray);
+			});
+		}).then(none => {
+			this.isLoaded = true;
+		})
+	}
+    fillMatesArray() {
+        if(typeof this.ID === "undefined" ){
+			alert("Space ID is empty.");
+			return;
+        }
         var mtePromiseArray = [];
         var db = firebase.firestore();
-        var spcSpaceRef = db.collection("Spaces").doc("0yAZm9Ny0Fka6TGI7PZr");
+        var spcSpaceRef = db.collection("Spaces").doc(this.ID);
         return spcSpaceRef.get().then(function (spcDoc) {
             if (spcDoc.exists) {
                 spcDoc.data().spcMates.forEach(mate => {
@@ -246,46 +244,58 @@ class Space {
             return Promise.all(mtePromiseArray);
         });
     }
-
-    getNumberOfTasksByMateEmail(email) {
-      var numTasks = 0;
-      for (var i = 0; i < this.tasks.length; ++i) {
-        tempTask = this.tasks[i];
-        if (tempTask.assignedMate.email == email &&
-           !tempTask.isRecurring &&
-           !tempTask.completionStatus) {
-          ++numTasks;
+	fillTasksArray() {
+        if(typeof this.ID === "undefined" ){
+			alert("Space ID is empty.");
+			return;
         }
-      }
-      return numTasks;
+        var tskPromiseArray = [];
+        var db = firebase.firestore();
+        var spcSpaceRef = db.collection("Spaces").doc(this.ID);
+        return spcSpaceRef.get().then(function (spcDoc) {
+            if (spcDoc.exists) {
+                spcDoc.data().spcTasks.forEach(task => {
+                    var tskTaskRef = db.collection("Tasks").doc(task);
+                    var newTask = tskTaskRef.get().then(function (taskRecord) {
+                            var currTask = new Task();
+							currTask.setTitle(taskRecord.data().tskTitle);
+							currTask.setDescription(taskRecord.data().tskDescription);
+							currTask.setDueDate(taskRecord.data().tskDueDate);
+							currTask.setDueTime(taskRecord.data().tskDueTime);
+							currTask.setIsRecurring(taskRecord.data().tskIsRecurring);
+							currTask.setIsComplete(taskRecord.data().tskIsCompleted);
+							currTask.setAssignedMate(taskRecord.data().tskTitle);
+                            return currTask;
+                        });
+                    tskPromiseArray.push(newTask);
+                });
+            }
+            return Promise.all(tskPromiseArray);
+        });
     }
     //**End of Space Class**//
 }
 
-function testSpace() {
-    //Run this function to show that Mates pulled from Spaces firestore and into newSpace object.
+function outputMatesAndTasksInSpace() {
     var newSpace = new Space();
-    newSpace.addMateToSpace();
-    // newSpace.fillMatesArray().then(function(matesArray) {
-    // newSpace.setMatesArray(matesArray);
-    // newSpace.getMates().forEach(mate => {
-    // mate.outputMateProperties();
-    // });
-    // });
-}
-
-function outputMates(space) {
-    space.getMates().forEach(function (mte) {
-        mte.outputMateProperties();
+	newSpace.setID('5wSYYawnb8axu29EF6PH');
+    newSpace.fillMatesArray().then(function(matesArray) {
+		newSpace.setMatesArray(matesArray);
+		newSpace.getMates().forEach(mate => {
+			mate.outputMateProperties();
+		});
+    });
+	newSpace.fillTasksArray().then(function(tasksArray) {
+		newSpace.setTasksArray(tasksArray);
+		newSpace.getTasks().forEach(task => {
+			task.outputTaskProperties();
+		});
     });
 }
 
-function redirectCreateNewSpace() {
-    window.location.href = "../html/createNewSpace.html";
-}
-
-function redirectSpaceKey() {
-    window.location.href = "../html/overview.html";
+function joinExistingSpace(){
+	var newSpace = new Space();
+	newSpace.addMateToSpace();
 }
 
 function outputFunction(exists) {
@@ -316,7 +326,7 @@ function createFirestoreSpace() {
         });
     })
     .then(result => {
-        window.location.href = "spaceKey.html";
+        redirect("./spaceKey.html");
     })
     .catch(function (error) {
         console.error("Error adding document: ", error);

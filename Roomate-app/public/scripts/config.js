@@ -1,7 +1,4 @@
-﻿function initialize() {
-    firebase.initializeApp(firebaseConfig);
-}
-const firebaseConfig = {
+﻿const firebaseConfig = {
     apiKey: "AIzaSyCmyzsBoBimz_LSIKGBVPqYb9-Ngq4aW38",
     authDomain: "roommate-a0823.firebaseapp.com",
     databaseURL: "https://roommate-a0823.firebaseio.com",
@@ -10,43 +7,13 @@ const firebaseConfig = {
     messagingSenderId: "941174280385",
     appId: "1:941174280385:web:0ee7547beb6089b7"
 };
-function validate(){
-    firebase.initializeApp(firebaseConfig);
-   database = firebase.firestore();
-    if(sessionStorage.getItem('log') === 'true'){
-      updateToken_Overview(database);  
-      return;
-    }
-    if(sessionStorage.getItem('NickName') !== sessionStorage.getItem('null')){
-      updateNickName_JoinOrCreate(database);
-      return;
-    }
-    let query = database.collection('Mates').where('usrToken', '==', sessionStorage.getItem('token')).get().then(snapshot =>{
-        if(snapshot.empty){
-            window.location.href = "../index.html";
-            //console.log('Invalid Token :')
-            //console.log(sessionStorage.getItem('token'));
-        }else{
-            snapshot.forEach(doc => {
-                if(new Date() < doc.data().usrExpiration.toDate()){
-                    sessionStorage.setItem('user', doc.id);
-                    updateExpiration(database, doc)
-                }else{
-                    window.location.href = "../index.html";
-                }
-                
-            });
-        }
-    });
-  }
-
-  function updateExpiration(database, doc){
+function updateExpiration(database, doc){
     let date = new Date();
     date.setTime(date.getTime() + 86400000);
     database.collection('Mates').doc(doc).update({
         usrExpiration: date
     })
-  }
+}
 
   function updateToken_Overview(database){
     sessionStorage.removeItem('log');
@@ -90,5 +57,5 @@ function validate(){
           usrNickname: nickname
       });
     });});
-    
+
   }
