@@ -72,7 +72,7 @@ async function initializeOverview(){
 		console.log(mySpace);
 		mySpace = Object.assign(new Space, { a: 1 });//JSON.parse(myJSON);
 		console.log(mySpace);
-		alert('Complete');
+		//alert('Complete');
 	}
 	else{
 		alert('Error loading Space.');
