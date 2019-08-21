@@ -82,7 +82,7 @@
 	getIsComplete(completionStatus) {
 		return this.isComplete;
 	}
-	
+
 	outputTaskProperties(){
 		console.log('task_ID: ', this.task_ID);
 		console.log('title: ', this.title);
@@ -124,17 +124,9 @@ function createFirestoreTask() {
 				spcTasks: firebase.firestore.FieldValue.arrayUnion(docRef.id),
 			}).
 			then(none => {
-				redirectOverview();
+				redirect("../html/overview.html");
 			});
 		});
-}
-
-function redirectCreateTask() {
-	window.location.href = "../html/createTask.html";
-}
-
-function redirectOverview() {
-	window.location.href = "../html/overview.html";
 }
 
 module.exports = Task;

@@ -1,25 +1,23 @@
 <!DOCTYPE html>
 <html>
 	<head>
-	<!-- Global site tag (gtag.js) - Google Analytics -->
-	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-146101638-1"></script>
-	<script>
-		window.dataLayer = window.dataLayer || [];
-		function gtag(){dataLayer.push(arguments);}
-		gtag('js', new Date());
-		gtag('config', 'UA-146101638-1');
-	</script>
-	
-	<title>Create or Join a Space</title>
-	<!-- Meta Tags -->
-    <meta charset="utf-8">
-    <!-- meta name="description" content="DESC" -->
-    <!-- meta name="author" content="COMPANY" -->
+		<!-- Global site tag (gtag.js) - Google Analytics -->
+		<script async src="https://www.googletagmanager.com/gtag/js?id=UA-146101638-1"></script>
+		<script>
+			window.dataLayer = window.dataLayer || [];
+			function gtag(){dataLayer.push(arguments);}
+			gtag('js', new Date());
+			gtag('config', 'UA-146101638-1');
+		</script>
+
+		<!-- Meta Tags -->
+		<meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="Keep your roommates in check with CheckMates.">
+    <meta name="author" content="Mates Co.">
     <meta property="og:type" content="Website Applicaiton" />
-    <!-- meta property="og:title" content="TITLE" / -->
-    <!-- meta property="og:description" content="DESC" / -->
-    <!-- meta property="og:url" content="URL" / -->
+    <meta property="og:title" content="CheckMates" />
+    <meta property="og:description" content="Keep your roommates in check" />
 
     <!-- Stylesheets -->
 		<link rel="stylesheet" type="text/css" href="../css/joinOrCreatePage.css">
@@ -36,31 +34,39 @@
     <script src="https://www.gstatic.com/firebasejs/5.10.1/firebase-firestore.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
+		<script src="../scripts/config.js"></script>
+		<script src="../scripts/login.js"></script>
+		<script src="../scripts/pageInitsAndRedirs.js"></script>
+    <script src="../scripts/displayScripts.js"></script>
+		<script src="../scripts/Space.js"></script>
+		<script src="../scripts/Mate.js"></script>
+		<script src="../scripts/Task.js"></script>
+
     <title>Create/Join a Space</title>
 	</head>
 	<body onload="validate()">
 		<div class="container">
-				<div class="center-items-container">
-						<div class="center-items">
-								<h3>Welcome to CheckMates!</h3>
-								<p>How would you like to proceed?</p>
-								<br><br>
-								<div class="center-items">
-									<button type="button" class="blue-btn" onclick="redirectCreateNewSpace()">Create a new space</button>
-									<p> </p>
-									<button type="button" class="blue-btn" onclick="openForm()">Join an existing space</button>
-								</div>
-								<div class="form-popup" id="frmSpaceIDPopup">
-									<form class="form-container">
-										<h3>Join Your Mates Space</h3>
-										<label for="SpaceID"><b>Enter Space ID</b></label>
-										<input id="userSpaceID" type="text" placeholder="Space ID" name="SpaceID" required>
-										<button type="button" class="btn" onclick="joinExistingSpace()">Join Space</button>
-										<button type="button" class="btn cancel" onclick="closeForm()">Cancel</button>
-									</form>
-								</div>
-						</div>
-        </div>
+			<div class="center-items-container">
+				<div class="center-items">
+					<h3>Welcome to CheckMates!</h3>
+					<p>How would you like to proceed?</p>
+					<br><br>
+					<div class="center-items">
+						<button type="button" class="blue-btn" onclick="redirectCreateNewSpace()">Create a new space</button>
+						<p> </p>
+						<button type="button" class="blue-btn" onclick="openForm()">Join an existing space</button>
+					</div>
+					<div class="form-popup" id="frmSpaceIDPopup">
+						<form class="form-container">
+							<h3>Join Your Mates Space</h3>
+							<label for="SpaceID"><b>Enter Space ID</b></label>
+							<input id="userSpaceID" type="text" placeholder="Space ID" name="SpaceID" required>
+							<button type="button" class="btn" onclick="joinExistingSpace()">Join Space</button>
+							<button type="button" class="btn cancel" onclick="closeForm()">Cancel</button>
+						</form>
+					</div>
+				</div>
+      </div>
 		</div>
 
 		<script>
@@ -72,11 +78,5 @@
 			  document.getElementById("frmSpaceIDPopup").style.display = "none";
 			}
 		</script>
-
-		<script src="../scripts/config.js"></script>
-		<script src="../scripts/login.js"></script>
-		<script src="../scripts/Space.js"></script>
-		<script src="../scripts/Mate.js"></script>
-		<script src="../scripts/Task.js"></script>
 	</body>
 </html>
