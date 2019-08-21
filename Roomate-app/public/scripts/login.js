@@ -56,6 +56,7 @@ function redirLogin(user, authExpiration, database) {
     .then(snapshot => {
       if (snapshot.empty) {
         sessionStorage.setItem('name', user.displayName);
+        sessionStorage.setItem('nickname', user.displayName);
         sessionStorage.removeItem('log');
         mateRef
           .add({
@@ -126,6 +127,7 @@ function initializeWelcome() {
 function displayUserInfo() {
   document.getElementById('FullName').innerHTML= sessionStorage.getItem('name');
   document.getElementById('Email').innerHTML= sessionStorage.getItem('email');
+  document.getElementById('nameField').innerHTML = sessionStorage.getItem('nickname');
 }
 
 function redirect(url){

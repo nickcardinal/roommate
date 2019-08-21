@@ -83,6 +83,7 @@ class Space {
 				return;
 			}
 			else{
+                sessionStorage.setItem('Space', userSpaceID);
 				var db = firebase.firestore();
 				var spcDocRef = db.collection("Spaces").doc(userSpaceID);
 
