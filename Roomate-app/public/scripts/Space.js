@@ -83,6 +83,7 @@ class Space {
 				return;
 			}
 			else{
+                sessionStorage.setItem('Space', userSpaceID);
 				var db = firebase.firestore();
 				var spcDocRef = db.collection("Spaces").doc(userSpaceID);
 
@@ -379,6 +380,11 @@ function testAssignTask() {
         console.log(task.getAssignedMate(), "assigned.");
         space.addTask(task);
     }
+}
+
+function joinSpace() {
+    var newSpace = new Space();
+    newSpace.addMateToSpace();
 }
 
 module.exports = Space;
