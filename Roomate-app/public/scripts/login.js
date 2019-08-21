@@ -45,55 +45,6 @@ function logout() {
     });
 }
 
-function redirLogin(user, authExpiration, database) {
-  sessionStorage.setItem('log', 'true');
-  firebase.firestore.setLogLevel('debug');
-  let mateRef = database.collection("Mates");
-  let mateQuery = mateRef.where("usrEmail", "==", user.email);
-
-  mateQuery
-    .get()
-    .then(snapshot => {
-      if (snapshot.empty) {
-        sessionStorage.setItem('name', user.displayName);
-        sessionStorage.removeItem('log');
-        mateRef
-          .add({
-            usrToken: sessionStorage.getItem('token'),
-            usrExpiration: authExpiration,
-            usrPhotoUrl: user.photoURL,
-            usrEmail: user.email,
-            usrName: user.displayName,
-            usrNickname: user.displayName
-          })
-          .then(ref => {
-            redirect('../html/profile.html');
-          });
-      } else {
-        redirLoginToSpace(user, database);
-      }
-    });
-}
-
-function redirLoginToSpace(user, database) {
-  let matedb = database.collection("Mates").where("usrEmail", "==", user.email);
-
-  matedb
-    .get()
-    .then(function(snapshot){
-      sessionStorage.setItem('user', snapshot.docs[0].id);
-      let user = snapshot.docs[0].data();
-      let spaces = user.usrSpaces;
-      if(spaces != undefined) {
-        let spaceID = spaces[0].id;
-        sessionStorage.setItem('Space', spaceID);
-        redirect('../html/overview.html')
-      }else {
-        redirect('../html/joinOrCreateSpace.html')
-      }
-    });
-  }
-
 function loginNewUser(redir) {
   sessionStorage.setItem('NickName', document.getElementById("nameField").value);
   redirect(redir);

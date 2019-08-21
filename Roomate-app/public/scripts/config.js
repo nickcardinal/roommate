@@ -8,10 +8,6 @@
     appId: "1:941174280385:web:0ee7547beb6089b7"
 };
 
-function redirect(url){
-  window.location.href = url;
-}
-
   function updateExpiration(database, doc){
     let date = new Date();
     date.setTime(date.getTime() + 86400000);

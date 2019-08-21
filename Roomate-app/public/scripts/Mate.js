@@ -1,4 +1,3 @@
-
 class Mate {
 
     constructor() {

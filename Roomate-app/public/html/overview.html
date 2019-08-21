@@ -36,7 +36,7 @@
 
     <script src="../scripts/config.js"></script>
 		<script src="../scripts/login.js"></script>
-		<script src="../scripts/pageInits.js"></script>
+		<script src="../scripts/pageInitsAndRedirs.js"></script>
     <script src="../scripts/displayScripts.js"></script>
 		<script src="../scripts/Space.js"></script>
 		<script src="../scripts/Mate.js"></script>
@@ -59,14 +59,14 @@
 
       <br>
 
-      <div class="center-items-container space-content ">
+      <div class="center-items-container space-content">
         <div class="">
           <button class="blue-btn" type="button" onclick="redirectSpaceKey()">Invite a Mate</button>
-          <button class="blue-btn" type="button" target="_blank" href="matelist.html">View Mates</button>
+          <button class="blue-btn" type="button" onclick="openMateList()">View Mates</button>
         </div>
         <div class="">
           <button class="blue-btn" type="button" onclick="redirectCreateTask()">Create a Task</button>
-          <button class="blue-btn" type="button" target="_blank" href="tasklist.html">View Tasks</button>
+          <button class="blue-btn" type="button" onclick="openTaskList()">View Tasks</button>
         </div>
       </div>
     </div>

@@ -91,7 +91,7 @@ class Space {
 						const spcUserArray = snapshot.get("spcMates");
 						spcUserArray.push(userDocID);
 						transaction.update(spcDocRef, "spcMates", spcUserArray);
-						window.location.href = "../html/overview.html";
+						redirectOverview();;
 					})
 				});
 			}
@@ -272,14 +272,6 @@ function joinExistingSpace(){
 	newSpace.addMateToSpace();
 }
 
-function redirectCreateNewSpace() {
-    window.location.href = "../html/createNewSpace.html";
-}
-
-function redirectSpaceKey() {
-    window.location.href = "../html/overview.html";
-}
-
 function outputFunction(exists) {
     return exists;
 }
@@ -308,7 +300,7 @@ function createFirestoreSpace() {
         });
     })
     .then(result => {
-        window.location.href = "spaceKey.html";
+        redirect("./spaceKey.html");
     })
     .catch(function (error) {
         console.error("Error adding document: ", error);
