@@ -26,6 +26,32 @@ function displayTasks(tasks) {
     })
 }
 
+function displayMates() {
+  var space = new Space();
+  space.setID(sessionStorage.getItem('Space'));
+  var mates = space.fillMatesArray().then(function(matesArray) {
+    space.mates = matesArray;
+    space.mates.forEach(mate => {
+        appendMate(mate);
+    });
+  });
+}
+
+function appendMate(mate) {
+  let table = document.getElementById("mateList");
+
+  let rows = table.getElementsByTagName("tr");
+  let row = table.insertRow(rows.length);
+
+  let mteName = row.insertCell(0);
+  row = table.insertRow(rows.length);
+
+  let br = row.insertCell(0);
+
+  mteName.innerHTML = mate.getNickName();
+  br.innerHTML = '<br></br>'
+}
+
 function appendTask(task) {
   let table = document.getElementById("taskList");
   let rows = table.getElementsByTagName("tr");
