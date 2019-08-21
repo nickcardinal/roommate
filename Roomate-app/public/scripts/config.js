@@ -7,49 +7,13 @@
     messagingSenderId: "941174280385",
     appId: "1:941174280385:web:0ee7547beb6089b7"
 };
-var mySpace;
-async function initializeOverview(){
-	//This function will navigate away from the bottom portion 
-	//of this function if user isn't logged in or isn't part of a space.
-	validate();
-	
-	mySpace = new Space();
-	var spaceID = sessionStorage.getItem('Space');
-	await mySpace.populateSpace(spaceID, populateSpaceCallback);
-	if(mySpace.isLoaded){	
-		var myJSON = JSON.stringify(mySpace);
-		console.log(JSON.parse(myJSON));
-		console.log(mySpace);
-		mySpace = Object.assign(new Space, { a: 1 });//JSON.parse(myJSON);
-		console.log(mySpace);
-		alert('Complete');
-	}
-	else{
-		alert('Error loading Space.');
-	}
-}
-function populateSpaceCallback(type, value){
-	if(type === 'title'){
-		mySpace.setTitle(value);
-	}
-	else if(type === 'description'){
-		mySpace.setDescription(value);
-	}
-	else if(type === 'mates'){
-		mySpace.setMatesArray(value);
-	}
-	else if(type === 'tasks'){
-		mySpace.setTasksArray(value);
-	}
-}
-
-  function updateExpiration(database, doc){
+function updateExpiration(database, doc){
     let date = new Date();
     date.setTime(date.getTime() + 86400000);
     database.collection('Mates').doc(doc).update({
         usrExpiration: date
     })
-  }
+}
 
   function updateToken_Overview(database){
     sessionStorage.removeItem('log');
