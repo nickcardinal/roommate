@@ -36,7 +36,7 @@ test("Space Getter Test", function() {
     .toEqual([title, description, space_ID]);
 });
 
-
+let space = new Space();
 test('add Mate set proper mate 3 for Space', function(){
   for(let j = 0; j < 5; j++){
       let mate = new Mate();
