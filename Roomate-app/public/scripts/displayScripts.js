@@ -3,6 +3,7 @@
 function displayUserInfo() {
   document.getElementById('FullName').innerHTML= sessionStorage.getItem('name');
   document.getElementById('Email').innerHTML= sessionStorage.getItem('email');
+  document.getElementById('nameField').value = sessionStorage.getItem('name');
 }
 
 // Space Information Display Functions
