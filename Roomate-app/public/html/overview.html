@@ -35,22 +35,23 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
     <script src="../scripts/config.js"></script>
-	<script src="../scripts/login.js"></script>
-	<script src="../scripts/pageInitsAndRedirs.js"></script>
+    <script src="../scripts/login.js"></script>
+    <script src="../scripts/pageInitsAndRedirs.js"></script>
     <script src="../scripts/displayScripts.js"></script>
-	<script src="../scripts/Space.js"></script>
-	<script src="../scripts/Mate.js"></script>
-	<script src="../scripts/Task.js"></script>
+    <script src="../scripts/Space.js"></script>
+    <script src="../scripts/Mate.js"></script>
+    <script src="../scripts/Task.js"></script>
 
     <title>CheckMates</title>
   </head>
-  <body onload="initializeOverview()">
-    <div class="space container">
+
+  <body onload="initializeOverview(); displaySpaceInfo()">
+    <div class="space container ">
       <div class="top-bar">
           <img class ="top-bar-logo " src="../images/logoCheckMates.png" alt="Checkmates Logo">
           <div class="space-information ">
-              <h3 id="showName">Space Name</h3>
-              <h4 id="showDescription">Space Description</h4>
+              <h3 id="showName"></h3>
+              <h4 id="showDescription"></h4>
           </div>
           <div class="">
             <button class="blue-btn" type="button" onclick="logout()">Logout</button>
