@@ -35,38 +35,21 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
     <script src="../scripts/config.js"></script>
-	<script src="../scripts/login.js"></script>
-	<script src="../scripts/pageInitsAndRedirs.js"></script>
+		<script src="../scripts/login.js"></script>
+		<script src="../scripts/pageInitsAndRedirs.js"></script>
     <script src="../scripts/displayScripts.js"></script>
-	<script src="../scripts/Space.js"></script>
-	<script src="../scripts/Mate.js"></script>
-	<script src="../scripts/Task.js"></script>
+		<script src="../scripts/Space.js"></script>
+		<script src="../scripts/Mate.js"></script>
+		<script src="../scripts/Task.js"></script>
 
-    <title>CheckMates</title>
+    <title>Task List -- Test</title>
   </head>
-  <body onload="initializeOverview()">
-    <div class="space container">
-      <div class="top-bar">
-          <img class ="top-bar-logo " src="../images/logoCheckMates.png" alt="Checkmates Logo">
-          <div class="space-information ">
-              <h3 id="showName">Space Name</h3>
-              <h4 id="showDescription">Space Description</h4>
-          </div>
-          <div class="">
-            <button class="blue-btn" type="button" onclick="logout()">Logout</button>
-          </div>
-      </div>
-
-      <br>
-
-      <div class="center-items-container space-content">
-        <div class="">
-          <button class="blue-btn" type="button" onclick="redirect('../html/spaceKey.html')">Invite a Mate</button>
-          <button class="blue-btn" type="button" onclick="redirect('../html/mateslist.html')">View Mates</button>
-        </div>
-        <div class="">
-          <button class="blue-btn" type="button" onclick="redirectCreateTask()">Create a Task</button>
-          <!-- <button class="blue-btn" type="button" onclick="openTaskList()">View Tasks</button> -->
+  <body onload="validate(); displayMates()">
+    <div class="container page">
+      <div class="center-items-container">
+        <div class="center-items">
+            <table id="mateList">
+            </table>
         </div>
       </div>
     </div>
