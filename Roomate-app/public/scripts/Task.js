@@ -138,14 +138,29 @@ function redirectOverview() {
 }
 
 function calcNewDate(currDate, recurPeriod) {
-    var newdate = new Date(currDate);
-    newdate.setDate(newdate.getDate() + recurPeriod);
+		var currDate = currDate.split("-");
+		currFormatedDate = currDate[1] + "/" + currDate[2] + "/" + currDate[0];
 
-    var dd = newdate.getDate();
-    var mm = newdate.getMonth() + 1;
-    var y = newdate.getFullYear();
+    var newDate = new Date(currFormatedDate);
 
-    var formattedDate = mm + '/' + dd + '/' + y;
+		var today = new Date();
+		today.getDate();
+		console.log("Today's Date: " + today);
+		console.log("CurrDate: " + newDate);
+
+    newDate.setDate(newDate.getDate() + recurPeriod);
+		console.log(newDate);
+
+		while(newDate < today) {
+			newDate.setDate(newDate.getDate() + recurPeriod);
+			console.log(newDate);
+		}
+
+    var dd = newDate.getDate();
+    var mm = newDate.getMonth() + 1;
+    var y = newDate.getFullYear();
+
+    var formattedDate = y + '-' + mm + '-' + dd;
     return formattedDate;
 }
 
