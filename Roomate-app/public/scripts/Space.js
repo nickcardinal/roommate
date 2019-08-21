@@ -92,7 +92,7 @@ class Space {
 						const spcUserArray = snapshot.get("spcMates");
 						spcUserArray.push(userDocID);
 						transaction.update(spcDocRef, "spcMates", spcUserArray);
-						window.location.href = "../html/createTask.html";
+						window.location.href = "../html/overview.html";
 					})
 				});
 			}
