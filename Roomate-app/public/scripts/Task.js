@@ -16,6 +16,18 @@
 		this.isComplete;
 	}
 
+	duplicate(task) {
+		this.task_ID; //assign it to something?
+		this.title = task.getTitle();
+		this.description = task.getDescription();
+		this.dueDate = task.getDueDate();
+		this.dueTime = task.getDueTime();
+		this.isRecurring = task.getIsRecurring();
+		this.getRecurringPeriod = task.getRecurringPeriod();
+		this.assignedMate = task.getAssignedMate();
+		this.isComplete = task.isComplete();
+	}
+
 	// Getters/Setters: Task Descriptors
 	setTaskID(task_ID) {
 		this.task_ID = task_ID;
@@ -66,6 +78,14 @@
 		this.isRecurring = isRecurring;
 	}
 
+	setRecurringPeriod(recurringPeriod) {
+		this.recurringPeriod = recurringPeriod;
+	}
+
+	getRecurringPeriod(recurringPeriod) {
+		return this.recurringPeriod;
+	}
+
 	// Getters/Setters: Task Completion Details
 	setAssignedMate(assignedMate) {
 		this.assignedMate = assignedMate;
@@ -96,6 +116,7 @@
 }
 
 //Create Firestore Task
+
 function createFirestoreTask() {
 	var taskdb = firebase.firestore().collection("Tasks");
 	console.log("We're in the mainframe... Task data collection has commenced.");
