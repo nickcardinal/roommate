@@ -152,5 +152,4 @@ function calcNewDate(currDate, recurPeriod) {
     return formattedDate;
 }
 
-
 module.exports = Task;
