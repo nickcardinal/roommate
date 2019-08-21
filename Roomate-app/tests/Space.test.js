@@ -11,15 +11,13 @@ const Space = require("../public/scripts/Space.js");
 const Mate = require("../public/scripts/Mate.js");
 const Task = require("../public/scripts/Task.js")
 
-var space = new Space();
-
 // Getter/Setter tests
 var title = "The Collective";
 var description = "A Co-Living Space";
 var space_ID = "OFWGKTA";
 
 test("Space Setter Test", function() {
-
+  var space = new Space();
   space.setTitle(title);
   space.setDescription(description);
   space.setID(space_ID);
@@ -29,6 +27,7 @@ test("Space Setter Test", function() {
 });
 
 test("Space Getter Test", function() {
+  var space = new Space();
   space.title = title;
   space.description = description;
   space.ID = space_ID;
