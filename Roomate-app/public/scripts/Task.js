@@ -145,15 +145,11 @@ function calcNewDate(currDate, recurPeriod) {
 
 		var today = new Date();
 		today.getDate();
-		console.log("Today's Date: " + today);
-		console.log("CurrDate: " + newDate);
 
     newDate.setDate(newDate.getDate() + recurPeriod);
-		console.log(newDate);
 
 		while(newDate < today) {
 			newDate.setDate(newDate.getDate() + recurPeriod);
-			console.log(newDate);
 		}
 
     var dd = newDate.getDate();
