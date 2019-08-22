@@ -84,11 +84,15 @@ function appendMate(mate) {
   let rows = table.getElementsByTagName("tr");
   let row = table.insertRow(rows.length);
 
+  let mteIcon = row.insertCell(0);
+  row = table.insertRow(rows.length);
+
   let mteName = row.insertCell(0);
   row = table.insertRow(rows.length);
 
   let br = row.insertCell(0);
 
+  mteIcon.innerHTML = '<img class ="user-icon" src=' + mate.getPhotoURL() + " " + 'alt="Checkmates Logo">';
   mteName.innerHTML = mate.getNickName();
   br.innerHTML = '<br></br>'
 }

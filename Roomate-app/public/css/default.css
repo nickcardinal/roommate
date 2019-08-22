@@ -94,6 +94,11 @@ button {
   transition: all 0.125s ease-out;
 }
 
+.user-icon {
+  width: 50px;
+  height: auto;
+}
+
 /* INDEX */
 .home-logo {
   width: 450px;
