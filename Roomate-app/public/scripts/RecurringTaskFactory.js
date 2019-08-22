@@ -38,7 +38,7 @@ class RecurringTaskFactory {
       tskIsRecurring: this.task.getIsRecurring(),
       tskRecurringPeriod: this.task.getRecurringPeriod(),
       tskAssignedMateID: this.task.getAssignedMate().getID(),
-      tskIsComplete: this.task.getIsComplete()
+      tskIsComplete: this.task.getIsComplete(),
       tskFavour:""
     }
 
