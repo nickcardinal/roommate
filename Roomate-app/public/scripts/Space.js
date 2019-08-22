@@ -318,6 +318,7 @@ class Space {
                             currTask.setIsRecurring(taskRecord.data().tskIsRecurring);
                             currTask.setIsComplete(taskRecord.data().tskIsComplete);
                             currTask.setAssignedMate(taskRecord.data().tskAssignedMate);
+                            currTask.setFavourMate(taskRecord.data().tskFavour);
                             return currTask;
                         });
                     tskPromiseArray.push(newTask);

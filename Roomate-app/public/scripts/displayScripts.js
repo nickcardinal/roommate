@@ -59,7 +59,7 @@ function appendTask(task) {
   tskDesc.innerHTML = task.getDescription();
   tskDue.innerHTML = 'Due by ' + task.getDueDate() + ' ' + task.getDueTime();
   tskMate.innerHTML = 'Task assigned to ' + task.getAssignedMate();
-  if(task.getFavourMate() !== undefined){
+  if(task.getFavourMate() !== ''){
     tskMate.innerHTML = 'Task favoured by ' + task.getFavourMate();
   }
   br.innerHTML = '<br></br>'
