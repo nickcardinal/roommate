@@ -23,7 +23,7 @@
 		this.dueDate = task.getDueDate();
 		this.dueTime = task.getDueTime();
 		this.isRecurring = task.getIsRecurring();
-		this.getRecurringPeriod = task.getRecurringPeriod();
+		this.RecurringPeriod = task.getRecurringPeriod();
 		this.assignedMate = task.getAssignedMate();
 		this.isComplete = task.getIsComplete();
 	}
@@ -70,19 +70,19 @@
 		return this.dueTime;
 	}
 
-	getIsRecurring(isRecurring) {
-		return this.isRecurring;
-	}
-
 	setIsRecurring(isRecurring) {
 		this.isRecurring = isRecurring;
+	}
+
+	getIsRecurring() {
+		return this.isRecurring;
 	}
 
 	setRecurringPeriod(recurringPeriod) {
 		this.recurringPeriod = recurringPeriod;
 	}
 
-	getRecurringPeriod(recurringPeriod) {
+	getRecurringPeriod() {
 		return this.recurringPeriod;
 	}
 
@@ -91,15 +91,15 @@
 		this.assignedMate = assignedMate;
 	}
 
-	getAssignedMate(assignedMate) {
+	getAssignedMate() {
 		return this.assignedMate;
 	}
 
-	setIsComplete(completionStatus) {
-		this.isComplete = completionStatus;
+	setIsComplete(isComplete) {
+		this.isComplete = isComplete;
 	}
 
-	getIsComplete(completionStatus) {
+	getIsComplete() {
 		return this.isComplete;
 	}
 
