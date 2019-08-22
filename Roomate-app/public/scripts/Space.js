@@ -60,22 +60,26 @@ class Space {
         return this.tasks;
     }
 
-    createTaskByFactory() {
+    createTaskByFactory(taskdb) {
     	var factory;
+      var mate;
+
     	if ($('#isRecurringField').is(':checked')) {
-    		factory = new RecurringTaskFactory();
+    		factory = new RecurringTaskFactory(taskdb);
+        mate = setFirstMateAssignedToRecurringTask();
     	}
     	else {
-    		factory = new NonRecurringTaskFactory();
+    		factory = new NonRecurringTaskFactory(taskdb);
+        mate = setMateToNonRecurringTask();
     	}
 
-      var taskdb = firebase.firestore().collection("Tasks");
-
-    	addTask(factory.createTask(taskdb));
+    	addTask(factory.createTask(mate));
     }
 
-    createNewTaskByFactory(task) {
-      var factory;
+    reCreateRecurringTaskByFactory(task, taskdb) {
+      var factory = new RecurringTaskFactory(taskdb);
+      task.setAssignedMate(setNextMateAssignedToRecurringTask(task.getAssignedMate()));
+      task.setDueDate() //call Morgan's function
       addTask(factory.reCreateTask(task));
     }
 
@@ -241,10 +245,10 @@ class Space {
 	}
 
   fillMatesArray() {
-      if(typeof this.ID === "undefined" ){
-		alert("Space ID is empty.");
-		return;
-      }
+    if(typeof this.ID === "undefined" ){
+      alert("Space ID is empty.");
+      return;
+    }
       var mtePromiseArray = [];
       var db = firebase.firestore();
       var spcSpaceRef = db.collection("Spaces").doc(this.ID);
@@ -266,10 +270,10 @@ class Space {
           }
           return Promise.all(mtePromiseArray);
       });
-  }
+    }
 
 	fillTasksArray() {
-        if(typeof this.ID === "undefined" ){
+    if(typeof this.ID === "undefined" ){
 			alert("Space ID is empty.");
 			return;
         }
