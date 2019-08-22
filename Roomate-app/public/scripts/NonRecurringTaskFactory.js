@@ -10,8 +10,8 @@ class NonRecurringTaskFactory {
 
   createTask(mate) {
     this.mate = mate;
-    populateTask();
-    insertTaskIntoFirestore();
+    this.populateTask();
+    this.insertTaskIntoFirestore();
     //json here...
     return this.task;
   }
