@@ -79,6 +79,7 @@ class Space {
         }
         return -1;
       });
+    }
       
     createTaskByFactory(taskdb) {
     	var factory;
