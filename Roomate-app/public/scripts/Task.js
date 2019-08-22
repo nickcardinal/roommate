@@ -25,7 +25,7 @@
 		this.isRecurring = task.getIsRecurring();
 		this.getRecurringPeriod = task.getRecurringPeriod();
 		this.assignedMate = task.getAssignedMate();
-		this.isComplete = task.isComplete();
+		this.isComplete = task.getIsComplete();
 	}
 
 	// Getters/Setters: Task Descriptors

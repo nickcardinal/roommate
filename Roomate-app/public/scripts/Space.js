@@ -1,3 +1,7 @@
+const RecurringTaskFactory = require('./RecurringTaskFactory.js')
+const NonRecurringTaskFactory = require('./NonRecurringTaskFactory.js')
+
+
 class Space {
     constructor() {
 		this.ID;
@@ -78,9 +82,9 @@ class Space {
 
     reCreateRecurringTaskByFactory(task, taskdb) {
       var factory = new RecurringTaskFactory(taskdb);
-      task.setAssignedMate(setNextMateAssignedToRecurringTask(task.getAssignedMate()));
-      task.setDueDate() //call Morgan's function
-      addTask(factory.reCreateTask(task));
+      task.setAssignedMate(this.setNextMateAssignedToRecurringTask(task.getAssignedMate()));
+      //task.setDueDate() //call Morgan's function
+      this.addTask(factory.reCreateTask(task));
     }
 
     isValidSpace(spaceDocID) {

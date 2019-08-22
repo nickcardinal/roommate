@@ -1,3 +1,6 @@
+const Mate = require('./Mate.js')
+const Task = require('./Task.js')
+
 class RecurringTaskFactory {
   constructor(taskdb) {
     this.task = new Task();
@@ -54,8 +57,10 @@ class RecurringTaskFactory {
 
   reCreateTask(task) {
     this.task = task;
-    insertTaskIntoFirestore();
+    //insertTaskIntoFirestore();
     //json here...
     return this.task;
   }
 }
+
+module.exports = RecurringTaskFactory;
