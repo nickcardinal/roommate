@@ -51,10 +51,17 @@ function appendTask(task) {
   row = table.insertRow(rows.length);
   let br = row.insertCell(0);
   tskTitle.innerHTML = task.getTitle();
-  tskComplete.innerHTML = '<input type="checkbox" onclick="completeTask(' + task.getTaskID() + ')"><br>';
+  if(task.getIsComplete()){
+    tskComplete.innerHTML = '<input type="checkbox" checked onclick="uncompleteTask(' + task.getTaskID() + ')"><br>';
+  }else{
+    tskComplete.innerHTML = '<input type="checkbox" onclick="completeTask(' + task.getTaskID() + ')"><br>';
+  }
   tskDesc.innerHTML = task.getDescription();
   tskDue.innerHTML = 'Due by ' + task.getDueDate() + ' ' + task.getDueTime();
   tskMate.innerHTML = 'Task assigned to ' + task.getAssignedMate();
+  if(task.getFavourMate() !== ''){
+    tskMate.innerHTML = 'Task favoured by ' + task.getFavourMate();
+  }
   br.innerHTML = '<br></br>'
 }
 //This function will branch based on Recurring/Nonrecurring

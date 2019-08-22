@@ -316,8 +316,9 @@ class Space {
                             currTask.setDueDate(taskRecord.data().tskDueDate);
                             currTask.setDueTime(taskRecord.data().tskDueTime);
                             currTask.setIsRecurring(taskRecord.data().tskIsRecurring);
-                            currTask.setIsComplete(taskRecord.data().tskIsCompleted);
-                            currTask.setAssignedMate(taskRecord.data().tskTitle);
+                            currTask.setIsComplete(taskRecord.data().tskIsComplete);
+                            currTask.setAssignedMate(taskRecord.data().tskAssignedMate);
+                            currTask.setFavourMate(taskRecord.data().tskFavour);
                             return currTask;
                         });
                     tskPromiseArray.push(newTask);
