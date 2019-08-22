@@ -56,8 +56,9 @@ function redirLogin(user, authExpiration, database) {
     .then(snapshot => {
       if (snapshot.empty) {
         sessionStorage.setItem('name', user.displayName);
-        sessionStorage.setItem('nickname', user.displayName);
         sessionStorage.removeItem('log');
+    
+
         mateRef
           .add({
             usrToken: sessionStorage.getItem('token'),
@@ -71,30 +72,29 @@ function redirLogin(user, authExpiration, database) {
             redirect('../html/profile.html');
           });
       } else {
+
+        sessionStorage.setItem('user', snapshot.docs[0].id);
+        let user = snapshot.docs[0].data();
+
+        //redirect if no nickname
+        let nickname = user.usrNickName;
+        if(nickname == undefined) {
+          redirect('../html/profile.html');
+        }
+
+        //redirect if no space
+        let spaces = user.usrSpaces;
         redirLoginToSpace(user, database);
+        if(spaces != undefined) {
+          let spaceID = spaces[0].id;
+          sessionStorage.setItem('Space', spaceID);
+          redirect('../html/overview.html')
+        }else {
+          redirect('../html/joinOrCreateSpace.html')
+        }
       }
     });
 }
-
-function redirLoginToSpace(user, database) {
-  let matedb = database.collection("Mates").where("usrEmail", "==", user.email);
-
-  matedb
-    .get()
-    .then(function(snapshot){
-      sessionStorage.setItem('user', snapshot.docs[0].id);
-      let user = snapshot.docs[0].data();
-      let spaces = user.usrSpaces;
-      if(spaces != undefined) {
-        let spaceID = spaces[0].id;
-        sessionStorage.setItem('Space', spaceID);
-        redirect('../html/overview.html')
-      }else {
-        redirect('../html/joinOrCreateSpace.html')
-      }
-    });
-  }
-
 
 function loginNewUser(redir) {
   sessionStorage.setItem('NickName', document.getElementById("nameField").value);

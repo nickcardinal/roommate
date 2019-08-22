@@ -44,6 +44,7 @@
 
     <title>CheckMates</title>
   </head>
+
   <body onload="initializeOverview(); displaySpaceInfo()">
     <div class="space container ">
       <div class="top-bar">
@@ -61,12 +62,12 @@
 
       <div class="center-items-container space-content">
         <div class="">
-          <button class="blue-btn" type="button" onclick="redirect('../html/spaceKey.html')">Invite a Mate</button>
-          <!-- <button class="blue-btn" type="button" onclick="openMateList()">View Mates</button> -->
+          <button class="blue-btn" type="button" onclick="redirectSpaceKey()">Invite a Mate</button>
+          <button class="blue-btn" type="button" onclick="openMateList()">View Mates</button>
         </div>
         <div class="">
           <button class="blue-btn" type="button" onclick="redirectCreateTask()">Create a Task</button>
-          <!-- <button class="blue-btn" type="button" onclick="openTaskList()">View Tasks</button> -->
+          <button class="blue-btn" type="button" onclick="openTaskList()">View Tasks</button>
         </div>
       </div>
     </div>

@@ -1,5 +1,5 @@
 // User Information Display Functions
-// Found in --> ./html/profile.html
+// Found in --> ../html/profile.html
 function displayUserInfo() {
   document.getElementById('FullName').innerHTML= sessionStorage.getItem('name');
   document.getElementById('Email').innerHTML= sessionStorage.getItem('email');
@@ -7,7 +7,7 @@ function displayUserInfo() {
 }
 
 // Space Information Display Functions
-// Found in --> ./html/spaceKey.html
+// Found in --> ../html/spaceKey.html
 function displaySpaceInfo() {
   accessFirestoreSpace(sessionStorage.getItem('Space'), spaceKeyShowElements);
 }
@@ -15,15 +15,24 @@ function displaySpaceInfo() {
 function spaceKeyShowElements(spc) {
   document.getElementById('showName').innerHTML= spc.getTitle();
   document.getElementById('showDescription').innerHTML= spc.getDescription();
-  document.getElementById('showID').innerHTML= spc.getID();
+  try{
+    document.getElementById('showID').innerHTML= spc.getID();
+  }catch(e){
+
+  }
 }
 
 // Task Display Functions
-// Found in --> ./html/tasklist.html; to be moved to ./html/overview.html
+// Found in --> ../html/tasklist.html; to be moved to ../html/overview.html
 function displayTasks(tasks) {
-    tasks.forEach(task => {
+  var space = new Space();
+  space.setID(sessionStorage.getItem('Space'));
+  var tasks = space.fillTasksArray().then(function(tasksArray) {
+    space.tasks = tasksArray;
+    space.tasks.forEach(task => {
         appendTask(task);
-    })
+    });
+  });
 }
 
 function appendTask(task) {
@@ -53,4 +62,32 @@ function completeTask(taskID){
     firebase.firestore().collection('Tasks').doc(taskID).update({tskComplete:true}).then(result =>{
         location.reload()
     });
+}
+
+// Mates Display Functions
+// Found in --> ../html/mateslist.html; to be moved to ../html/overview.html
+function displayMates() {
+  var space = new Space();
+  space.setID(sessionStorage.getItem('Space'));
+  var mates = space.fillMatesArray().then(function(matesArray) {
+    space.mates = matesArray;
+    space.mates.forEach(mate => {
+        appendMate(mate);
+    });
+  });
+}
+
+function appendMate(mate) {
+  let table = document.getElementById("mateList");
+
+  let rows = table.getElementsByTagName("tr");
+  let row = table.insertRow(rows.length);
+
+  let mteName = row.insertCell(0);
+  row = table.insertRow(rows.length);
+
+  let br = row.insertCell(0);
+
+  mteName.innerHTML = mate.getNickName();
+  br.innerHTML = '<br></br>'
 }

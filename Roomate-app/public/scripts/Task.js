@@ -86,6 +86,14 @@
 		return this.recurringPeriod;
 	}
 
+	setRecurringPeriod(recurringPeriod) {
+		this.recurringPeriod = recurringPeriod;
+	}
+
+	getRecurringPeriod(recurringPeriod) {
+		return this.recurringPeriod;
+	}
+
 	// Getters/Setters: Task Completion Details
 	setAssignedMate(assignedMate) {
 		this.assignedMate = assignedMate;
