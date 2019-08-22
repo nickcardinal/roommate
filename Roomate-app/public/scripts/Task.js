@@ -121,6 +121,29 @@
 		console.log('assignedMate: ', this.assignedMate);
 		console.log('isComplete: ', this.isComplete);
 	}
+
+	calcNewDate() {
+			let currDate = this.dueDate.split("-");
+			let currFormatedDate = currDate[1] + "/" + currDate[2] + "/" + currDate[0];
+
+	    let newDate = new Date(currFormatedDate);
+
+			let today = new Date();
+			today.getDate();
+
+	    newDate.setDate(newDate.getDate() + this.recurringPeriod);
+
+			while(newDate < today) {
+				newDate.setDate(newDate.getDate() + this.recurringPeriod);
+			}
+
+	    let dd = newDate.getDate();
+	    let mm = newDate.getMonth() + 1;
+	    let y = newDate.getFullYear();
+
+	    let formattedDate = y + '-' + mm + '-' + dd;
+	    this.dueDate =  formattedDate;
+	}
 }
 
 function createTask() {
@@ -171,27 +194,6 @@ function createFirestoreTask() {
 		});
 }
 
-function calcNewDate(currDate, recurPeriod) {
-		var currDate = currDate.split("-");
-		currFormatedDate = currDate[1] + "/" + currDate[2] + "/" + currDate[0];
 
-    var newDate = new Date(currFormatedDate);
-
-		var today = new Date();
-		today.getDate();
-
-    newDate.setDate(newDate.getDate() + recurPeriod);
-
-		while(newDate < today) {
-			newDate.setDate(newDate.getDate() + recurPeriod);
-		}
-
-    var dd = newDate.getDate();
-    var mm = newDate.getMonth() + 1;
-    var y = newDate.getFullYear();
-
-    var formattedDate = y + '-' + mm + '-' + dd;
-    return formattedDate;
-}
 
 module.exports = Task;
