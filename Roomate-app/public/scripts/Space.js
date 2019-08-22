@@ -1,5 +1,5 @@
-const RecurringTaskFactory = require('./RecurringTaskFactory.js')
-const NonRecurringTaskFactory = require('./NonRecurringTaskFactory.js')
+// const RecurringTaskFactory = require('./RecurringTaskFactory.js')
+// const NonRecurringTaskFactory = require('./NonRecurringTaskFactory.js')
 
 
 class Space {
@@ -63,7 +63,24 @@ class Space {
     getTasks() {
         return this.tasks;
     }
+  
+    sortTasksByDate(tasksArray) {
+      tasksArray.sort((taskA, taskB) => {
 
+        // Check Date: recent first
+        if(taskA.getDueDate() > taskB.getDueDate()) {
+          return 1;
+        } else if(taskA.getDueDate() === taskB.getDueDate()){
+
+          // Check Time: recent first
+          if(taskA.getDueTime() >= taskB.getDueTime()) {
+            return 1;
+          }
+        }
+        return -1;
+      });
+    }
+      
     createTaskByFactory(taskdb) {
     	var factory;
       var mate;

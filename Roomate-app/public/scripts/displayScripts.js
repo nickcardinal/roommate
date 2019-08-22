@@ -29,6 +29,7 @@ function displayTasks(tasks) {
   space.setID(sessionStorage.getItem('Space'));
   var tasks = space.fillTasksArray().then(function(tasksArray) {
     space.tasks = tasksArray;
+    space.sortTasksByDate(space.tasks);
     space.tasks.forEach(task => {
         appendTask(task);
     });
