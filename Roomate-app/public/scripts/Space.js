@@ -1,7 +1,6 @@
-const RecurringTaskFactory = require('./RecurringTaskFactory.js')
-    const NonRecurringTaskFactory = require('./NonRecurringTaskFactory.js')
-
-    class Space {
+// const RecurringTaskFactory = require('./RecurringTaskFactory.js')
+// const NonRecurringTaskFactory = require('./NonRecurringTaskFactory.js')
+class Space {
     constructor() {
         this.ID;
         this.title;
@@ -62,7 +61,24 @@ const RecurringTaskFactory = require('./RecurringTaskFactory.js')
     getTasks() {
         return this.tasks;
     }
-	//Moved to utility.js
+    sortTasksByDate(tasksArray) {
+      tasksArray.sort((taskA, taskB) => {
+
+        // Check Date: recent first
+        if(taskA.getDueDate() > taskB.getDueDate()) {
+          return 1;
+        } else if(taskA.getDueDate() === taskB.getDueDate()){
+
+          // Check Time: recent first
+          if(taskA.getDueTime() >= taskB.getDueTime()) {
+            return 1;
+          }
+        }
+        return -1;
+      });
+    }
+      
+  	//Moved to utility.js
     createTaskByFactory(taskdb) {
         var factory;
         var mate;
