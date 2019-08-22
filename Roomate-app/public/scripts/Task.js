@@ -115,7 +115,20 @@
 	}
 }
 
-//Create Firestore Task
+function createTask() {
+	var taskdb = firebase.firestore().collection("Tasks");
+	//somehow find the space object and call createTaskByFactoryFunction()
+}
+
+function reCreateRecurringTask() {
+	var taskdb = firebase.firestore().collection("Tasks");
+	//find the original task using the id
+	//call duplicate on the new task and pass in the old task
+	//update the original task to set isComplete to true
+	//update the original in json and the database
+	//somehow find the space object and call reCreateTaskByFactoryFunction()
+	// pass in taskdb and the new task
+}
 
 function createFirestoreTask() {
 	var taskdb = firebase.firestore().collection("Tasks");
