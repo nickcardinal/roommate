@@ -16,6 +16,18 @@
 		this.isComplete;
 	}
 
+	duplicate(task) {
+		this.task_ID; //assign it to something?
+		this.title = task.getTitle();
+		this.description = task.getDescription();
+		this.dueDate = task.getDueDate();
+		this.dueTime = task.getDueTime();
+		this.isRecurring = task.getIsRecurring();
+		this.getRecurringPeriod = task.getRecurringPeriod();
+		this.assignedMate = task.getAssignedMate();
+		this.isComplete = task.getIsComplete();
+	}
+
 	// Getters/Setters: Task Descriptors
 	setTaskID(task_ID) {
 		this.task_ID = task_ID;
@@ -66,6 +78,14 @@
 		this.isRecurring = isRecurring;
 	}
 
+	setRecurringPeriod(recurringPeriod) {
+		this.recurringPeriod = recurringPeriod;
+	}
+
+	getRecurringPeriod(recurringPeriod) {
+		return this.recurringPeriod;
+	}
+
 	// Getters/Setters: Task Completion Details
 	setAssignedMate(assignedMate) {
 		this.assignedMate = assignedMate;
@@ -95,7 +115,21 @@
 	}
 }
 
-//Create Firestore Task
+function createTask() {
+	var taskdb = firebase.firestore().collection("Tasks");
+	//somehow find the space object and call createTaskByFactoryFunction()
+}
+
+function reCreateRecurringTask() {
+	var taskdb = firebase.firestore().collection("Tasks");
+	//find the original task using the id
+	//call duplicate on the new task and pass in the old task
+	//update the original task to set isComplete to true
+	//update the original in json and the database
+	//somehow find the space object and call reCreateTaskByFactoryFunction()
+	// pass in taskdb and the new task
+}
+
 function createFirestoreTask() {
 	var taskdb = firebase.firestore().collection("Tasks");
 	console.log("We're in the mainframe... Task data collection has commenced.");
@@ -151,6 +185,5 @@ function calcNewDate(currDate, recurPeriod) {
     var formattedDate = y + '-' + mm + '-' + dd;
     return formattedDate;
 }
-
 
 module.exports = Task;
