@@ -79,10 +79,10 @@ const RecurringTaskFactory = require('./RecurringTaskFactory.js')
     }
 
     reCreateRecurringTaskByFactory(task, taskdb) {
-        var factory = new RecurringTaskFactory(taskdb);
-        task.setAssignedMate(this.setNextMateAssignedToRecurringTask(task.getAssignedMate()));
-        //task.setDueDate() //call Morgan's function
-        this.addTask(factory.reCreateTask(task));
+      var factory = new RecurringTaskFactory(taskdb);
+      task.setAssignedMate(this.setNextMateAssignedToRecurringTask(task.getAssignedMate()));
+      task.calcNewDate() //call Morgan's function
+      this.addTask(factory.reCreateTask(task));
     }
 	//Moved to utility.js
     isValidSpace(spaceDocID) {

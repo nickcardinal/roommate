@@ -14,6 +14,7 @@
 		// Task Completion Details
 		this.assignedMate;
 		this.isComplete;
+		this.favourMate;
 	}
 
 	duplicate(task) {
@@ -26,6 +27,7 @@
 		this.RecurringPeriod = task.getRecurringPeriod();
 		this.assignedMate = task.getAssignedMate();
 		this.isComplete = task.getIsComplete();
+		this.favourMate = task.getFavourMate();
 	}
 
 	// Getters/Setters: Task Descriptors
@@ -94,6 +96,14 @@
 		return this.recurringPeriod;
 	}
 
+	setFavourMate(mate){
+		this.favourMate = mate;
+	}
+
+	getFavourMate(){
+		return this.favourMate;
+	}
+
 	// Getters/Setters: Task Completion Details
 	setAssignedMate(assignedMate) {
 		this.assignedMate = assignedMate;
@@ -120,6 +130,29 @@
 		console.log('isRecurring: ', this.isRecurring);
 		console.log('assignedMate: ', this.assignedMate);
 		console.log('isComplete: ', this.isComplete);
+	}
+
+	calcNewDate() {
+			let currDate = this.dueDate.split("-");
+			let currFormatedDate = currDate[1] + "/" + currDate[2] + "/" + currDate[0];
+
+	    let newDate = new Date(currFormatedDate);
+
+			let today = new Date();
+			today.getDate();
+
+	    newDate.setDate(newDate.getDate() + this.recurringPeriod);
+
+			while(newDate < today) {
+				newDate.setDate(newDate.getDate() + this.recurringPeriod);
+			}
+
+	    let dd = newDate.getDate();
+	    let mm = newDate.getMonth() + 1;
+	    let y = newDate.getFullYear();
+
+	    let formattedDate = y + '-' + mm + '-' + dd;
+	    this.dueDate =  formattedDate;
 	}
 }
 
@@ -151,7 +184,8 @@ function createFirestoreTask() {
 		tskIsRecurring: $('#isRecurringField').is(':checked'),
 		tskRecurringPeriod: $('#recurringPeriodField').val(),
 		tskAssignedMate: "Unique Mate ID",
-		tskIsComplete: false
+		tskIsComplete: false,
+		tskFavour:""
 	}
 
 	// Add Task to Space
@@ -171,27 +205,6 @@ function createFirestoreTask() {
 		});
 }
 
-function calcNewDate(currDate, recurPeriod) {
-		var currDate = currDate.split("-");
-		currFormatedDate = currDate[1] + "/" + currDate[2] + "/" + currDate[0];
 
-    var newDate = new Date(currFormatedDate);
-
-		var today = new Date();
-		today.getDate();
-
-    newDate.setDate(newDate.getDate() + recurPeriod);
-
-		while(newDate < today) {
-			newDate.setDate(newDate.getDate() + recurPeriod);
-		}
-
-    var dd = newDate.getDate();
-    var mm = newDate.getMonth() + 1;
-    var y = newDate.getFullYear();
-
-    var formattedDate = y + '-' + mm + '-' + dd;
-    return formattedDate;
-}
 
 module.exports = Task;
