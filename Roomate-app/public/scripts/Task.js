@@ -14,6 +14,7 @@
 		// Task Completion Details
 		this.assignedMate;
 		this.isComplete;
+		this.favourMate;
 	}
 
 	duplicate(task) {
@@ -92,6 +93,14 @@
 
 	getRecurringPeriod(recurringPeriod) {
 		return this.recurringPeriod;
+	}
+
+	setFavourMate(mate){
+		this.favourMate = mate;
+	}
+
+	getFavourMate(){
+		return this.favourMate;
 	}
 
 	// Getters/Setters: Task Completion Details
