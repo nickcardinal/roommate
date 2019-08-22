@@ -14,6 +14,7 @@
 		// Task Completion Details
 		this.assignedMate;
 		this.isComplete;
+		this.favourMate;
 	}
 
 	duplicate(task) {
@@ -26,6 +27,7 @@
 		this.RecurringPeriod = task.getRecurringPeriod();
 		this.assignedMate = task.getAssignedMate();
 		this.isComplete = task.getIsComplete();
+		this.favourMate = task.getFavourMate();
 	}
 
 	// Getters/Setters: Task Descriptors
@@ -92,6 +94,14 @@
 
 	getRecurringPeriod(recurringPeriod) {
 		return this.recurringPeriod;
+	}
+
+	setFavourMate(mate){
+		this.favourMate = mate;
+	}
+
+	getFavourMate(){
+		return this.favourMate;
 	}
 
 	// Getters/Setters: Task Completion Details
@@ -174,7 +184,8 @@ function createFirestoreTask() {
 		tskIsRecurring: $('#isRecurringField').is(':checked'),
 		tskRecurringPeriod: $('#recurringPeriodField').val(),
 		tskAssignedMate: "Unique Mate ID",
-		tskIsComplete: false
+		tskIsComplete: false,
+		tskFavour:""
 	}
 
 	// Add Task to Space
