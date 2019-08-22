@@ -38,3 +38,15 @@ test('Task Getter Test', function(){
 	expect([task.getTaskID(), task.getTitle(), task.getDescription(), task.getDueDate(), task.getDueTime(), task.getIsRecurring(), task.getAssignedMate(), task.getIsComplete()])
 		.toEqual([task_ID, title, description, dueDate, dueTime, isRecurring, assignedMate, isComplete]);
 });
+
+test('favour mate setter', function(){
+	let task = new Task();
+	task.setFavourMate('mate');
+	expect(task.favourMate).toEqual('mate');
+});
+
+test('favour mate getter', function(){
+	let task = new Task();
+	task.favourMate = 'mate';
+	expect(task.getFavourMate()).toEqual('mate');
+});
