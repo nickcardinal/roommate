@@ -68,16 +68,16 @@ class Space {
     	var factory;
       var mate;
 
-    	if ($('#isRecurringField').is(':checked')) {
+    	if ($('#isRecurringField').is(':checked')) { //test this
     		factory = new RecurringTaskFactory(taskdb);
-        mate = setFirstMateAssignedToRecurringTask();
+        mate = this.setFirstMateAssignedToRecurringTask();
     	}
     	else {
     		factory = new NonRecurringTaskFactory(taskdb);
-        mate = setMateToNonRecurringTask();
+        mate = this.setMateToNonRecurringTask();
     	}
 
-    	addTask(factory.createTask(mate));
+    	this.addTask(factory.createTask(mate));
     }
 
     reCreateRecurringTaskByFactory(task, taskdb) {
