@@ -27,6 +27,7 @@
 		this.RecurringPeriod = task.getRecurringPeriod();
 		this.assignedMate = task.getAssignedMate();
 		this.isComplete = task.getIsComplete();
+		this.favourMate = task.getFavourMate();
 	}
 
 	// Getters/Setters: Task Descriptors
@@ -160,7 +161,8 @@ function createFirestoreTask() {
 		tskIsRecurring: $('#isRecurringField').is(':checked'),
 		tskRecurringPeriod: $('#recurringPeriodField').val(),
 		tskAssignedMate: "Unique Mate ID",
-		tskIsComplete: false
+		tskIsComplete: false,
+		tskFavour:""
 	}
 
 	// Add Task to Space
