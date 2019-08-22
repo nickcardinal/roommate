@@ -1,12 +1,15 @@
 class NonRecurringTaskFactory() {
-  constructor() {
+  constructor(taskdb) {
     this.task = new Task();
+    this.mate = new Mate();
+    this.taskdb = taskdb;
   }
 
-  createTask(taskdb) {
+  createTask(mate) {
+    this.mate = mate;
     populateTask();
-    insertTaskIntoFirestore(taskdb);
-    //json here
+    insertTaskIntoFirestore();
+    //json here...
     return this.task;
   }
 
@@ -17,11 +20,11 @@ class NonRecurringTaskFactory() {
     this.task.setDueTime($("#dueTimeField").val());
     this.task.setIsRecurring(false);
     this.task.setRecurringPeriod(0);
-    this.task.getAssignedMate();
+    this.task.setAssignedMate(this.mate);
     this.task.setIsComplete(false);
   }
 
-  insertTaskIntoFirestore(taskdb) {
+  insertTaskIntoFirestore() {
     // Setting firestore data
     let data = {
       tskTitle: this.task.getTitle(),
@@ -30,12 +33,12 @@ class NonRecurringTaskFactory() {
       tskDueTime: this.task.getDueTime(),
       tskIsRecurring: this.task.getRecurringPeriod(),
       tskRecurringPeriod: this.task.getRecurringPeriod(),
-      tskAssignedMate: this.task.getAssignedMate().getID(),
+      tskAssignedMateID: this.task.getAssignedMate().getID(),
       tskIsComplete: this.task.getIsComplete()
     }
 
-    // Add Task to Space
-    taskdb
+    // Add Task to Space in db
+    this.taskdb
     .add(data)
     .then(function(docRef) {
       var spaceID = sessionStorage.getItem("Space");
