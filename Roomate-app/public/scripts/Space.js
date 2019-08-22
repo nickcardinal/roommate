@@ -84,7 +84,7 @@ class Space {
 				return;
 			}
 			else{
-                sessionStorage.setItem('Space', userSpaceID);
+        sessionStorage.setItem('Space', userSpaceID);
 				var db = firebase.firestore();
 				var spcDocRef = db.collection("Spaces").doc(userSpaceID);
                 let mateDocRef = db.collection('Mates').doc(userDocID);
@@ -97,13 +97,12 @@ class Space {
                     mateDocRef.update({
                         usrSpaces: mateSpaces
                     });
-                    db.runTransaction(transaction => {
-                        return transaction.get(spcDocRef).then(snapshot => {
-                            const spcUserArray = snapshot.get("spcMates");
-                            spcUserArray.push(userDocID);
-                            transaction.update(spcDocRef, "spcMates", spcUserArray);
-                            redirectOverview();
-                        })
+                    spcDocRef.get().then(result => {
+                      let mteArr = result.data().spcMates;
+                      mteArr.push(userDocID);
+                      spcDocRef.update({spcMates:mteArr}).then(result =>{
+                        redirect('../html/overview.html');
+                      });
                     });
                 });
 			}
@@ -207,7 +206,7 @@ class Space {
 		 else{
 			this.setID(space_ID);
 		 }
-		 
+
 		var db = firebase.firestore();
         var spcSpaceRef = db.collection("Spaces").doc(this.ID);
 		await spcSpaceRef.get().then(function (spcDoc) {
@@ -219,10 +218,10 @@ class Space {
 			await this.fillMatesArray().then(function(matesArray) {
 				_callback('mates', matesArray);
 			});
-		
+
 			await this.fillTasksArray().then(function(tasksArray) {
 				_callback('tasks', tasksArray);
-			});	
+			});
 		}).then(none => {
 			this.isLoaded = true;
 		})
@@ -304,7 +303,7 @@ function outputMatesAndTasksInSpace() {
 }
 
 function joinExistingSpace(){
-    var newSpace = new Space();
+  var newSpace = new Space();
 	newSpace.addMateToSpace();
 }
 
