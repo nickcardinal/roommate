@@ -12,6 +12,7 @@ class NonRecurringTaskFactory {
     this.mate = mate;
     this.populateTask();
     this.insertTaskIntoFirestore();
+    //json here...
     return this.task;
   }
 
@@ -33,7 +34,7 @@ class NonRecurringTaskFactory {
       tskDescription: this.task.getDescription(),
       tskDueDate: this.task.getDueDate(),
       tskDueTime: this.task.getDueTime(),
-      tskIsRecurring: this.task.getRecurringPeriod(),
+      tskIsRecurring: this.task.getIsRecurring(),
       tskRecurringPeriod: this.task.getRecurringPeriod(),
       tskAssignedMateID: this.task.getAssignedMate().getID(),
       tskIsComplete: this.task.getIsComplete()
