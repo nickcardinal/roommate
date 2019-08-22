@@ -1,15 +1,17 @@
-// An attempt to pull tasks from Firebase
-function pullTasksFromFirebase() {
-  var spaceID = sessionStorage.getItem("Space");
-  var spacedb = firebase.firestore().collection("Spaces").doc(spaceID);
-  console.log("Space in session: " + spaceID);
 
-  var tempTaskArray = new Array();
+function sortTasksByDate() {
+  // Pull tasks from Firebase
+  var space = new Space();
+  space.setID(sessionStorage.getItem('Space'));
+  var tasks = space.fillTasksArray().then(function(tasksArray) {
+    space.tasks = tasksArray;
+    console.log("Task List: ");
+    space.tasks.forEach(task => {
+        console.log(task.getDueDate(), task.getDueTime());
+    });
+  });
+}
 
-  let space = await spacedb.get();
-  tempTaskArray = space.data().spcTasks;
-  console.log("tempTaskArray: ");
-  tempTaskArray.forEach(doc => {
-    console.log(doc);
-  })
+function moveCompletedTasks() {
+
 }
