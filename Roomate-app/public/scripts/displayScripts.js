@@ -57,7 +57,8 @@ function appendTask(task) {
   tskMate.innerHTML = 'Task assigned to ' + task.getAssignedMate();
   br.innerHTML = '<br></br>'
 }
-
+//This function will branch based on Recurring/Nonrecurring
+//Functionality for marking a task as complete should be moved to the Task Object class.
 function completeTask(taskID){
     //marks task with id taskID as completed
     firebase.firestore().collection('Tasks').doc(taskID).update({tskComplete:true}).then(result =>{

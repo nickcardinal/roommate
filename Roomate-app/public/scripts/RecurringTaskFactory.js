@@ -15,6 +15,13 @@ class RecurringTaskFactory {
     //json here...
     return this.task;
   }
+  
+  createTask() {
+    this.populateTask();
+    this.insertTaskIntoFirestore();
+    //json here...
+    return this.task;
+  }
 
   populateTask() {
     this.task.setTitle($("#titleField").val());
