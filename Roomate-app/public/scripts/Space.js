@@ -253,16 +253,6 @@ const RecurringTaskFactory = require('./RecurringTaskFactory.js')
             this.isLoaded = true;
         })
     }
-
-    populateFromSessionStorage() {
-        let mySpaceJSON = sessionStorage.getItem("mySpaceJSON");
-        if (mySpaceJSON === "undefined") {
-            alert("mySpaceJSON is empty.");
-            return;
-        }
-        this = JSON.parse(mySpaceJSON);
-    }
-
     fillMatesArray() {
         if (typeof this.ID === "undefined") {
             alert("Space ID is empty.");
