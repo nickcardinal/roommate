@@ -48,22 +48,17 @@
     <div class="container">
       <div class="center-items-container">
         <div class="center-items">
-          <h3>Create Space</h3>
-
+          <h3>Join Your Mates Space</h3>
+          <br>
           <form>
-            Space Title:
+            Enter Space ID
             <br>
-            <input type="text" id="spaceTitle">
-            <br><br>
-
-            Description:
+            <input id="userSpaceID" type="text" name="SpaceID" required>
             <br>
-            <input type="text" id="spaceDescription">
-            <br><br>
           </form>
-
-          <button type="button" class="blue-btn" onclick="createFirestoreSpace()">Create Space</button>
-					<br>
+          <br>
+          <button type="button" class="blue-btn" onclick="joinExistingSpace()">Join Space</button>
+          <br>
           <button type="button" class="blue-btn cancel" onclick="redirect('./joinOrCreateSpace.html')">Cancel</button>
         </div>
       </div>

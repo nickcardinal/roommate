@@ -1,3 +1,7 @@
+const RecurringTaskFactory = require('./RecurringTaskFactory.js')
+const NonRecurringTaskFactory = require('./NonRecurringTaskFactory.js')
+
+
 class Space {
     constructor() {
 		this.ID;
@@ -60,6 +64,29 @@ class Space {
         return this.tasks;
     }
 
+    createTaskByFactory(taskdb) {
+    	var factory;
+      var mate;
+
+    	if ($('#isRecurringField').is(':checked')) {
+    		factory = new RecurringTaskFactory(taskdb);
+        mate = setFirstMateAssignedToRecurringTask();
+    	}
+    	else {
+    		factory = new NonRecurringTaskFactory(taskdb);
+        mate = setMateToNonRecurringTask();
+    	}
+
+    	addTask(factory.createTask(mate));
+    }
+
+    reCreateRecurringTaskByFactory(task, taskdb) {
+      var factory = new RecurringTaskFactory(taskdb);
+      task.setAssignedMate(this.setNextMateAssignedToRecurringTask(task.getAssignedMate()));
+      //task.setDueDate() //call Morgan's function
+      this.addTask(factory.reCreateTask(task));
+    }
+
     isValidSpace(spaceDocID) {
         var db = firebase.firestore();
         var spcDocRef = db.collection("Spaces").doc(spaceDocID);
@@ -84,7 +111,7 @@ class Space {
 				return;
 			}
 			else{
-                sessionStorage.setItem('Space', userSpaceID);
+        sessionStorage.setItem('Space', userSpaceID);
 				var db = firebase.firestore();
 				var spcDocRef = db.collection("Spaces").doc(userSpaceID);
                 let mateDocRef = db.collection('Mates').doc(userDocID);
@@ -97,112 +124,110 @@ class Space {
                     mateDocRef.update({
                         usrSpaces: mateSpaces
                     });
-                    db.runTransaction(transaction => {
-                        return transaction.get(spcDocRef).then(snapshot => {
-                            const spcUserArray = snapshot.get("spcMates");
-                            spcUserArray.push(userDocID);
-                            transaction.update(spcDocRef, "spcMates", spcUserArray);
-
-
-
-                            redirectOverview();
-
-                        })
+                       spcDocRef.get().then(result => {
+                      let mteArr = result.data().spcMates;
+                      mteArr.push(userDocID);
+                      spcDocRef.update({spcMates:mteArr}).then(result =>{
+                        redirect('../html/overview.html');
+                      });
                     });
                 });
 			}
     });
   }
 
-    setMateToNonRecurringTask() {
-      if (this.mates.length == 0) {
-        console.log("No mates in the living space.");
-        return;
+  setMateToNonRecurringTask() {
+    if (this.mates.length == 0) {
+      console.log("No mates in the living space.");
+      return;
+    }
+
+    let minNumTasks = this.getNumberOfMatesNonRecurringTasks(this.mates[0]);
+    var minTaskMates = [];
+    minTaskMates.push(this.mates[0]);
+
+    for (var i = 1; i < this.mates.length; ++i) {
+      let j = this.getNumberOfMatesNonRecurringTasks(this.mates[i]); //would be more efficient to get all the number of tasks in one shot...
+      if (j < minNumTasks) {
+        minNumTasks = j;
+        minTaskMates = [];
+        minTaskMates.push(this.mates[i]);
+      } else if (j === minNumTasks) {
+        minTaskMates.push(this.mates[i]);
       }
+      //console.log(minTaskMates);
+    }
 
-      let minNumTasks = this.getNumberOfMatesNonRecurringTasks(this.mates[0]);
-      var minTaskMates = [];
-      minTaskMates.push(this.mates[0]);
+    if (minTaskMates.length > 1) {
+      return minTaskMates[Math.floor(Math.random() * minTaskMates.length)];
+    } else {
+      return minTaskMates[0];
+    }
+  }
 
-      for (var i = 1; i < this.mates.length; ++i) {
-        let j = this.getNumberOfMatesNonRecurringTasks(this.mates[i]); //would be more efficient to get all the number of tasks in one shot...
-        if (j < minNumTasks) {
-          minNumTasks = j;
-          minTaskMates = [];
-          minTaskMates.push(this.mates[i]);
-        } else if (j === minNumTasks) {
-          minTaskMates.push(this.mates[i]);
-        }
-        //console.log(minTaskMates);
-      }
+  setFirstMateAssignedToRecurringTask() {
+    if (this.mates.length == 0) {
+      alert("No mates in the living space.");
+      return;
+    }
 
-      if (minTaskMates.length > 1) {
-        return minTaskMates[Math.floor(Math.random() * minTaskMates.length)];
-      } else {
-        return minTaskMates[0];
+    let minNumTasks = this.getNumberOfMatesRecurringTasks(this.mates[0]);
+    var minTaskMates = [];
+    minTaskMates.push(this.mates[0]);
+
+    for (var i = 1; i < this.mates.length; ++i) {
+      let j = this.getNumberOfMatesRecurringTasks(this.mates[i]); //would be more efficient to get all the number of tasks in one shot...
+      if (j < minNumTasks) {
+        minNumTasks = j;
+        minTaskMates = [];
+        minTaskMates.push(this.mates[i]);
+      } else if (j == minNumTasks) {
+        minTaskMates.push(this.mates[i]);
       }
     }
 
-    setFirstMateAssignedToRecurringTask() {
-      if (this.mates.length == 0) {
-        alert("No mates in the living space.");
-        return;
-      }
+    if (minTaskMates.length > 1) {
+      return minTaskMates[Math.floor(Math.random() * minTaskMates.length)];
+    } else {
+      return minTaskMates[0];
+    }
+  }
 
-      let minNumTasks = this.getNumberOfMatesRecurringTasks(this.mates[0]);
-      var minTaskMates = [];
-      minTaskMates.push(this.mates[0]);
-
-      for (var i = 1; i < this.mates.length; ++i) {
-        let j = this.getNumberOfMatesRecurringTasks(this.mates[i]); //would be more efficient to get all the number of tasks in one shot...
-        if (j < minNumTasks) {
-          minNumTasks = j;
-          minTaskMates = [];
-          minTaskMates.push(this.mates[i]);
-        } else if (j == minNumTasks) {
-          minTaskMates.push(this.mates[i]);
-        }
-      }
-
-      if (minTaskMates.length > 1) {
-        return minTaskMates[Math.floor(Math.random() * minTaskMates.length)];
-      } else {
-        return minTaskMates[0];
+  setNextMateAssignedToRecurringTask(mate) {
+    for (var i = 0; i < this.mates.length - 1; ++i) {
+      if (this.mates[i] == mate) {
+          return this.mates[i + 1];
       }
     }
+    return this.mates[0];
+  }
 
-    setNextMateAssignedToRecurringTask(mate) {
-      for (var i = 0; i < this.mates.length - 1; ++i) {
-        if (this.mates[i] == mate) {
-            return this.mates[i + 1];
-        }
-      }
-      return this.mates[0];
-    }
-    getNumberOfMatesNonRecurringTasks(mate) {
-      var numTasks = 0;
-      for (var i = 0; i < this.tasks.length; ++i) {
-        var tempTask = this.tasks[i];
-        //console.log(tempTask);
-        if (tempTask.assignedMate == mate &&
-           !tempTask.isRecurring &&
-           !tempTask.completionStatus) {
-             ++numTasks;
-        }
-      }
-      return numTasks;
-    }
-    getNumberOfMatesRecurringTasks(mate) {
-      var numTasks = 0;
-      for (var i = 0; i < this.tasks.length; ++i) {
-        var tempTask = this.tasks[i];
-        if (tempTask.assignedMate == mate &&
-            tempTask.isRecurring &&
-           !tempTask.completionStatus) {
-             ++numTasks;
-        }
+  getNumberOfMatesNonRecurringTasks(mate) {
+    var numTasks = 0;
+    for (var i = 0; i < this.tasks.length; ++i) {
+      var tempTask = this.tasks[i];
+      //console.log(tempTask);
+      if (tempTask.assignedMate == mate &&
+         !tempTask.isRecurring &&
+         !tempTask.isComplete) {
+           ++numTasks;
       }
     }
+    return numTasks;
+  }
+
+  getNumberOfMatesRecurringTasks(mate) {
+    var numTasks = 0;
+    for (var i = 0; i < this.tasks.length; ++i) {
+      var tempTask = this.tasks[i];
+      if (tempTask.assignedMate == mate &&
+          tempTask.isRecurring &&
+         !tempTask.isComplete) {
+           ++numTasks;
+      }
+    }
+  }
+
 	async populateSpace(space_ID, _callback){
 		 if(space_ID === "undefined" ){
 			alert("Space ID is empty.");
@@ -211,7 +236,7 @@ class Space {
 		 else{
 			this.setID(space_ID);
 		 }
-		 
+
 		var db = firebase.firestore();
         var spcSpaceRef = db.collection("Spaces").doc(this.ID);
 		await spcSpaceRef.get().then(function (spcDoc) {
@@ -223,43 +248,45 @@ class Space {
 			await this.fillMatesArray().then(function(matesArray) {
 				_callback('mates', matesArray);
 			});
-		
+
 			await this.fillTasksArray().then(function(tasksArray) {
 				_callback('tasks', tasksArray);
-			});	
+			});
 		}).then(none => {
 			this.isLoaded = true;
 		})
 	}
-    fillMatesArray() {
-        if(typeof this.ID === "undefined" ){
-			alert("Space ID is empty.");
-			return;
-        }
-        var mtePromiseArray = [];
-        var db = firebase.firestore();
-        var spcSpaceRef = db.collection("Spaces").doc(this.ID);
-        return spcSpaceRef.get().then(function (spcDoc) {
-            if (spcDoc.exists) {
-                spcDoc.data().spcMates.forEach(mate => {
-                    var mteMateRef = db.collection("Mates").doc(mate);
-                    var newMate = mteMateRef.get().then(function (mateRecord) {
-                            var currMate = new Mate();
-                            currMate.setID(mateRecord.id);
-                            currMate.setNickName(mateRecord.data().usrNickname);
-                            currMate.setFullName(mateRecord.data().usrName);
-                            currMate.setEmail(mateRecord.data().usrEmail);
-                            currMate.setPhotoURL(mateRecord.data().usrPhotoUrl);
-                            return currMate;
-                        });
-                    mtePromiseArray.push(newMate);
-                });
-            }
-            return Promise.all(mtePromiseArray);
-        });
+
+  fillMatesArray() {
+    if(typeof this.ID === "undefined" ){
+      alert("Space ID is empty.");
+      return;
     }
+      var mtePromiseArray = [];
+      var db = firebase.firestore();
+      var spcSpaceRef = db.collection("Spaces").doc(this.ID);
+      return spcSpaceRef.get().then(function (spcDoc) {
+          if (spcDoc.exists) {
+              spcDoc.data().spcMates.forEach(mate => {
+                  var mteMateRef = db.collection("Mates").doc(mate);
+                  var newMate = mteMateRef.get().then(function (mateRecord) {
+                          var currMate = new Mate();
+                          currMate.setID(mateRecord.id);
+                          currMate.setNickName(mateRecord.data().usrNickname);
+                          currMate.setFullName(mateRecord.data().usrName);
+                          currMate.setEmail(mateRecord.data().usrEmail);
+                          currMate.setPhotoURL(mateRecord.data().usrPhotoUrl);
+                          return currMate;
+                      });
+                  mtePromiseArray.push(newMate);
+              });
+          }
+          return Promise.all(mtePromiseArray);
+      });
+    }
+
 	fillTasksArray() {
-        if(typeof this.ID === "undefined" ){
+    if(typeof this.ID === "undefined" ){
 			alert("Space ID is empty.");
 			return;
         }
@@ -308,7 +335,7 @@ function outputMatesAndTasksInSpace() {
 }
 
 function joinExistingSpace(){
-    var newSpace = new Space();
+  var newSpace = new Space();
 	newSpace.addMateToSpace();
 }
 
@@ -383,27 +410,27 @@ function reWriteFirestoreSpace(ID, space) {
 }
 
 function testAssignTask() {
-    let user1 = new Mate();
-    let user2 = new Mate();
-    let user3 = new Mate();
-    let space = new Space();
-    user1.setEmail("user1@mail.com");
-    user2.setEmail("user2@mail.com");
-    user3.setEmail("user3@mail.com");
-    user1.setFullName("user1");
-    user2.setFullName("user2");
-    user3.setFullName("user3");
-    space.setTitle("Space");
-    space.addMate(user1);
-    space.addMate(user2);
-    space.addMate(user3);
-    for (let i = 0; i < 50; i++) {
-        let task = new Task();
-        task.setTitle("Task # " + i);
-        space.randomAssignMateToTask(task);
-        console.log(task.getAssignedMate(), "assigned.");
-        space.addTask(task);
-    }
+  let user1 = new Mate();
+  let user2 = new Mate();
+  let user3 = new Mate();
+  let space = new Space();
+  user1.setEmail("user1@mail.com");
+  user2.setEmail("user2@mail.com");
+  user3.setEmail("user3@mail.com");
+  user1.setFullName("user1");
+  user2.setFullName("user2");
+  user3.setFullName("user3");
+  space.setTitle("Space");
+  space.addMate(user1);
+  space.addMate(user2);
+  space.addMate(user3);
+  for (let i = 0; i < 50; i++) {
+    let task = new Task();
+    task.setTitle("Task # " + i);
+    space.randomAssignMateToTask(task);
+    console.log(task.getAssignedMate(), "assigned.");
+    space.addTask(task);
+  }
 }
 
 module.exports = Space;
