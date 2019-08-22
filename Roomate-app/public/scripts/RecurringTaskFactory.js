@@ -10,8 +10,8 @@ class RecurringTaskFactory {
 
   createTask(mate) {
     this.mate = mate;
-    populateTask();
-    insertTaskIntoFirestore();
+    this.populateTask();
+    this.insertTaskIntoFirestore();
     //json here...
     return this.task;
   }
@@ -34,7 +34,7 @@ class RecurringTaskFactory {
       tskDescription: this.task.getDescription(),
       tskDueDate: this.task.getDueDate(),
       tskDueTime: this.task.getDueTime(),
-      tskIsRecurring: this.task.getRecurringPeriod(),
+      tskIsRecurring: this.task.getIsRecurring(),
       tskRecurringPeriod: this.task.getRecurringPeriod(),
       tskAssignedMateID: this.task.getAssignedMate().getID(),
       tskIsComplete: this.task.getIsComplete()
@@ -57,7 +57,8 @@ class RecurringTaskFactory {
 
   reCreateTask(task) {
     this.task = task;
-    //insertTaskIntoFirestore();
+    //uncomment the line below when ready
+    //this.insertTaskIntoFirestore();
     //json here...
     return this.task;
   }
