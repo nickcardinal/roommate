@@ -60,6 +60,23 @@ class Space {
         return this.tasks;
     }
 
+    sortTasksByDate(tasksArray) {
+      tasksArray.sort((taskA, taskB) => {
+
+        // Check Date: recent first
+        if(taskA.getDueDate() > taskB.getDueDate()) {
+          return 1;
+        } else if(taskA.getDueDate() === taskB.getDueDate()){
+
+          // Check Time: recent first
+          if(taskA.getDueTime() >= taskB.getDueTime()) {
+            return 1;
+          }
+        }
+        return -1;
+      });
+    }
+
     isValidSpace(spaceDocID) {
         var db = firebase.firestore();
         var spcDocRef = db.collection("Spaces").doc(spaceDocID);
