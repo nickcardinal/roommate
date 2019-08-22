@@ -100,7 +100,9 @@ class Space {
                     spcDocRef.get().then(result => {
                       let mteArr = result.data().spcMates;
                       mteArr.push(userDocID);
-                      spcDocRef.update({spcMates:mteArr});
+                      spcDocRef.update({spcMates:mteArr}).then(result =>{
+                        redirect('../html/overview.html');
+                      });
                     });
                 });
 			}
