@@ -1,11 +1,14 @@
 class RecurringTaskFactory {
-  constructor() {
+  constructor(taskdb) {
     this.task = new Task();
+    this.mate = new Mate();
+    this.taskdb = taskdb;
   }
 
-  createTask(taskdb) {
-    populateTask(); // call a function that will populate the task object with jquery
-    insertTaskIntoFirestore(taskdb);
+  createTask(mate) {
+    this.mate = mate;
+    populateTask();
+    insertTaskIntoFirestore();
     //json here...
     return this.task;
   }
@@ -17,11 +20,11 @@ class RecurringTaskFactory {
     this.task.setDueTime($("#dueTimeField").val());
     this.task.setIsRecurring(true);
     this.task.setRecurringPeriod($('#recurringPeriodField').val());
-    this.task.getAssignedMate();
+    this.task.setAssignedMate(this.mate);
     this.task.setIsComplete(false);
   }
 
-  insertTaskIntoFirestore(taskdb) {
+  insertTaskIntoFirestore() {
     // Setting firestore data
     let data = {
       tskTitle: this.task.getTitle(),
@@ -30,12 +33,12 @@ class RecurringTaskFactory {
       tskDueTime: this.task.getDueTime(),
       tskIsRecurring: this.task.getRecurringPeriod(),
       tskRecurringPeriod: this.task.getRecurringPeriod(),
-      tskAssignedMate: this.task.getAssignedMate().getID(),
+      tskAssignedMateID: this.task.getAssignedMate().getID(),
       tskIsComplete: this.task.getIsComplete()
     }
 
-    // Add Task to Space
-    taskdb
+    // Add Task to Space in db
+    this.taskdb
     .add(data)
     .then(function(docRef) {
       var spaceID = sessionStorage.getItem("Space");
@@ -50,16 +53,8 @@ class RecurringTaskFactory {
   }
 
   reCreateTask(task) {
-    copyTask = new Task();
-    copyTask.duplicate(task);
-
-    //things that need to be changed after
-		copyTask.setAssignedMate()
-		copyTask.setDueDate() //call Morgan's function;
-
-    var taskdb = firebase.firestore().collection("Tasks");
-
-    insertTaskIntoFirestore(taskdb);
+    this.task = task;
+    insertTaskIntoFirestore();
     //json here...
     return this.task;
   }
