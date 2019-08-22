@@ -9,7 +9,7 @@
 		this.dueDate;
 		this.dueTime;
 		this.isRecurring;
-		this.recurringPeriod;
+		this.recurringPeriod = 0;
 
 		// Task Completion Details
 		this.assignedMate;
