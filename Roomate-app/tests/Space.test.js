@@ -10,8 +10,8 @@ test('some description', function(){
 const Space = require("../public/scripts/Space.js");
 const Mate = require("../public/scripts/Mate.js");
 const Task = require("../public/scripts/Task.js");
-//const RecurringTaskFactory = require("../public/scripts/RecurringTaskFactory.js");
-//const NonRecurringTaskFactory = require("../public/scripts/NonRecurringTaskFactory.js");
+const RecurringTaskFactory = require("../public/scripts/RecurringTaskFactory.js");
+const NonRecurringTaskFactory = require("../public/scripts/NonRecurringTaskFactory.js");
 
 // Getter/Setter tests
 var title = "The Collective";
@@ -54,6 +54,16 @@ test('add Mate set proper mate 3 for Space', function(){
 });
 
 let testSpace = new Space();
+for(let j = 0; j < 5; j++){
+    let mate = new Mate();
+    mate.setID('MATEID' + j + 'SPACEID');
+    mate.setNickName('m' + j);
+    mate.setFullName('Mate ' + j);
+    mate.setEmail('mate' + j + '@test.com');
+    mate.setPhotoURL('mate' + j +'ulr');
+    testSpace.addMate(mate);
+}
+
 
 //Tests for recurring Assignment
 
@@ -141,9 +151,9 @@ console.log(task5);
 
 console.log("start");
 
-// task6 = new Task();
-// task6.duplicate(task5);
+task6 = new Task();
+task6.duplicate(recurTask);
 //
-// testSpace.reCreateRecurringTaskByFactory(task6, null);
+testSpace.reCreateRecurringTaskByFactory(task6, null);
 
 console.log(testSpace.tasks);
