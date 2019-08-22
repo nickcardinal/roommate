@@ -87,15 +87,25 @@ class Space {
                 sessionStorage.setItem('Space', userSpaceID);
 				var db = firebase.firestore();
 				var spcDocRef = db.collection("Spaces").doc(userSpaceID);
-
-				db.runTransaction(transaction => {
-					return transaction.get(spcDocRef).then(snapshot => {
-						const spcUserArray = snapshot.get("spcMates");
-						spcUserArray.push(userDocID);
-						transaction.update(spcDocRef, "spcMates", spcUserArray);
-						redirectOverview();;
-					})
-				});
+                let mateDocRef = db.collection('Mates').doc(userDocID);
+                db.collection('Mates').doc(userDocID).get().then(result => {
+                    let mateSpaces = result.data().usrSpaces;
+                    if(mateSpaces === undefined){
+                        mateSpaces = new Array();
+                    }
+                    mateSpaces.push(spcDocRef);
+                    mateDocRef.update({
+                        usrSpaces: mateSpaces
+                    });
+                    db.runTransaction(transaction => {
+                        return transaction.get(spcDocRef).then(snapshot => {
+                            const spcUserArray = snapshot.get("spcMates");
+                            spcUserArray.push(userDocID);
+                            transaction.update(spcDocRef, "spcMates", spcUserArray);
+                            redirectOverview();
+                        })
+                    });
+                });
 			}
     });
   }
@@ -294,7 +304,7 @@ function outputMatesAndTasksInSpace() {
 }
 
 function joinExistingSpace(){
-	var newSpace = new Space();
+    var newSpace = new Space();
 	newSpace.addMateToSpace();
 }
 

@@ -59,14 +59,14 @@ function initializeWelcome() {
 
 var mySpace;
 async function initializeOverview(){
-	//This function will navigate away from the bottom portion 
+	//This function will navigate away from the bottom portion
 	//of this function if user isn't logged in or isn't part of a space.
 	validate();
-	
+
 	mySpace = new Space();
 	var spaceID = sessionStorage.getItem('Space');
 	await mySpace.populateSpace(spaceID, populateSpaceCallback);
-	if(mySpace.isLoaded){	
+	if(mySpace.isLoaded){
 		var myJSON = JSON.stringify(mySpace);
 		console.log(JSON.parse(myJSON));
 		console.log(mySpace);
@@ -128,7 +128,7 @@ function openTaskList() {
 }
 
 function openMateList() {
-  redirect("../html/matelist.html");
+  redirect("../html/mateslist.html");
   // window.open("../html/tasklist.html");
 }
 
