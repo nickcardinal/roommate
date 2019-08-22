@@ -83,7 +83,7 @@ class Space {
     reCreateRecurringTaskByFactory(task, taskdb) {
       var factory = new RecurringTaskFactory(taskdb);
       task.setAssignedMate(this.setNextMateAssignedToRecurringTask(task.getAssignedMate()));
-      //task.setDueDate() //call Morgan's function
+      task.calcNewDate() //call Morgan's function
       this.addTask(factory.reCreateTask(task));
     }
 

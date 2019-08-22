@@ -149,11 +149,11 @@ console.log(task5);
 
 //testing Factories
 
-console.log("start");
+//console.log("start");
 
-task6 = new Task();
-task6.duplicate(recurTask);
+// task6 = new Task();
+// task6.duplicate(recurTask);
+// //
+// testSpace.reCreateRecurringTaskByFactory(task6, null);
 //
-testSpace.reCreateRecurringTaskByFactory(task6, null);
-
-console.log(testSpace.tasks);
+// console.log(testSpace.tasks);
