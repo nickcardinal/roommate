@@ -112,11 +112,11 @@ function createTaskByFactory() {
 }
 //This function will branch based on Recurring/Nonrecurring
 //Functionality for marking a task as complete should be moved to the Task Object class.
+//Only allows for you to complete your own tasks
 function completeTask(taskID){
+    task = getTaskById(taskID);
+    if((task.getFavourMate() === '' && sessionStorage.getItem('user') === task.getAssignedMate() )|| task.getFavourMate() === sessionStorage.getItem('user')){
     //marks task with id taskID as completed
-    let tasks = getAllTasks();
-    tasks.forEach(task => {
-        if(task.getTaskID() === taskID){
           if(task.getIsRecurring()){
             // let fact = new RecurringTaskFactory(firebase.firestore().collection('Tasks'));
             let nextTask = Object.assign(new Task(), task);
@@ -145,7 +145,6 @@ function completeTask(taskID){
             });
           }
         }
-      });
 }
 /*********************************************
 
@@ -225,6 +224,15 @@ function getMateById(id){
     return new Mate();
 }
 
+//Returns task with id passed in
+function getTaskById(id){
+    let tasks = mySpace.getTasks();
+    for(let i = 0; i < tasks.length; i++){
+        if(tasks[i].getTaskID === id){
+            return tasks[i];
+        }
+    }
+}
 //Callback function for loadSpaceFromFirestore();
 function loadSpaceFromFirestoreCallback(type, value) {
     if (type === 'title') {
