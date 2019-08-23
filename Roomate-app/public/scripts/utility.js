@@ -62,21 +62,36 @@ function addMateRefToSpacesMates(mateRef, currSpaceID) { //Tested
 }
 //Pulls SpaceID from joinSpace.html and adds mateRef to Spaces.spcMate && adds Space to Mates.usrSpaces
 function addMateToSpace() { //Tested
-    var currMateID = sessionStorage.getItem("user");
-    var userSpaceID = $("#userSpaceID").val();
-
-    this.isValidSpace(userSpaceID).then(function (exists) {
-        var isValidSpaceID = exists;
+    let userDocID = sessionStorage.getItem("user");
+    let userSpaceID = $("#userSpaceID").val();
+    isValidSpace(userSpaceID).then(function (isValidSpaceID) {
         if (!isValidSpaceID) {
             alert("Invalid Space ID");
             return;
         } else {
-            let spcDocRef = firebase.firestore().collection("Spaces").doc(userSpaceID);
-            addSpaceRefToMatesSpaces(spcDocRef, currMateID).then(none => {
-                    //Save spaceID to session storage.
-                    sessionStorage.setItem('Space', userSpaceID);
-                    redirect('../html/overview.html');
+            sessionStorage.setItem('Space', userSpaceID);
+            let db = firebase.firestore();
+            let spcDocRef = db.collection("Spaces").doc(userSpaceID);
+            let mateDocRef = db.collection('Mates').doc(userDocID);
+            db.collection('Mates').doc(userDocID).get().then(result => {
+                let mateSpaces = result.data().usrSpaces;
+                if (mateSpaces === undefined) {
+                    mateSpaces = new Array();
+                }
+                mateSpaces.push(spcDocRef);
+                mateDocRef.update({
+                    usrSpaces: mateSpaces
                 });
+                spcDocRef.get().then(result => {
+                    let mteArr = result.data().spcMates;
+                    mteArr.push(userDocID);
+                    spcDocRef.update({
+                        spcMates: mteArr
+                    }).then(result => {
+                        redirect('../html/overview.html');
+                    });
+                });
+            });
         }
     });
 }
