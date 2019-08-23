@@ -5,9 +5,9 @@ class RecurringTaskFactory {
     this.taskdb = taskdb;
   }
 
-  createTask() {
+  async createTask() {
     this.populateTask();
-    this.task.setTaskID(this.insertTaskIntoFirestore());
+    this.task.setTaskID(await this.insertTaskIntoFirestore());
     return this.task;
   }
 
@@ -110,5 +110,5 @@ class RecurringTaskFactory {
 try{
 module.exports = RecurringTaskFactory;
 }catch(e){
-  
+
 }
