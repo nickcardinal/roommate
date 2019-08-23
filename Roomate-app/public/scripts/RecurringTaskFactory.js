@@ -38,16 +38,13 @@ class RecurringTaskFactory {
     }
 
     // Add Task to Space in db
-    this.taskdb
-    .add(data)
-    .then(function(docRef) {
-      var spaceID = sessionStorage.getItem("Space");
-      var spacedb = firebase.firestore().collection("Spaces").doc(spaceID);
-      await spacedb.update({
-        spcTasks: firebase.firestore.FieldValue.arrayUnion(docRef.id),
-      });
-      return docRef.id;
+    let docRef = await this.taskdb.add(data);
+    var spaceID = sessionStorage.getItem("Space");
+    var spacedb = firebase.firestore().collection("Spaces").doc(spaceID);
+    await spacedb.update({
+      spcTasks: firebase.firestore.FieldValue.arrayUnion(docRef.id),
     });
+    return docRef.id;
   }
 
   getNumberOfMatesRecurringTasks(mate) {
@@ -91,11 +88,11 @@ class RecurringTaskFactory {
       }
   }
 
-  reCreateTask(oldTask) { // pass in the old task
+  async reCreateTask(oldTask) { // pass in the old task
     this.task.duplicate(oldTask);
     this.task.setAssignedMate(this.setNextMateAssignedToRecurringTask(this.task.getAssignedMate()));
     this.task.calcNewDate();
-    this.task.setTaskID(this.insertTaskIntoFirestore()); // assign the ID now that it has been upoaded to db
+    this.task.setTaskID(await this.insertTaskIntoFirestore()); // assign the ID now that it has been upoaded to db
     return this.task;
   }
 

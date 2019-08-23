@@ -119,26 +119,11 @@ async function completeTask(taskID){
     //if((task.favourMate === '' && sessionStorage.getItem('user') === task.assignedMate)|| task.favourMate === sessionStorage.getItem('user')){
     //marks task with id taskID as completed
         if(task.getIsRecurring()){
-            let fact = new RecurringTaskFactory(firebase.firestore().collection('Tasks'));
-            task.pushComplete();
-            let nextTask = Object.assign(new Task(), task);
-            nextTask.setFavourMate('');
-            nextTask.setAssignedMate(mySpace.setNextMateAssignedToRecurringTask(task.getAssignedMate()));
-            nextTask.calcNewDate();
-            firebase.firestore().collection('Tasks').add(nextTask.firestoreObj()).then(result => {
-              nextTask.setTaskID(result.id);
-              addTaskToSpace(nextTask);
-              let spaceRef = firebase.firestore().collection('Spaces').doc(sessionStorage.getItem('Space'))
-              spaceRef.get().then(space => {
-                let taskList = space.data().spcTasks;
-                taskList.push(nextTask.getTaskID());
-                spaceRef.update({spcTasks:taskList}).then(updateRef => {
-                firebase.firestore().collection('Tasks').doc(taskID).update({tskIsComplete:true}).then(result =>{
-                    location.reload();
-                 });
-                });
-              });
-            });
+            let fact = new RecurringTaskFactory(firebase.firestore().collection('Tasks'), getMatesInSpace());
+            await fact.reCreateTask(task);
+            await task.pushComplete();
+            saveSpaceToSessionStorage();
+            location.reload();
           }else{
             await task.pushComplete();
           }
