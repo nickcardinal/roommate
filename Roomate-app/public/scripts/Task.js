@@ -227,4 +227,8 @@ function createFirestoreTask() {
 
 
 
-module.exports = Task;
+try{
+	module.exports = Task;
+}catch(e){
+	
+}

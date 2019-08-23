@@ -1,6 +1,3 @@
-//const Space = require('./Space.js'); //THESE BREAK JAVASCRIPT IN WEB!!!
-
-var firestoreDB = firebase.firestore();
 var mySpace = new Space();
 
 /*************************************

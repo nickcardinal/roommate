@@ -95,4 +95,8 @@ function assignMateInfo(docId, db) {
     this.photoURL = mate.data().usrPhotoUrl;
 }
 
-module.exports = Mate;
+try{
+	module.exports = Mate;
+}catch(e){
+	
+}

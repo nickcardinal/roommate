@@ -399,4 +399,8 @@ function accessFirestoreSpace(ID, _callback) {
         });
 }
 
-module.exports = Space;
+try{
+	module.exports = Space;
+}catch(e){
+	
+}
