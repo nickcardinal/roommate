@@ -79,11 +79,11 @@ function completeTask(taskID){
         if(task.getTaskID() === taskID){
           if(task.getIsRecurring()){
             let nextTask = Object.assign(new Task(), task);
+            task.setIsComplete(true);
             nextTask.setFavourMate('');
             nextTask.setAssignedMate(mySpace.setNextMateAssignedToRecurringTask(task.getAssignedMate()));
             nextTask.calcNewDate();
             firebase.firestore().collection('Tasks').add(nextTask.firestoreObj()).then(result => {
-              task.setIsComplete(true);
               nextTask.setTaskID(result.id);
               addTaskToSpace(nextTask);
               let spaceRef = firebase.firestore().collection('Spaces').doc(sessionStorage.getItem('Space'))
