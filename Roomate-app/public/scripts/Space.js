@@ -312,18 +312,18 @@ class Space {
                 spcDoc.data().spcTasks.forEach(task => {
                     var tskTaskRef = db.collection("Tasks").doc(task);
                     var newTask = tskTaskRef.get().then(function (taskRecord) {
-                        if (mateRecord.exists) {
-                            var currTask = new Task();
-                            currTask.setTitle(taskRecord.data().tskTitle);
-                            currTask.setDescription(taskRecord.data().tskDescription);
-                            currTask.setDueDate(taskRecord.data().tskDueDate);
-                            currTask.setDueTime(taskRecord.data().tskDueTime);
-                            currTask.setIsRecurring(taskRecord.data().tskIsRecurring);
-                            currTask.setIsComplete(taskRecord.data().tskIsComplete);
-                            currTask.setAssignedMate(taskRecord.data().tskAssignedMate);
-                            currTask.setFavourMate(taskRecord.data().tskFavour);
-                            return currTask;
-                        }
+							if (taskRecord.exists) {
+								var currTask = new Task();
+								currTask.setTitle(taskRecord.data().tskTitle);
+								currTask.setDescription(taskRecord.data().tskDescription);
+								currTask.setDueDate(taskRecord.data().tskDueDate);
+								currTask.setDueTime(taskRecord.data().tskDueTime);
+								currTask.setIsRecurring(taskRecord.data().tskIsRecurring);
+								currTask.setIsComplete(taskRecord.data().tskIsComplete);
+								currTask.setAssignedMate(taskRecord.data().tskAssignedMate);
+								currTask.setFavourMate(taskRecord.data().tskFavour);
+								return currTask;
+							}
                         });
                     tskPromiseArray.push(newTask);
                 });
