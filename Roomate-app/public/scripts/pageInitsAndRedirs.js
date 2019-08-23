@@ -61,8 +61,8 @@ async function initializeOverview(){
 	if(!loadSpaceFromSessionStorage()){
 		await loadSpaceFromFirestore();
 		saveSpaceToSessionStorage();
-		displaySpaceInfo();
-	}
+  }
+  displaySpaceInfo(); 
 }
 function populateSpaceCallback(type, value){
 	if(type === 'title'){

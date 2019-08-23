@@ -9,9 +9,10 @@ function displayUserInfo() {
 // Space Information Display Functions
 // Found in --> ../html/spaceKey.html
 function displaySpaceInfo() {
+  loadSpaceFromSessionStorage()
   document.getElementById('showName').innerHTML = getSpaceTitle();
   document.getElementById('showDescription').innerHTML = getSpaceDescription();
-  document.getElementById('showID').innerHTML = sessionStorage.getItem('Space');
+  document.getElementById('showID').innerHTML = getSpaceID();
   //accessFirestoreSpace(sessionStorage.getItem('Space'), spaceKeyShowElements);
 }
 

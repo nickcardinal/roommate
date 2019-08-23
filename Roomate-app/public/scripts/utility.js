@@ -173,7 +173,13 @@ function loadSpaceFromSessionStorage() {
 		return false;
     }
 	else{
-		mySpace = JSON.parse(mySpaceJSON);
+        let spaceData = JSON.parse(mySpaceJSON);
+        mySpace.setTitle(spaceData.title);
+        mySpace.setDescription(spaceData.description);
+        mySpace.setID(spaceData.ID);
+        mySpace.setMatesArray(spaceData.mates);
+        mySpace.setTasksArray(spaceData.tasks);
+        mySpace.isLoaded = spaceData.isLoaded;
 		return true;
 	}
 }
