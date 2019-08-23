@@ -1,13 +1,14 @@
 class RecurringTaskFactory {
-  constructor(taskdb, matesArray) {
+  constructor(taskdb, matesArray, tasksArray) {
     this.task = new Task();
+    this.tasks = tasksArray;
     this.mates = matesArray;
     this.taskdb = taskdb;
   }
 
-  createTask() {
+  async createTask() {
     this.populateTask();
-    this.task.setTaskID(this.insertTaskIntoFirestore());
+    this.task.setTaskID(await this.insertTaskIntoFirestore());
     return this.task;
   }
 
@@ -110,5 +111,5 @@ class RecurringTaskFactory {
 try{
 module.exports = RecurringTaskFactory;
 }catch(e){
-  
+
 }
