@@ -135,24 +135,44 @@
 	calcNewDate() {
 			let currDate = this.dueDate.split("-");
 			let currFormatedDate = currDate[1] + "/" + currDate[2] + "/" + currDate[0];
-
+		//error checking
+		if(this.recurringPeriod <= 0){
+			this.recurringPeriod = 1;
+		}
 	    let newDate = new Date(currFormatedDate);
 
 			let today = new Date();
-			today.getDate();
 
-	    newDate.setDate(newDate.getDate() + this.recurringPeriod);
+	    newDate.setDate(newDate.getDate() + parseInt(this.recurringPeriod));
 
 			while(newDate < today) {
-				newDate.setDate(newDate.getDate() + this.recurringPeriod);
-			}
+				newDate.setDate(newDate.getDate() + parseInt(this.recurringPeriod));
+			}//very innefficient for long times
 
 	    let dd = newDate.getDate();
 	    let mm = newDate.getMonth() + 1;
 	    let y = newDate.getFullYear();
-
+		if(dd < 10){
+			dd = '0' + dd;
+		}
+		if(mm < 10){
+			mm = '0' + mm;
+		}
 	    let formattedDate = y + '-' + mm + '-' + dd;
 	    this.dueDate =  formattedDate;
+	}
+	firestoreObj(){
+		return {
+			tskAssignedMate: this.assignedMate.getID(),
+			tskDescription: this.description,
+			tskDueDate: this.dueDate,
+			tskDueTime: this.dueTime,
+			tskFavour: this.favourMate,
+			tskIsComplete: this.isComplete,
+			tskIsRecurring: this.isRecurring,
+			tskRecurringPeriod: this.recurringPeriod,
+			tskTitle: this.title
+		}
 	}
 }
 

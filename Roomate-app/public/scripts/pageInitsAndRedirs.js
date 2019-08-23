@@ -4,7 +4,10 @@ function initialize() {
 }
 
 function validate(){
-    initialize();
+  initialize();
+  if(sessionStorage.getItem('Space') !== undefined){ 
+    loadSpaceFromFirestore(sessionStorage.getItem('Space'));
+  }
     database = firebase.firestore();
     if(sessionStorage.getItem('log') === 'true'){
       updateToken_Overview(database);

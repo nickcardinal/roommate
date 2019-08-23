@@ -1,4 +1,4 @@
-const Space = require('./Space.js');
+//const Space = require('./Space.js'); //THESE BREAK JAVASCRIPT IN WEB!!!
 
 var firestoreDB = firebase.firestore();
 var mySpace = new Space();
@@ -112,9 +112,6 @@ function createTaskByFactory() {
     addTaskToSpace(newTask);
     saveSpaceToSessionStorage();
 }
-//Andre's function
-function completeTask(){
-}
 
 /*********************************************
 
@@ -129,7 +126,7 @@ function saveSpaceToSessionStorage() {
     sessionStorage.setItem('mySpaceJSON', mySpaceJSON);
 }
 //Loads mySpace from Firestore Spaces table.
-function loadSpaceFromFirestore() {
+function loadSpaceFromFirestore(currSpaceID) {
     mySpace = new Space();
     mySpace.populateFromFirestore(currSpaceID, loadSpaceFromFirestoreCallback);
 }
@@ -141,6 +138,7 @@ function loadSpaceFromSessionStorage() {
         return;
     }
     mySpace = JSON.parse(mySpaceJSON);
+    return mySpace;
 }
 //Returns ID from mySpace
 function getSpaceID(){
