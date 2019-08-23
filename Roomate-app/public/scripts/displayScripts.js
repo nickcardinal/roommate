@@ -64,9 +64,19 @@ function appendTask(task) {
   }
   tskDesc.innerHTML = task.getDescription();
   tskDue.innerHTML = 'Due by ' + task.getDueDate() + ' ' + task.getDueTime();
-  tskMate.innerHTML = 'Task assigned to ' + task.getAssignedMate()//.getNickName();
+  tskMate.innerHTML = 'Task assigned to ';
   if(task.getFavourMate() !== ''){
-    tskMate.innerHTML = 'Task favoured by ' + task.getFavourMate()//.getNickName(); //Needs to be fixed with the mates name
+    tskMate.innerHTML = 'Task favoured by ';
+    try{firebase.firestore().collection('Mates').doc(task.getFavourMate()).get().then(doc => {
+      tskMate.innerHTML += doc.data().usrNickname;
+    });
+  } catch(e){ }
+  }else{
+    try{
+    firebase.firestore().collection('Mates').doc(task.getAssignedMate()).get().then(doc => {
+      tskMate.innerHTML += doc.data().usrNickname;
+    });
+  } catch(e){}
   }
   br.innerHTML = '<br></br>'
 }

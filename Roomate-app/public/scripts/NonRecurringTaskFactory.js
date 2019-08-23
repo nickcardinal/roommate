@@ -1,6 +1,3 @@
-const Mate = require('./Mate.js')
-const Task = require('./Task.js')
-
 class NonRecurringTaskFactory {
   constructor(taskdb) {
     this.task = new Task();
