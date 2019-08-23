@@ -169,7 +169,13 @@ function getAllTasks() {
 function getMyTasks(){
 	let currMateID = sessionStorage.getItem("user");
 	mySpace.getTasks().filter(task => {
-		return task.assignMate == currMateID;
+		return task.assignMate === currMateID;
+	});
+}
+//Returns Task object matching taskID in mySpace tasks array.
+function getTasksByID(taskID){	
+	return mySpace.getTasks().filter(task => {
+		return task.getTaskID() === taskID;
 	});
 }
 //Adds Task to mySpace
