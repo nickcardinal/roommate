@@ -108,6 +108,7 @@ async function createTaskByFactory() {
     //Need to move assignMate functions to respective factories.
     newTask = factory.createTask();
     addTaskToSpace(newTask);
+    saveSpaceToSessionStorage();
     await syncData();
     redirect("../html/overview.html");
 }
