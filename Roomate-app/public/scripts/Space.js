@@ -292,9 +292,7 @@ class Space {
                                 return currMate;
                             }
                         });
-                    if (newMate) {
-                        mtePromiseArray.push(newMate);
-                    }
+                    mtePromiseArray.push(newMate);
                 });
             }
             return Promise.all(mtePromiseArray);
@@ -314,6 +312,7 @@ class Space {
                 spcDoc.data().spcTasks.forEach(task => {
                     var tskTaskRef = db.collection("Tasks").doc(task);
                     var newTask = tskTaskRef.get().then(function (taskRecord) {
+                        if (mateRecord.exists) {
                             var currTask = new Task();
                             currTask.setTitle(taskRecord.data().tskTitle);
                             currTask.setDescription(taskRecord.data().tskDescription);
@@ -324,6 +323,7 @@ class Space {
                             currTask.setAssignedMate(taskRecord.data().tskAssignedMate);
                             currTask.setFavourMate(taskRecord.data().tskFavour);
                             return currTask;
+                        }
                         });
                     tskPromiseArray.push(newTask);
                 });
