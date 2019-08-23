@@ -110,7 +110,11 @@ function createTaskByFactory() {
     addTaskToSpace(newTask);
     saveSpaceToSessionStorage();
 }
+//Andre's function
+//had to change the name
+function completeTask2(){
 
+}
 /*********************************************
 
 Functions that access  mySpace Object
