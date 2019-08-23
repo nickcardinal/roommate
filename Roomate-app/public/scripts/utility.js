@@ -127,18 +127,23 @@ function saveSpaceToSessionStorage() {
     sessionStorage.setItem('mySpaceJSON', mySpaceJSON);
 }
 //Loads mySpace from Firestore Spaces table.
-function loadSpaceFromFirestore() {
+async function loadSpaceFromFirestore() {
+	let currSpaceID = sessionStorage.getItem("Space");
     mySpace = new Space();
-    mySpace.populateFromFirestore(currSpaceID, loadSpaceFromFirestoreCallback);
+    await mySpace.populateFromFirestore(currSpaceID, loadSpaceFromFirestoreCallback);
+	return true;	
 }
 //Loads mySpace from Session Storage JSON.
 function loadSpaceFromSessionStorage() {
     let mySpaceJSON = sessionStorage.getItem("mySpaceJSON");
-    if (mySpaceJSON === "undefined") {
-        alert("mySpaceJSON is empty.");
-        return;
+    if (!mySpaceJSON) {
+        //alert("mySpaceJSON is empty.");
+		return false;
     }
-    mySpace = JSON.parse(mySpaceJSON);
+	else{
+		mySpace = JSON.parse(mySpaceJSON);
+		return true;
+	}
 }
 //Returns ID from mySpace
 function getSpaceID(){
@@ -157,8 +162,15 @@ function getMatesInSpace() {
     return mySpace.getMates();
 }
 //Returns Tasks array from mySpace
-function getTasksInSpace() {
+function getAllTasks() {
     return mySpace.getTasks();
+}
+//Returns a filtered task array of all tasks matching userID in Session Storage.
+function getMyTasks(){
+	let currMateID = sessionStorage.getItem("user");
+	mySpace.getTasks().filter(task => {
+		return task.assignMate == currMateID;
+	});
 }
 //Adds Task to mySpace
 function addTaskToSpace(newTask) {
@@ -171,8 +183,10 @@ function loadSpaceFromFirestoreCallback(type, value) {
     } else if (type === 'description') {
         mySpace.setDescription(value);
     } else if (type === 'mates') {
-        mySpace.setMatesArray(value);
+		//removes null values from array
+        mySpace.setMatesArray(value.filter(x => x));
     } else if (type === 'tasks') {
-        mySpace.setTasksArray(value);
+		//removes null values from array
+        mySpace.setTasksArray(value.filter(x => x));
     }
 }
