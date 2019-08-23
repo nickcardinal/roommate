@@ -58,11 +58,12 @@ function initializeWelcome() {
   });
 }
 async function initializeOverview(){
-	validate();
-  displaySpaceInfo(); 
+  await validate();
+  await loadSpace();
+  displaySpaceInfo();
 }
 async function initializeSpaceKey(){
-	validate();
+  await validate();
   displaySpaceInfo(); 
 }
 
