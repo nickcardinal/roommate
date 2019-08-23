@@ -11,7 +11,6 @@ class NonRecurringTaskFactory {
   createTask() {
     this.populateTask();
     this.insertTaskIntoFirestore();
-    //json here...
     return this.task;
   }
 

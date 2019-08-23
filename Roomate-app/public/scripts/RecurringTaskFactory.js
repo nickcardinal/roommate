@@ -11,7 +11,6 @@ class RecurringTaskFactory {
   createTask() {
     this.populateTask();
     task.setTaskID(this.insertTaskIntoFirestore()); //
-    //json here...
     return this.task;
   }
 
