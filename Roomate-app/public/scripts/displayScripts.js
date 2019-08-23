@@ -18,20 +18,19 @@ function displaySpaceInfo() {
 
 // Task Display Functions
 // Found in --> ../html/tasklist.html; to be moved to ../html/overview.html
-function displayTasks() {
-  loadSpaceFromSessionStorage();
+async function displayTasks(table) {
+  await loadSpaceFromSessionStorage();
   var tasks = getAllTasks();
   sortTasksByDate(tasks);
   tasks.forEach(task => {
-    appendTask(task);
+    appendTask(task, table);
   });
 }
 
-function appendTask(task) {
+function appendTask(task, table) {
   if(task.getIsComplete() && 0){//change the '0' for testing purposes
     return;
   }
-  let table = document.getElementById("taskList");
   let rows = table.getElementsByTagName("tr");
   let row = table.insertRow(rows.length);
   let tskTitle = row.insertCell(0);
@@ -67,22 +66,24 @@ function appendTask(task) {
   }
   br.innerHTML = '<br></br>'
 }
-// Mates Display Functions
-// Found in --> ../html/mateslist.html; to be moved to ../html/overview.html
-function displayMates() {
-  var space = new Space();
-  space.setID(sessionStorage.getItem('Space'));
-  var mates = space.fillMatesArray().then(function(matesArray) {
-    space.mates = matesArray;
-    space.mates.forEach(mate => {
-        appendMate(mate);
-    });
-  });
+
+async function resetTaskTable() {
+  let table = document.getElementById("taskList");
+  table.innerHTML = "";
+  table.setAttribute('id', 'taskList');
+  displayMates(document.getElementById("taskList"));
 }
 
-function appendMate(mate) {
-  let table = document.getElementById("mateList");
+// Mates Display Functions
+// Found in --> ../html/mateslist.html; to be moved to ../html/overview.html
+async function displayMates(table) {
+  await loadSpaceFromFirestore();
+    getMatesInSpace().forEach(mate => {
+        appendMate(mate, table);
+    });
+}
 
+function appendMate(mate, table) {
   let rows = table.getElementsByTagName("tr");
   let row = table.insertRow(rows.length);
 
@@ -97,4 +98,11 @@ function appendMate(mate) {
   mteIcon.innerHTML = '<img class ="user-icon" src=' + mate.getPhotoURL() + " " + 'alt="Checkmates Logo">';
   mteName.innerHTML = mate.getNickName();
   br.innerHTML = '<br></br>'
+}
+
+async function resetMateTable() {
+  let table = document.getElementById("mateList");
+  table.innerHTML = "";
+  table.setAttribute('id', 'mateList');
+  displayMates(document.getElementById("mateList"));
 }

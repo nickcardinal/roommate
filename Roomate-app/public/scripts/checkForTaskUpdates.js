@@ -10,10 +10,10 @@ doc.onSnapshot(function(snapshot) {
       console.log("New Space", change.doc.data());
     }
     if(change.type === "modified") {
-      console.log("Modified Mates", change.doc.data().spcMates);
+      console.log("Modified Task", change.doc.data().spcTasks);
       loadSpaceFromFirestore();
       saveSpaceToSessionStorage();
-      resetMateTable();
+      resetTaskTable();
     }
   });
 });

@@ -97,13 +97,14 @@ function isValidSpace(spaceDocID) { //Tested
 
 //Andre's function
 async function createTaskByFactory() {
-    var factory;
-    var tasksCollection = firestoreDB.collection('Tasks');
-    var matesArray = getMatesInSpace();
+  var factory;
+	var tasksCollection = firebase.firestore().collection('Tasks');
+	var matesArray =  getMatesInSpace();
+  var tasksArray = getAllTasks();
     if ($('#isRecurringField').is(':checked')) {
-        factory = new RecurringTaskFactory(tasksCollection, matesArray);
+        factory = new RecurringTaskFactory(tasksCollection, matesArray, tasksArray);
     } else {
-        factory = new NonRecurringTaskFactory(tasksCollection, matesArray);
+        factory = new NonRecurringTaskFactory(tasksCollection, matesArray, tasksArray);
     }
     //Need to move assignMate functions to respective factories.
     newTask = factory.createTask();
@@ -115,20 +116,19 @@ async function createTaskByFactory() {
 //This function will branch based on Recurring/Nonrecurring
 //Functionality for marking a task as complete should be moved to the Task Object class.
 //Only allows for you to complete your own tasks
-async function completeTask(taskID) {
-    task = getTasksByID(taskID)[0];
-    //if((task.favourMate === '' && sessionStorage.getItem('user') === task.assignedMate)|| task.favourMate === sessionStorage.getItem('user')){
-    //marks task with id taskID as completed
-    if (task.getIsRecurring()) {
-        let fact = new RecurringTaskFactory(firebase.firestore().collection('Tasks'), getMatesInSpace());
-        await fact.reCreateTask(task);
-        await task.pushComplete();
-        saveSpaceToSessionStorage();
-        location.reload();
-    } else {
-        await task.pushComplete();
+async function completeTask(taskID){
+  task = getTasksByID(taskID)[0];
+  //if((task.favourMate === '' && sessionStorage.getItem('user') === task.assignedMate)|| task.favourMate === sessionStorage.getItem('user')){
+  //marks task with id taskID as completed
+  if(task.getIsRecurring()){
+      let fact = new RecurringTaskFactory(firebase.firestore().collection('Tasks'), getMatesInSpace());
+      await fact.reCreateTask(task);
+      await task.pushComplete();
+      saveSpaceToSessionStorage();
+      location.reload();
+    }else{
+      await task.pushComplete();
     }
-    //       }
 }
 
 function sortTasksByDate(tasksArray) {
@@ -164,7 +164,7 @@ async function loadSpaceFromFirestore() {
     let currSpaceID = sessionStorage.getItem("Space");
     mySpace = new Space();
     await mySpace.populateFromFirestore(currSpaceID, loadSpaceFromFirestoreCallback);
-    return true;
+	  return true;
 }
 //Loads mySpace from Session Storage JSON.
 function loadSpaceFromSessionStorage() {
