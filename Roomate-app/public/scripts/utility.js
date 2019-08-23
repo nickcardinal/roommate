@@ -157,6 +157,12 @@ function getSpaceTitle(){
 function getSpaceDescription(){
 	return mySpace.getDescription();
 }
+//Returns Mate object matching userID in mySpace mates array.
+function getMateByID(userID){
+	return mySpace.getMates().filter(mate => {
+		return mate.getID() == userID;
+	});
+}
 //Returns Mates array from mySpace
 function getMatesInSpace() {
     return mySpace.getMates();
