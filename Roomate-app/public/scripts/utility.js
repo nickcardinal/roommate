@@ -98,10 +98,11 @@ async function createTaskByFactory() {
   var factory;
 	var tasksCollection = firebase.firestore().collection('Tasks');
 	var matesArray =  getMatesInSpace();
+  var tasksArray = getAllTasks();
     if ($('#isRecurringField').is(':checked')) {
-        factory = new RecurringTaskFactory(tasksCollection, matesArray);
+        factory = new RecurringTaskFactory(tasksCollection, matesArray, tasksArray);
     } else {
-        factory = new NonRecurringTaskFactory(tasksCollection, matesArray);
+        factory = new NonRecurringTaskFactory(tasksCollection, matesArray, tasksArray);
     }
     //Need to move assignMate functions to respective factories.
     newTask = factory.createTask();

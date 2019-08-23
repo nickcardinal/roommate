@@ -1,6 +1,7 @@
 class NonRecurringTaskFactory {
-  constructor(taskdb, matesArray) {
+  constructor(taskdb, matesArray, tasksArray) {
     this.task = new Task();
+    this.tasks = tasksArray;
     this.mates = matesArray;
     this.taskdb = taskdb;
   }
