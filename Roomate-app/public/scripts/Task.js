@@ -153,6 +153,12 @@
 	    let formattedDate = y + '-' + mm + '-' + dd;
 	    this.dueDate =  formattedDate;
 	}
+
+	async pushComplete(){
+		task.setIsComplete(true);
+		await firebase.firestore().collection('Tasks').doc(this.task_ID).update({tskIsComplete:true});
+		
+	}
 	firestoreObj(){
 		return {
 			tskAssignedMate: this.assignedMate.getID(),
@@ -165,6 +171,23 @@
 			tskRecurringPeriod: this.recurringPeriod,
 			tskTitle: this.title
 		}
+	}
+	importJSON(task){
+				// Task Descriptors
+				this.task_ID = task.task_ID;
+				this.title = task.title;
+				this.description = task.description;
+		
+				// Task Deadline Data
+				this.dueDate = task.dueDate;
+				this.dueTime = task.dueTime;
+				this.isRecurring = task.isRecurring;
+				this.recurringPeriod = task.recurringPeriod;
+		
+				// Task Completion Details
+				this.assignedMate = task.assignedMate;
+				this.isComplete = task.isComplete;
+				this.favourMate = task.favourMate;
 	}
 }
 

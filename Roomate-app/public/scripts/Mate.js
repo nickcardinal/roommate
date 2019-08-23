@@ -71,7 +71,15 @@ class Mate {
 		console.log('nickname: ', this.nickName);
 		console.log('fullName: ', this.fullName);
 		console.log('photoURL: ', this.photoURL);
-	}
+    }
+    
+    importJSON(mate){
+        this.user_ID = mate.user_ID;
+        this.nickName = mate.nickName;
+        this.fullName = mate.fullName;
+        this.email = mate.email;
+        this.photoURL = mate.photoURL;
+    }
 
 }
 

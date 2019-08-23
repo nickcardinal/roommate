@@ -113,14 +113,14 @@ function createTaskByFactory() {
 //This function will branch based on Recurring/Nonrecurring
 //Functionality for marking a task as complete should be moved to the Task Object class.
 //Only allows for you to complete your own tasks
-function completeTask(taskID){
-    task = getTaskById(taskID);
-    if((task.getFavourMate() === '' && sessionStorage.getItem('user') === task.getAssignedMate() )|| task.getFavourMate() === sessionStorage.getItem('user')){
+async function completeTask(taskID){
+    task = getTasksByID(taskID)[0];
+    //if((task.favourMate === '' && sessionStorage.getItem('user') === task.assignedMate)|| task.favourMate === sessionStorage.getItem('user')){
     //marks task with id taskID as completed
-          if(task.getIsRecurring()){
-            // let fact = new RecurringTaskFactory(firebase.firestore().collection('Tasks'));
+        if(task.getIsRecurring()){
+            let fact = new RecurringTaskFactory(firebase.firestore().collection('Tasks'));
+            task.pushComplete();
             let nextTask = Object.assign(new Task(), task);
-            task.setIsComplete(true);
             nextTask.setFavourMate('');
             nextTask.setAssignedMate(mySpace.setNextMateAssignedToRecurringTask(task.getAssignedMate()));
             nextTask.calcNewDate();
@@ -132,19 +132,35 @@ function completeTask(taskID){
                 let taskList = space.data().spcTasks;
                 taskList.push(nextTask.getTaskID());
                 spaceRef.update({spcTasks:taskList}).then(updateRef => {
-                  firebase.firestore().collection('Tasks').doc(taskID).update({tskIsComplete:true}).then(result =>{
-                    location.reload()
-                  });
+                firebase.firestore().collection('Tasks').doc(taskID).update({tskIsComplete:true}).then(result =>{
+                    location.reload();
+                 });
                 });
               });
             });
           }else{
-            task.setIsComplete(true);
-            firebase.firestore().collection('Tasks').doc(taskID).update({tskIsComplete:true}).then(result =>{
-              location.reload()
-            });
+            await task.pushComplete();
           }
+ //       }
+}
+
+
+
+function sortTasksByDate(tasksArray) {
+    tasksArray.sort((taskA, taskB) => {
+
+        // Check Date: recent first
+        if (taskA.getDueDate() > taskB.getDueDate()) {
+            return 1;
+        } else if (taskA.getDueDate() === taskB.getDueDate()) {
+
+            // Check Time: recent first
+            if (taskA.getDueTime() >= taskB.getDueTime()) {
+                return 1;
+            }
         }
+        return -1;
+    });
 }
 /*********************************************
 
@@ -173,14 +189,8 @@ function loadSpaceFromSessionStorage() {
 		return false;
     }
 	else{
-        let spaceData = JSON.parse(mySpaceJSON);
-        mySpace.setTitle(spaceData.title);
-        mySpace.setDescription(spaceData.description);
-        mySpace.setID(spaceData.ID);
-        mySpace.setMatesArray(spaceData.mates);
-        mySpace.setTasksArray(spaceData.tasks);
-        mySpace.isLoaded = spaceData.isLoaded;
-		return true;
+        mySpace.importJSON(JSON.parse(mySpaceJSON));
+        return true;
 	}
 }
 //Returns ID from mySpace

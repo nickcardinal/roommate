@@ -62,23 +62,6 @@ class Space {
         return this.tasks;
     }
 
-    sortTasksByDate(tasksArray) {
-        tasksArray.sort((taskA, taskB) => {
-
-            // Check Date: recent first
-            if (taskA.getDueDate() > taskB.getDueDate()) {
-                return 1;
-            } else if (taskA.getDueDate() === taskB.getDueDate()) {
-
-                // Check Time: recent first
-                if (taskA.getDueTime() >= taskB.getDueTime()) {
-                    return 1;
-                }
-            }
-            return -1;
-        });
-    }
-
   	//Moved to utility.js
     createTaskByFactory(taskdb) {
         var factory;
@@ -250,6 +233,25 @@ class Space {
                 ++numTasks;
             }
         }
+    }
+
+    importJSON(space){
+        this.ID = space.ID;
+        this.title = space.title;
+        this.description = space.description;
+        this.mates = [];
+        this.tasks = [];
+        this.isLoaded = space.isLoaded;
+        space.mates.forEach(mate => {
+            let add = new Mate();
+            add.importJSON(mate);
+            this.mates.push(add);
+        });
+        space.tasks.forEach(task => {
+            let add = new Task();
+            add.importJSON(task);
+            this.tasks.push(add);
+        });
     }
 
     async populateFromFirestore(space_ID, _callback) {

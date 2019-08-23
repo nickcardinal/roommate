@@ -12,7 +12,8 @@ function displaySpaceInfo() {
   loadSpaceFromSessionStorage()
   document.getElementById('showName').innerHTML = getSpaceTitle();
   document.getElementById('showDescription').innerHTML = getSpaceDescription();
-  document.getElementById('showID').innerHTML = getSpaceID();
+  try{document.getElementById('showID').innerHTML = getSpaceID();}
+  catch(e){}
   //accessFirestoreSpace(sessionStorage.getItem('Space'), spaceKeyShowElements);
 }
 
@@ -28,15 +29,12 @@ function spaceKeyShowElements(spc) {
 
 // Task Display Functions
 // Found in --> ../html/tasklist.html; to be moved to ../html/overview.html
-function displayTasks(tasks) {
-  var space = new Space();
-  space.setID(sessionStorage.getItem('Space'));
-  var tasks = space.fillTasksArray().then(function(tasksArray) {
-    space.tasks = tasksArray;
-    space.sortTasksByDate(space.tasks);
-    space.tasks.forEach(task => {
-        appendTask(task);
-    });
+function displayTasks() {
+  loadSpaceFromSessionStorage();
+  var tasks = getAllTasks();
+  sortTasksByDate(tasks);
+  tasks.forEach(task => {
+    appendTask(task);
   });
 }
 
