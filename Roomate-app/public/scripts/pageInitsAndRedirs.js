@@ -4,7 +4,7 @@ function initialize() {
 }
 
 function validate(){
-    initialize();
+  initialize();
     database = firebase.firestore();
     if(sessionStorage.getItem('log') === 'true'){
       updateToken_Overview(database);
@@ -23,7 +23,7 @@ function validate(){
             snapshot.forEach(doc => {
                 if(new Date() < doc.data().usrExpiration.toDate()){
                     sessionStorage.setItem('user', doc.id);
-                    updateExpiration(database, doc)
+                    updateExpiration(database, doc);
                 }else{
                     redirect("../index.html");
                 }
@@ -56,27 +56,13 @@ function initializeWelcome() {
     }
   });
 }
-
-var mySpace;
 async function initializeOverview(){
-	//This function will navigate away from the bottom portion
-	//of this function if user isn't logged in or isn't part of a space.
 	validate();
-
-	mySpace = new Space();
-	var spaceID = sessionStorage.getItem('Space');
-	await mySpace.populateSpace(spaceID, populateSpaceCallback);
-	if(mySpace.isLoaded){
-		var myJSON = JSON.stringify(mySpace);
-		console.log(JSON.parse(myJSON));
-		console.log(mySpace);
-		mySpace = Object.assign(new Space, { a: 1 });//JSON.parse(myJSON);
-		console.log(mySpace);
-		//alert('Complete');
-	}
-	else{
-		alert('Error loading Space.');
-	}
+	if(!loadSpaceFromSessionStorage()){
+		await loadSpaceFromFirestore();
+		saveSpaceToSessionStorage();
+  }
+  displaySpaceInfo(); 
 }
 function populateSpaceCallback(type, value){
 	if(type === 'title'){

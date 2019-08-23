@@ -1,18 +1,13 @@
-const Mate = require('./Mate.js')
-const Task = require('./Task.js')
-
 class RecurringTaskFactory {
-  constructor(taskdb) {
+  constructor(taskdb, matesArray) {
     this.task = new Task();
-    this.mate = new Mate();
+    this.mates = matesArray;
     this.taskdb = taskdb;
   }
 
-  createTask(mate) {
-    this.mate = mate;
+  createTask() {
     this.populateTask();
-    this.insertTaskIntoFirestore();
-    //json here...
+    this.task.setTaskID(this.insertTaskIntoFirestore());
     return this.task;
   }
 
@@ -23,11 +18,12 @@ class RecurringTaskFactory {
     this.task.setDueTime($("#dueTimeField").val());
     this.task.setIsRecurring(true);
     this.task.setRecurringPeriod($('#recurringPeriodField').val());
-    this.task.setAssignedMate(this.mate);
+    this.task.setAssignedMate(this.setFirstMateAssignedToRecurringTask());
     this.task.setIsComplete(false);
+    this.task.setFavourMate('');
   }
 
-  insertTaskIntoFirestore() {
+  async insertTaskIntoFirestore() {
     // Setting firestore data
     let data = {
       tskTitle: this.task.getTitle(),
@@ -37,31 +33,82 @@ class RecurringTaskFactory {
       tskIsRecurring: this.task.getIsRecurring(),
       tskRecurringPeriod: this.task.getRecurringPeriod(),
       tskAssignedMateID: this.task.getAssignedMate().getID(),
-      tskIsComplete: this.task.getIsComplete()
+      tskIsComplete: this.task.getIsComplete(),
+      tskFavour:""
     }
 
     // Add Task to Space in db
-    this.taskdb
-    .add(data)
-    .then(function(docRef) {
-      var spaceID = sessionStorage.getItem("Space");
-      var spacedb = firebase.firestore().collection("Spaces").doc(spaceID);
-      spacedb.update({
-        spcTasks: firebase.firestore.FieldValue.arrayUnion(docRef.id),
-      }).
-      then(none => { //maybe move later
-        redirect("../html/overview.html");
-      });
+    let docRef = await this.taskdb.add(data);
+    var spaceID = sessionStorage.getItem("Space");
+    var spacedb = firebase.firestore().collection("Spaces").doc(spaceID);
+    await spacedb.update({
+      spcTasks: firebase.firestore.FieldValue.arrayUnion(docRef.id),
     });
+    return docRef.id;
   }
 
-  reCreateTask(task) {
-    this.task = task;
-    //uncomment the line below when ready
-    //this.insertTaskIntoFirestore();
-    //json here...
+  getNumberOfMatesRecurringTasks(mate) {
+      var numTasks = 0;
+      for (var i = 0; i < this.tasks.length; ++i) {
+          var tempTask = this.tasks[i];
+          if (tempTask.assignedMate == mate &&
+              tempTask.isRecurring &&
+             !tempTask.isComplete) {
+              ++numTasks;
+          }
+      }
+      return numTasks;
+  }
+
+  setFirstMateAssignedToRecurringTask() {
+      if (this.mates.length == 0) {
+          alert("No mates in the living space.");
+          return;
+      }
+
+      let minNumTasks = this.getNumberOfMatesRecurringTasks(this.mates[0]);
+      var minTaskMates = [];
+      minTaskMates.push(this.mates[0]);
+
+      for (var i = 1; i < this.mates.length; ++i) {
+          let j = this.getNumberOfMatesRecurringTasks(this.mates[i]); //would be more efficient to get all the number of tasks in one shot...
+          if (j < minNumTasks) {
+              minNumTasks = j;
+              minTaskMates = [];
+              minTaskMates.push(this.mates[i]);
+          } else if (j == minNumTasks) {
+              minTaskMates.push(this.mates[i]);
+          }
+      }
+
+      if (minTaskMates.length > 1) {
+          return minTaskMates[Math.floor(Math.random() * minTaskMates.length)];
+      } else {
+          return minTaskMates[0];
+      }
+  }
+
+  async reCreateTask(oldTask) { // pass in the old task
+    this.task.duplicate(oldTask);
+    this.task.setAssignedMate(this.setNextMateAssignedToRecurringTask(this.task.getAssignedMate()));
+    this.task.calcNewDate();
+    this.task.setTaskID(await this.insertTaskIntoFirestore()); // assign the ID now that it has been upoaded to db
     return this.task;
   }
+
+  setNextMateAssignedToRecurringTask(mate) {
+      for (var i = 0; i < this.mates.length - 1; ++i) {
+          if (this.mates[i] == mate) {
+              return this.mates[i + 1];
+          }
+      }
+      return this.mates[0];
+  }
+
 }
 
+try{
 module.exports = RecurringTaskFactory;
+}catch(e){
+  
+}

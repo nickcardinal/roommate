@@ -1,15 +1,20 @@
 // User Information Display Functions
 // Found in --> ../html/profile.html
 function displayUserInfo() {
-  document.getElementById('FullName').innerHTML= sessionStorage.getItem('name');
-  document.getElementById('Email').innerHTML= sessionStorage.getItem('email');
+  document.getElementById('FullName').innerHTML = sessionStorage.getItem('name');
+  document.getElementById('Email').innerHTML = sessionStorage.getItem('email');
   document.getElementById('nameField').value = sessionStorage.getItem('name');
 }
 
 // Space Information Display Functions
 // Found in --> ../html/spaceKey.html
 function displaySpaceInfo() {
-  accessFirestoreSpace(sessionStorage.getItem('Space'), spaceKeyShowElements);
+  loadSpaceFromSessionStorage()
+  document.getElementById('showName').innerHTML = getSpaceTitle();
+  document.getElementById('showDescription').innerHTML = getSpaceDescription();
+  try{document.getElementById('showID').innerHTML = getSpaceID();}
+  catch(e){}
+  //accessFirestoreSpace(sessionStorage.getItem('Space'), spaceKeyShowElements);
 }
 
 function spaceKeyShowElements(spc) {
@@ -24,18 +29,19 @@ function spaceKeyShowElements(spc) {
 
 // Task Display Functions
 // Found in --> ../html/tasklist.html; to be moved to ../html/overview.html
-function displayTasks(tasks) {
-  var space = new Space();
-  space.setID(sessionStorage.getItem('Space'));
-  var tasks = space.fillTasksArray().then(function(tasksArray) {
-    space.tasks = tasksArray;
-    space.tasks.forEach(task => {
-        appendTask(task);
-    });
+function displayTasks() {
+  loadSpaceFromSessionStorage();
+  var tasks = getAllTasks();
+  sortTasksByDate(tasks);
+  tasks.forEach(task => {
+    appendTask(task);
   });
 }
 
 function appendTask(task) {
+  if(task.getIsComplete() && 0){//change the '0' for testing purposes
+    return;
+  }
   let table = document.getElementById("taskList");
   let rows = table.getElementsByTagName("tr");
   let row = table.insertRow(rows.length);
@@ -50,20 +56,28 @@ function appendTask(task) {
   row = table.insertRow(rows.length);
   let br = row.insertCell(0);
   tskTitle.innerHTML = task.getTitle();
-  tskComplete.innerHTML = '<input type="checkbox" onclick="completeTask(' + task.getTaskID() + ')"><br>';
+  if(task.getIsComplete()){
+    tskComplete.innerHTML = '✅<br>';
+  }else{
+    tskComplete.innerHTML = '<input type="checkbox" onclick="completeTask(\'' + task.getTaskID() + '\')"><br>';
+  }
   tskDesc.innerHTML = task.getDescription();
   tskDue.innerHTML = 'Due by ' + task.getDueDate() + ' ' + task.getDueTime();
-  tskMate.innerHTML = 'Task assigned to ' + task.getAssignedMate();
+  tskMate.innerHTML = 'Task assigned to ';
+  if(task.getFavourMate() !== ''){
+    tskMate.innerHTML = 'Task favoured by ';
+    firebase.firestore().collection('Mates').doc(task.getFavourMate()).get().then(doc => {
+      try{tskMate.innerHTML += doc.data().usrNickname;}
+      catch(e){tskMate.innerHTML += '?';}
+    });
+  }else{
+    firebase.firestore().collection('Mates').doc(task.getAssignedMate()).get().then(doc => {
+      try{tskMate.innerHTML += doc.data().usrNickname;}
+      catch(e){tskMate.innerHTML += '?';}
+    });
+  }
   br.innerHTML = '<br></br>'
 }
-
-function completeTask(taskID){
-    //marks task with id taskID as completed
-    firebase.firestore().collection('Tasks').doc(taskID).update({tskComplete:true}).then(result =>{
-        location.reload()
-    });
-}
-
 // Mates Display Functions
 // Found in --> ../html/mateslist.html; to be moved to ../html/overview.html
 function displayMates() {

@@ -10,8 +10,8 @@ test('some description', function(){
 const Space = require("../public/scripts/Space.js");
 const Mate = require("../public/scripts/Mate.js");
 const Task = require("../public/scripts/Task.js");
-const RecurringTaskFactory = require("../public/scripts/RecurringTaskFactory.js");
-const NonRecurringTaskFactory = require("../public/scripts/NonRecurringTaskFactory.js");
+//const RecurringTaskFactory = require("../public/scripts/RecurringTaskFactory.js");
+//const NonRecurringTaskFactory = require("../public/scripts/NonRecurringTaskFactory.js");
 
 // Getter/Setter tests
 var title = "The Collective";
@@ -149,11 +149,15 @@ console.log(task5);
 
 //testing Factories
 
-console.log("start");
+//console.log("start");
 
-task6 = new Task();
-task6.duplicate(recurTask);
+// var task6 = new Task();
+// task6.setTitle("Fold Clothes");
+// task6.setDescription("");
+// task6.setTaskID("123456");
+// task6.setIsRecurring(false);
+// task6.setIsComplete(false);
+// //
+// testSpace.reCreateRecurringTaskByFactory(task6, null);
 //
-testSpace.reCreateRecurringTaskByFactory(task6, null);
-
-console.log(testSpace.tasks);
+// console.log(testSpace.tasks);
