@@ -71,7 +71,7 @@ async function resetTaskTable() {
   let table = document.getElementById("taskList");
   table.innerHTML = "";
   table.setAttribute('id', 'taskList');
-  displayMates(document.getElementById("taskList"));
+  displayTasks(table);
 }
 
 // Mates Display Functions
@@ -104,5 +104,5 @@ async function resetMateTable() {
   let table = document.getElementById("mateList");
   table.innerHTML = "";
   table.setAttribute('id', 'mateList');
-  displayMates(document.getElementById("mateList"));
+  displayMates(table);
 }

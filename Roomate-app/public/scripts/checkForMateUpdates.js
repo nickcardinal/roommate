@@ -11,9 +11,12 @@ doc.onSnapshot(function(snapshot) {
     }
     if(change.type === "modified") {
       console.log("Modified Mates", change.doc.data().spcMates);
-      loadSpaceFromFirestore();
-      saveSpaceToSessionStorage();
-      resetMateTable();
+        refreshMates();
     }
   });
 });
+
+async function refreshMates() {
+  await syncData();
+  resetMateTable();
+}

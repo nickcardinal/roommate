@@ -11,9 +11,12 @@ doc.onSnapshot(function(snapshot) {
     }
     if(change.type === "modified") {
       console.log("Modified Task", change.doc.data().spcTasks);
-      loadSpaceFromFirestore();
-      saveSpaceToSessionStorage();
-      resetTaskTable();
+        refreshTasks();
     }
   });
 });
+
+async function refreshTasks() {
+  await syncData();
+  resetTaskTable();
+}

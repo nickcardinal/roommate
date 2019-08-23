@@ -164,7 +164,7 @@ async function loadSpaceFromFirestore() {
 	let currSpaceID = sessionStorage.getItem("Space");
     mySpace = new Space();
     await mySpace.populateFromFirestore(currSpaceID, loadSpaceFromFirestoreCallback);
-	return true;	
+	return true;
 }
 //Loads mySpace from Session Storage JSON.
 function loadSpaceFromSessionStorage() {
@@ -217,7 +217,7 @@ function getMyTasks(){
 	});
 }
 //Returns Task object matching taskID in mySpace tasks array.
-function getTasksByID(taskID){	
+function getTasksByID(taskID){
 	return mySpace.getTasks().filter(task => {
 		return task.getTaskID() === taskID;
 	});
