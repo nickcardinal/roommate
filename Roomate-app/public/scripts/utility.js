@@ -28,7 +28,7 @@ function createSpace() { //Tested
 }
 //Inserts Space into Firestore Spaces table
 function addSpaceToFirestore(newSpace) { //Tested
-	var firestoreDB = firebase.firestore();
+    var firestoreDB = firebase.firestore();
     let spacedb = firestoreDB.collection("Spaces");
     return spacedb.add(newSpace);
 }
@@ -47,9 +47,9 @@ async function addSpaceRefToMatesSpaces(spaceRef, currMateID) { //Tested
     })
 }
 //Add mateRef to Spaces.spcMates firebase collection.
-function addMateRefToSpacesMates(mateRef, currSpaceID) { //Tested
+async function addMateRefToSpacesMates(mateRef, currSpaceID) { //Tested
     let spcDocRef = firebase.firestore().collection("Spaces").doc(currSpaceID);
-    spcDocRef.get().then(spcDoc => {
+    await spcDocRef.get().then(spcDoc => {
         let spcMates = spcDoc.data().spcMates;
         if (spcMates === undefined) {
             spcMates = new Array();
@@ -60,23 +60,25 @@ function addMateRefToSpacesMates(mateRef, currSpaceID) { //Tested
         });
     })
 }
-//Pulls SpaceID from joinSpace.html and adds mateRef to Spaces.spcMate && adds Space to Mates.usrSpaces
-function addMateToSpace() { //Tested
+//Pulls SpaceID from joinSpace.html && adds mateRef to Spaces.spcMates && adds Space to Mates.usrSpaces
+async function addMateToSpace() { //Tested
     var currMateID = sessionStorage.getItem("user");
     var userSpaceID = $("#userSpaceID").val();
 
-    this.isValidSpace(userSpaceID).then(function (exists) {
+    this.isValidSpace(userSpaceID).then(async function (exists) {
         var isValidSpaceID = exists;
         if (!isValidSpaceID) {
             alert("Invalid Space ID");
             return;
         } else {
             let spcDocRef = firebase.firestore().collection("Spaces").doc(userSpaceID);
-            addSpaceRefToMatesSpaces(spcDocRef, currMateID).then(none => {
-                    //Save spaceID to session storage.
-                    sessionStorage.setItem('Space', userSpaceID);
-                    redirect('../html/overview.html');
-                });
+            await addSpaceRefToMatesSpaces(spcDocRef, currMateID).then(async function (none) {
+                await addMateRefToSpacesMates(currMateID, userSpaceID);
+                //Save spaceID to session storage.
+                sessionStorage.setItem('Space', userSpaceID);
+            }).then(redir => {
+                redirect('../html/overview.html');
+            })
         }
     });
 }
@@ -129,8 +131,6 @@ async function completeTask(taskID){
     }
 }
 
-
-
 function sortTasksByDate(tasksArray) {
     tasksArray.sort((taskA, taskB) => {
 
@@ -161,40 +161,39 @@ function saveSpaceToSessionStorage() {
 }
 //Loads mySpace from Firestore Spaces table.
 async function loadSpaceFromFirestore() {
-	let currSpaceID = sessionStorage.getItem("Space");
+    let currSpaceID = sessionStorage.getItem("Space");
     mySpace = new Space();
     await mySpace.populateFromFirestore(currSpaceID, loadSpaceFromFirestoreCallback);
-	return true;
+	  return true;
 }
 //Loads mySpace from Session Storage JSON.
 function loadSpaceFromSessionStorage() {
     let mySpaceJSON = sessionStorage.getItem("mySpaceJSON");
     if (!mySpaceJSON || !JSON.parse(mySpaceJSON).isLoaded) {
         //alert("mySpaceJSON is empty.");
-		return false;
-    }
-	else{
+        return false;
+    } else {
         mySpace.importJSON(JSON.parse(mySpaceJSON));
         return true;
-	}
+    }
 }
 //Returns ID from mySpace
-function getSpaceID(){
-	return mySpace.getID();
+function getSpaceID() {
+    return mySpace.getID();
 }
 //Returns Title from mySpace
-function getSpaceTitle(){
-	return mySpace.getTitle();
+function getSpaceTitle() {
+    return mySpace.getTitle();
 }
 //Returns Description from mySpace
-function getSpaceDescription(){
-	return mySpace.getDescription();
+function getSpaceDescription() {
+    return mySpace.getDescription();
 }
 //Returns Mate object matching userID in mySpace mates array.
-function getMateByID(userID){
-	return mySpace.getMates().filter(mate => {
-		return mate.getID() === userID;
-	});
+function getMateByID(userID) {
+    return mySpace.getMates().filter(mate => {
+        return mate.getID() === userID;
+    });
 }
 //Returns Mates array from mySpace
 function getMatesInSpace() {
@@ -206,21 +205,21 @@ function getAllTasks() {
 }
 
 //Returns whole space
-function getSpace(){
+function getSpace() {
     return mySpace;
 }
 //Returns a filtered task array of all tasks matching userID in Session Storage.
-function getMyTasks(){
-	let currMateID = sessionStorage.getItem("user");
-	mySpace.getTasks().filter(task => {
-		return task.assignMate === currMateID;
-	});
+function getMyTasks() {
+    let currMateID = sessionStorage.getItem("user");
+    mySpace.getTasks().filter(task => {
+        return task.assignMate === currMateID;
+    });
 }
 //Returns Task object matching taskID in mySpace tasks array.
-function getTasksByID(taskID){
-	return mySpace.getTasks().filter(task => {
-		return task.getTaskID() === taskID;
-	});
+function getTasksByID(taskID) {
+    return mySpace.getTasks().filter(task => {
+        return task.getTaskID() === taskID;
+    });
 }
 //Adds Task to mySpace
 function addTaskToSpace(newTask) {
@@ -234,15 +233,15 @@ function loadSpaceFromFirestoreCallback(type, value) {
     } else if (type === 'description') {
         mySpace.setDescription(value);
     } else if (type === 'mates') {
-		//removes null values from array
+        //removes null values from array
         mySpace.setMatesArray(value.filter(x => x));
     } else if (type === 'tasks') {
-		//removes null values from array
+        //removes null values from array
         mySpace.setTasksArray(value.filter(x => x));
     }
 }
 
-async function syncData(){
+async function syncData() {
     await loadSpaceFromFirestore();
     saveSpaceToSessionStorage();
 }
