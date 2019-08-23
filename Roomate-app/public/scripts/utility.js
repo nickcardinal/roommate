@@ -178,6 +178,12 @@ function getMyTasks(){
 		return task.assignMate === currMateID;
 	});
 }
+//Returns Task object matching taskID in mySpace tasks array.
+function getTasksByID(taskID){	
+	return mySpace.getTasks().filter(task => {
+		return task.getTaskID() === taskID;
+	});
+}
 //Adds Task to mySpace
 function addTaskToSpace(newTask) {
     mySpace.addTask(newTask);
