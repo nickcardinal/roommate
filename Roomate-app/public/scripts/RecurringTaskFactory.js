@@ -97,10 +97,12 @@ class RecurringTaskFactory {
       }
   }
 
-  reCreateTask(task) {
+  reCreateTask(task) { // pass in the deep copy of the task not the original... unless we change the logic
     this.task = task;
+    this.task.setAssignedMate(setNextMateAssignedToRecurringTask(this.task.getAssignedMate()));
+    this.task.calcNewDate();
     //uncomment the line below when ready
-    //this.insertTaskIntoFirestore();
+    this.insertTaskIntoFirestore();
     //json here...
     return this.task;
   }
