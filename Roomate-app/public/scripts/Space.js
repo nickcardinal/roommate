@@ -348,66 +348,6 @@ class Space {
     }
     //**End of Space Class**//
 }
-//Moved to utility.js
-function joinExistingSpace() {
-    var newSpace = new Space();
-    newSpace.addMateToSpace();
-}
-//Moved to utility.js
-function createFirestoreSpace() {
-    let spacedb = firebase.firestore().collection("Spaces");
-
-    let currMateID = sessionStorage.getItem("user");
-    let matedb = firebase
-        .firestore()
-        .collection("Mates")
-        .doc(currMateID);
-
-    let data = {
-        spcTitle: $("#spaceTitle").val(),
-        spcDescription: $("#spaceDescription").val(),
-        spcMates: firebase.firestore.FieldValue.arrayUnion(currMateID)
-    };
-
-    spacedb
-    .add(data)
-    .then(function (docRef) {
-        sessionStorage.setItem("Space", docRef.id);
-        matedb.update({
-            usrSpaces: firebase.firestore.FieldValue.arrayUnion(docRef)
-        });
-    })
-    .then(result => {
-        redirect("./spaceKey.html");
-    })
-    .catch(function (error) {
-        console.error("Error adding document: ", error);
-    });
-}
-//Moved to utility.js
-function accessFirestoreSpace(ID, _callback) {
-    let space = new Space();
-    let spacedb = firebase
-        .firestore()
-        .collection("Spaces")
-        .doc(ID);
-    let getSpace = spacedb
-        .get()
-        .then(doc => {
-            if (!doc.exists) {
-                console.log("No such document!");
-            } else {
-                space.setDescription(doc.data().spcDescription);
-                space.setTitle(doc.data().spcTitle);
-                space.setID(doc.id);
-
-                _callback(space);
-            }
-        })
-        .catch(err => {
-            console.log("Error getting document", err);
-        });
-}
 
 try{
 	module.exports = Space;

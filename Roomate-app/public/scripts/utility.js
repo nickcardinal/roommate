@@ -73,12 +73,10 @@ function addMateToSpace() { //Tested
         } else {
             let spcDocRef = firebase.firestore().collection("Spaces").doc(userSpaceID);
             addSpaceRefToMatesSpaces(spcDocRef, currMateID).then(none => {
-                addSpaceRefToMatesSpaces().then(redir => {
                     //Save spaceID to session storage.
                     sessionStorage.setItem('Space', userSpaceID);
                     redirect('../html/overview.html');
                 });
-            });
         }
     });
 }
@@ -109,6 +107,7 @@ async function createTaskByFactory() {
     newTask = factory.createTask();
     addTaskToSpace(newTask);
     saveSpaceToSessionStorage();
+    await syncData();
     redirect("../html/overview.html");
 }
 //This function will branch based on Recurring/Nonrecurring
@@ -169,7 +168,7 @@ async function loadSpaceFromFirestore() {
 //Loads mySpace from Session Storage JSON.
 function loadSpaceFromSessionStorage() {
     let mySpaceJSON = sessionStorage.getItem("mySpaceJSON");
-    if (!mySpaceJSON) {
+    if (!mySpaceJSON || !JSON.parse(mySpaceJSON).isLoaded) {
         //alert("mySpaceJSON is empty.");
 		return false;
     }
@@ -240,4 +239,9 @@ function loadSpaceFromFirestoreCallback(type, value) {
 		//removes null values from array
         mySpace.setTasksArray(value.filter(x => x));
     }
+}
+
+async function syncData(){
+    await loadSpaceFromFirestore();
+    saveSpaceToSessionStorage();
 }
