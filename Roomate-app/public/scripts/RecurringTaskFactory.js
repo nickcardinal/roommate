@@ -3,15 +3,14 @@ const Task = require('./Task.js')
 
 class RecurringTaskFactory {
   constructor(taskdb, matesArray) {
-    //this.task = new Task();
+    this.task = new Task();
     this.mates = matesArray;
     this.taskdb = taskdb;
   }
 
   createTask() {
     this.populateTask();
-    this.insertTaskIntoFirestore();
-    //json here...
+    this.task.setTaskID(this.insertTaskIntoFirestore());
     return this.task;
   }
 
@@ -27,7 +26,7 @@ class RecurringTaskFactory {
     this.task.setFavourMate('');
   }
 
-  insertTaskIntoFirestore() {
+  async insertTaskIntoFirestore() {
     // Setting firestore data
     let data = {
       tskTitle: this.task.getTitle(),
@@ -47,12 +46,10 @@ class RecurringTaskFactory {
     .then(function(docRef) {
       var spaceID = sessionStorage.getItem("Space");
       var spacedb = firebase.firestore().collection("Spaces").doc(spaceID);
-      spacedb.update({
+      await spacedb.update({
         spcTasks: firebase.firestore.FieldValue.arrayUnion(docRef.id),
-      }).
-      then(none => { //maybe move later
-        redirect("../html/overview.html");
       });
+      return docRef.id;
     });
   }
 
@@ -97,13 +94,11 @@ class RecurringTaskFactory {
       }
   }
 
-  reCreateTask(task) { // pass in the deep copy of the task not the original... unless we change the logic
-    this.task = task;
-    this.task.setAssignedMate(setNextMateAssignedToRecurringTask(this.task.getAssignedMate()));
+  reCreateTask(oldTask) { // pass in the old task
+    this.task.duplicate(oldTask);
+    this.task.setAssignedMate(this.setNextMateAssignedToRecurringTask(this.task.getAssignedMate()));
     this.task.calcNewDate();
-    //uncomment the line below when ready
-    this.insertTaskIntoFirestore();
-    //json here...
+    this.task.setTaskID(this.insertTaskIntoFirestore()); // assign the ID now that it has been upoaded to db
     return this.task;
   }
 

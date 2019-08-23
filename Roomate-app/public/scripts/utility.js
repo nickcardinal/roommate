@@ -109,6 +109,7 @@ function createTaskByFactory() {
     newTask = factory.createTask();
     addTaskToSpace(newTask);
     saveSpaceToSessionStorage();
+    redirect("../html/overview.html");
 }
 //Andre's function
 function completeTask(){
