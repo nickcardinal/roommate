@@ -85,7 +85,7 @@ function completeTask(taskID){
             firebase.firestore().collection('Tasks').add(nextTask.firestoreObj()).then(result => {
               task.setIsComplete(true);
               nextTask.setTaskID(result.id);
-              mySpace.addTask(nextTask);
+              addTaskToSpace(nextTask);
               let spaceRef = firebase.firestore().collection('Spaces').doc(sessionStorage.getItem('Space'))
               spaceRef.get().then(space => {
                 let taskList = space.data().spcTasks;
