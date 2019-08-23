@@ -61,6 +61,7 @@ class Space {
     getTasks() {
         return this.tasks;
     }
+
     sortTasksByDate(tasksArray) {
       tasksArray.sort((taskA, taskB) => {
 
@@ -77,7 +78,7 @@ class Space {
         return -1;
       });
     }
-      
+
   	//Moved to utility.js
     createTaskByFactory(taskdb) {
         var factory;
@@ -94,12 +95,14 @@ class Space {
         this.addTask(factory.createTask(mate));
     }
 
+    //this will be called completeTask in utility.js
     reCreateRecurringTaskByFactory(task, taskdb) {
       var factory = new RecurringTaskFactory(taskdb);
       task.setAssignedMate(this.setNextMateAssignedToRecurringTask(task.getAssignedMate()));
       task.calcNewDate() //call Morgan's function
       this.addTask(factory.reCreateTask(task));
     }
+
 	//Moved to utility.js
     isValidSpace(spaceDocID) {
         var db = firebase.firestore();
@@ -150,6 +153,7 @@ class Space {
         });
     }
 
+    //moved to NonRecurringTaskFactory
     setMateToNonRecurringTask() {
         if (this.mates.length == 0) {
             console.log("No mates in the living space.");
@@ -179,6 +183,7 @@ class Space {
         }
     }
 
+    //moved to RecurringTaskFactory
     setFirstMateAssignedToRecurringTask() {
         if (this.mates.length == 0) {
             alert("No mates in the living space.");
@@ -207,6 +212,7 @@ class Space {
         }
     }
 
+    //moved to RecurringTaskFactory
     setNextMateAssignedToRecurringTask(mate) {
         for (var i = 0; i < this.mates.length - 1; ++i) {
             if (this.mates[i] == mate) {
@@ -216,6 +222,7 @@ class Space {
         return this.mates[0];
     }
 
+    //moved to NonRecurringTaskFactory
     getNumberOfMatesNonRecurringTasks(mate) {
         var numTasks = 0;
         for (var i = 0; i < this.tasks.length; ++i) {
@@ -230,6 +237,7 @@ class Space {
         return numTasks;
     }
 
+    //Moved to RecurringTaskFactory
     getNumberOfMatesRecurringTasks(mate) {
         var numTasks = 0;
         for (var i = 0; i < this.tasks.length; ++i) {
