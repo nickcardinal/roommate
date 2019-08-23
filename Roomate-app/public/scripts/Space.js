@@ -85,7 +85,8 @@ class Space {
         task.calcNewDate() //call Morgan's function
         this.addTask(factory.reCreateTask(task));
     }
-    //Moved to utility.js
+  
+	//Moved to utility.js
     isValidSpace(spaceDocID) {
         var db = firebase.firestore();
         var spcDocRef = db.collection("Spaces").doc(spaceDocID);

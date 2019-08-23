@@ -1,14 +1,13 @@
 class NonRecurringTaskFactory {
   constructor(taskdb, matesArray) {
-    //this.task = new Task();
+    this.task = new Task();
     this.mates = matesArray;
     this.taskdb = taskdb;
   }
 
   createTask() {
     this.populateTask();
-    this.insertTaskIntoFirestore();
-    //json here...
+    this.task.setTaskID(this.insertTaskIntoFirestore());
     return this.task;
   }
 
@@ -24,7 +23,7 @@ class NonRecurringTaskFactory {
     this.task.setFavourMate('');
   }
 
-  insertTaskIntoFirestore() {
+  async insertTaskIntoFirestore() {
     // Setting firestore data
     let data = {
       tskTitle: this.task.getTitle(),
@@ -44,12 +43,10 @@ class NonRecurringTaskFactory {
     .then(function(docRef) {
       var spaceID = sessionStorage.getItem("Space");
       var spacedb = firebase.firestore().collection("Spaces").doc(spaceID);
-      spacedb.update({
+      await spacedb.update({
         spcTasks: firebase.firestore.FieldValue.arrayUnion(docRef.id),
-      }).
-      then(none => {
-        redirect("../html/overview.html");
       });
+      return docRef.id;
     });
   }
 
@@ -85,7 +82,6 @@ class NonRecurringTaskFactory {
           } else if (j === minNumTasks) {
               minTaskMates.push(this.mates[i]);
           }
-          //console.log(minTaskMates);
       }
 
       if (minTaskMates.length > 1) {

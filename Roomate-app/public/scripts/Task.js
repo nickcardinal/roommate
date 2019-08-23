@@ -18,7 +18,7 @@
 	}
 
 	duplicate(task) {
-		this.task_ID; //assign it to something?
+		//this.task_ID = null; //assign it to something
 		this.title = task.getTitle();
 		this.description = task.getDescription();
 		this.dueDate = task.getDueDate();
@@ -191,11 +191,13 @@
 	}
 }
 
+//old stuff
 function createTask() {
 	var taskdb = firebase.firestore().collection("Tasks");
 	//somehow find the space object and call createTaskByFactoryFunction()
 }
 
+//old stuff
 function reCreateRecurringTask() {
 	var taskdb = firebase.firestore().collection("Tasks");
 	//find the original task using the id
@@ -206,6 +208,7 @@ function reCreateRecurringTask() {
 	// pass in taskdb and the new task
 }
 
+//old stuff but currently tied to the button
 function createFirestoreTask() {
 	var taskdb = firebase.firestore().collection("Tasks");
 	console.log("We're in the mainframe... Task data collection has commenced.");

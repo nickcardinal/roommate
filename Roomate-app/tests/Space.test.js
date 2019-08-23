@@ -10,8 +10,8 @@ test('some description', function(){
 const Space = require("../public/scripts/Space.js");
 const Mate = require("../public/scripts/Mate.js");
 const Task = require("../public/scripts/Task.js");
-const RecurringTaskFactory = require("../public/scripts/RecurringTaskFactory.js");
-const NonRecurringTaskFactory = require("../public/scripts/NonRecurringTaskFactory.js");
+//const RecurringTaskFactory = require("../public/scripts/RecurringTaskFactory.js");
+//const NonRecurringTaskFactory = require("../public/scripts/NonRecurringTaskFactory.js");
 
 // Getter/Setter tests
 var title = "The Collective";

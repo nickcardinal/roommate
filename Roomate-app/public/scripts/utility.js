@@ -109,6 +109,7 @@ function createTaskByFactory() {
     newTask = factory.createTask();
     addTaskToSpace(newTask);
     saveSpaceToSessionStorage();
+    redirect("../html/overview.html");
 }
 //This function will branch based on Recurring/Nonrecurring
 //Functionality for marking a task as complete should be moved to the Task Object class.
