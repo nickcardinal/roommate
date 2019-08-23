@@ -38,16 +38,13 @@ class NonRecurringTaskFactory {
     }
 
     // Add Task to Space in db
-    this.taskdb
-    .add(data)
-    .then(async function(docRef) {
-      var spaceID = sessionStorage.getItem("Space");
-      var spacedb = firebase.firestore().collection("Spaces").doc(spaceID);
-      await spacedb.update({
-        spcTasks: firebase.firestore.FieldValue.arrayUnion(docRef.id),
-      });
-      return docRef.id;
+    let docRef = await this.taskdb.add(data);
+    var spaceID = sessionStorage.getItem("Space");
+    var spacedb = firebase.firestore().collection("Spaces").doc(spaceID);
+    await spacedb.update({
+      spcTasks: firebase.firestore.FieldValue.arrayUnion(docRef.id),
     });
+    return docRef.id;
   }
 
   getNumberOfMatesNonRecurringTasks(mate) {
