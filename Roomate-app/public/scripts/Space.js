@@ -62,23 +62,23 @@ class Space {
         return this.tasks;
     }
     sortTasksByDate(tasksArray) {
-      tasksArray.sort((taskA, taskB) => {
+        tasksArray.sort((taskA, taskB) => {
 
-        // Check Date: recent first
-        if(taskA.getDueDate() > taskB.getDueDate()) {
-          return 1;
-        } else if(taskA.getDueDate() === taskB.getDueDate()){
+            // Check Date: recent first
+            if (taskA.getDueDate() > taskB.getDueDate()) {
+                return 1;
+            } else if (taskA.getDueDate() === taskB.getDueDate()) {
 
-          // Check Time: recent first
-          if(taskA.getDueTime() >= taskB.getDueTime()) {
-            return 1;
-          }
-        }
-        return -1;
-      });
+                // Check Time: recent first
+                if (taskA.getDueTime() >= taskB.getDueTime()) {
+                    return 1;
+                }
+            }
+            return -1;
+        });
     }
-      
-  	//Moved to utility.js
+
+    //Moved to utility.js
     createTaskByFactory(taskdb) {
         var factory;
         var mate;
@@ -95,12 +95,12 @@ class Space {
     }
 
     reCreateRecurringTaskByFactory(task, taskdb) {
-      var factory = new RecurringTaskFactory(taskdb);
-      task.setAssignedMate(this.setNextMateAssignedToRecurringTask(task.getAssignedMate()));
-      task.calcNewDate() //call Morgan's function
-      this.addTask(factory.reCreateTask(task));
+        var factory = new RecurringTaskFactory(taskdb);
+        task.setAssignedMate(this.setNextMateAssignedToRecurringTask(task.getAssignedMate()));
+        task.calcNewDate() //call Morgan's function
+        this.addTask(factory.reCreateTask(task));
     }
-	//Moved to utility.js
+    //Moved to utility.js
     isValidSpace(spaceDocID) {
         var db = firebase.firestore();
         var spcDocRef = db.collection("Spaces").doc(spaceDocID);
@@ -114,7 +114,7 @@ class Space {
             return mate.exists;
         });
     }
-	//Moved to utility.js
+    //Moved to utility.js
     addMateToSpace() {
         let userDocID = sessionStorage.getItem("user");
         let userSpaceID = $("#userSpaceID").val();
@@ -282,13 +282,15 @@ class Space {
                 spcDoc.data().spcMates.forEach(mate => {
                     var mteMateRef = db.collection("Mates").doc(mate);
                     var newMate = mteMateRef.get().then(function (mateRecord) {
-                            var currMate = new Mate();
-                            currMate.setID(mateRecord.id);
-                            currMate.setNickName(mateRecord.data().usrNickname);
-                            currMate.setFullName(mateRecord.data().usrName);
-                            currMate.setEmail(mateRecord.data().usrEmail);
-                            currMate.setPhotoURL(mateRecord.data().usrPhotoUrl);
-                            return currMate;
+                            if (mateRecord.exists) {
+                                var currMate = new Mate();
+                                currMate.setID(mateRecord.id);
+                                currMate.setNickName(mateRecord.data().usrNickname);
+                                currMate.setFullName(mateRecord.data().usrName);
+                                currMate.setEmail(mateRecord.data().usrEmail);
+                                currMate.setPhotoURL(mateRecord.data().usrPhotoUrl);
+                                return currMate;
+                            }
                         });
                     mtePromiseArray.push(newMate);
                 });
@@ -306,20 +308,22 @@ class Space {
         var db = firebase.firestore();
         var spcSpaceRef = db.collection("Spaces").doc(this.ID);
         return spcSpaceRef.get().then(function (spcDoc) {
-            if (spcDoc.exists) {
+            if (spcDoc.data().hasOwnProperty('spcTasks')) {
                 spcDoc.data().spcTasks.forEach(task => {
                     var tskTaskRef = db.collection("Tasks").doc(task);
                     var newTask = tskTaskRef.get().then(function (taskRecord) {
-                            var currTask = new Task();
-                            currTask.setTitle(taskRecord.data().tskTitle);
-                            currTask.setDescription(taskRecord.data().tskDescription);
-                            currTask.setDueDate(taskRecord.data().tskDueDate);
-                            currTask.setDueTime(taskRecord.data().tskDueTime);
-                            currTask.setIsRecurring(taskRecord.data().tskIsRecurring);
-                            currTask.setIsComplete(taskRecord.data().tskIsComplete);
-                            currTask.setAssignedMate(taskRecord.data().tskAssignedMate);
-                            currTask.setFavourMate(taskRecord.data().tskFavour);
-                            return currTask;
+                            if (taskRecord.exists) {
+                                var currTask = new Task();
+                                currTask.setTitle(taskRecord.data().tskTitle);
+                                currTask.setDescription(taskRecord.data().tskDescription);
+                                currTask.setDueDate(taskRecord.data().tskDueDate);
+                                currTask.setDueTime(taskRecord.data().tskDueTime);
+                                currTask.setIsRecurring(taskRecord.data().tskIsRecurring);
+                                currTask.setIsComplete(taskRecord.data().tskIsComplete);
+                                currTask.setAssignedMate(taskRecord.data().tskAssignedMate);
+                                currTask.setFavourMate(taskRecord.data().tskFavour);
+                                return currTask;
+                            }
                         });
                     tskPromiseArray.push(newTask);
                 });
