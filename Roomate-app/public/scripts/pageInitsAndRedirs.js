@@ -4,7 +4,7 @@ function initialize() {
 }
 
 function validate(){
-    initialize();
+  initialize();
     database = firebase.firestore();
     if(sessionStorage.getItem('log') === 'true'){
       updateToken_Overview(database);
@@ -23,7 +23,7 @@ function validate(){
             snapshot.forEach(doc => {
                 if(new Date() < doc.data().usrExpiration.toDate()){
                     sessionStorage.setItem('user', doc.id);
-                    updateExpiration(database, doc)
+                    updateExpiration(database, doc);
                 }else{
                     redirect("../index.html");
                 }
@@ -61,8 +61,8 @@ async function initializeOverview(){
 	if(!loadSpaceFromSessionStorage()){
 		await loadSpaceFromFirestore();
 		saveSpaceToSessionStorage();
-		displaySpaceInfo();
-	}
+  }
+  displaySpaceInfo(); 
 }
 function populateSpaceCallback(type, value){
 	if(type === 'title'){

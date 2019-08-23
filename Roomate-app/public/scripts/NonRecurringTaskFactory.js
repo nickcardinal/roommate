@@ -1,6 +1,3 @@
-const Mate = require('./Mate.js')
-const Task = require('./Task.js')
-
 class NonRecurringTaskFactory {
   constructor(taskdb, matesArray) {
     this.task = new Task();
@@ -41,16 +38,13 @@ class NonRecurringTaskFactory {
     }
 
     // Add Task to Space in db
-    this.taskdb
-    .add(data)
-    .then(function(docRef) {
-      var spaceID = sessionStorage.getItem("Space");
-      var spacedb = firebase.firestore().collection("Spaces").doc(spaceID);
-      await spacedb.update({
-        spcTasks: firebase.firestore.FieldValue.arrayUnion(docRef.id),
-      });
-      return docRef.id;
+    let docRef = await this.taskdb.add(data);
+    var spaceID = sessionStorage.getItem("Space");
+    var spacedb = firebase.firestore().collection("Spaces").doc(spaceID);
+    await spacedb.update({
+      spcTasks: firebase.firestore.FieldValue.arrayUnion(docRef.id),
     });
+    return docRef.id;
   }
 
   getNumberOfMatesNonRecurringTasks(mate) {
@@ -94,5 +88,8 @@ class NonRecurringTaskFactory {
       }
   }
 }
-
+try{
 module.exports = NonRecurringTaskFactory;
+}catch(e){
+  
+}

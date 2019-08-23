@@ -62,23 +62,6 @@ class Space {
         return this.tasks;
     }
 
-    sortTasksByDate(tasksArray) {
-        tasksArray.sort((taskA, taskB) => {
-
-            // Check Date: recent first
-            if (taskA.getDueDate() > taskB.getDueDate()) {
-                return 1;
-            } else if (taskA.getDueDate() === taskB.getDueDate()) {
-
-                // Check Time: recent first
-                if (taskA.getDueTime() >= taskB.getDueTime()) {
-                    return 1;
-                }
-            }
-            return -1;
-        });
-    }
-
   	//Moved to utility.js
     createTaskByFactory(taskdb) {
         var factory;
@@ -214,6 +197,9 @@ class Space {
 
     //moved to RecurringTaskFactory
     setNextMateAssignedToRecurringTask(mate) {
+        if(this.mates.length == 0){
+            return new Mate();
+        }
         for (var i = 0; i < this.mates.length - 1; ++i) {
             if (this.mates[i] == mate) {
                 return this.mates[i + 1];
@@ -248,6 +234,25 @@ class Space {
                 ++numTasks;
             }
         }
+    }
+
+    importJSON(space){
+        this.ID = space.ID;
+        this.title = space.title;
+        this.description = space.description;
+        this.mates = [];
+        this.tasks = [];
+        this.isLoaded = space.isLoaded;
+        space.mates.forEach(mate => {
+            let add = new Mate();
+            add.importJSON(mate);
+            this.mates.push(add);
+        });
+        space.tasks.forEach(task => {
+            let add = new Task();
+            add.importJSON(task);
+            this.tasks.push(add);
+        });
     }
 
     async populateFromFirestore(space_ID, _callback) {
@@ -320,18 +325,20 @@ class Space {
                 spcDoc.data().spcTasks.forEach(task => {
                     var tskTaskRef = db.collection("Tasks").doc(task);
                     var newTask = tskTaskRef.get().then(function (taskRecord) {
-                            if (taskRecord.exists) {
-                                var currTask = new Task();
-                                currTask.setTitle(taskRecord.data().tskTitle);
-                                currTask.setDescription(taskRecord.data().tskDescription);
-                                currTask.setDueDate(taskRecord.data().tskDueDate);
-                                currTask.setDueTime(taskRecord.data().tskDueTime);
-                                currTask.setIsRecurring(taskRecord.data().tskIsRecurring);
-                                currTask.setIsComplete(taskRecord.data().tskIsComplete);
-                                currTask.setAssignedMate(taskRecord.data().tskAssignedMate);
-                                currTask.setFavourMate(taskRecord.data().tskFavour);
-                                return currTask;
-                            }
+                        if(taskRecord.exists){
+                            var currTask = new Task();
+                            currTask.setTitle(taskRecord.data().tskTitle);
+                            currTask.setDescription(taskRecord.data().tskDescription);
+                            currTask.setDueDate(taskRecord.data().tskDueDate);
+                            currTask.setDueTime(taskRecord.data().tskDueTime);
+                            currTask.setIsRecurring(taskRecord.data().tskIsRecurring);
+                            currTask.setIsComplete(taskRecord.data().tskIsComplete);
+                            currTask.setAssignedMate(taskRecord.data().tskAssignedMate);
+                            currTask.setFavourMate(taskRecord.data().tskFavour);
+                            currTask.setTaskID(taskRecord.id);
+                            currTask.setRecurringPeriod(taskRecord.data().tskRecurringPeriod);
+                            return currTask;
+                        }
                         });
                     tskPromiseArray.push(newTask);
                 });
@@ -402,28 +409,8 @@ function accessFirestoreSpace(ID, _callback) {
         });
 }
 
-function testAssignTask() {
-    let user1 = new Mate();
-    let user2 = new Mate();
-    let user3 = new Mate();
-    let space = new Space();
-    user1.setEmail("user1@mail.com");
-    user2.setEmail("user2@mail.com");
-    user3.setEmail("user3@mail.com");
-    user1.setFullName("user1");
-    user2.setFullName("user2");
-    user3.setFullName("user3");
-    space.setTitle("Space");
-    space.addMate(user1);
-    space.addMate(user2);
-    space.addMate(user3);
-    for (let i = 0; i < 50; i++) {
-        let task = new Task();
-        task.setTitle("Task # " + i);
-        space.randomAssignMateToTask(task);
-        console.log(task.getAssignedMate(), "assigned.");
-        space.addTask(task);
-    }
+try{
+	module.exports = Space;
+}catch(e){
+	
 }
-
-module.exports = Space;

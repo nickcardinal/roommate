@@ -111,14 +111,43 @@ function createTaskByFactory() {
     saveSpaceToSessionStorage();
     redirect("../html/overview.html");
 }
-//Andre's function
-function completeTask(){
-  // var factory = new RecurringTaskFactory(taskdb);
-  // task.setAssignedMate(this.setNextMateAssignedToRecurringTask(task.getAssignedMate()));
-  // task.calcNewDate() //call Morgan's function
-  // this.addTask(factory.reCreateTask(task));
+//This function will branch based on Recurring/Nonrecurring
+//Functionality for marking a task as complete should be moved to the Task Object class.
+//Only allows for you to complete your own tasks
+async function completeTask(taskID){
+    task = getTasksByID(taskID)[0];
+    //if((task.favourMate === '' && sessionStorage.getItem('user') === task.assignedMate)|| task.favourMate === sessionStorage.getItem('user')){
+    //marks task with id taskID as completed
+        if(task.getIsRecurring()){
+            let fact = new RecurringTaskFactory(firebase.firestore().collection('Tasks'), getMatesInSpace());
+            await fact.reCreateTask(task);
+            await task.pushComplete();
+            saveSpaceToSessionStorage();
+            location.reload();
+          }else{
+            await task.pushComplete();
+          }
+ //       }
 }
 
+
+
+function sortTasksByDate(tasksArray) {
+    tasksArray.sort((taskA, taskB) => {
+
+        // Check Date: recent first
+        if (taskA.getDueDate() > taskB.getDueDate()) {
+            return 1;
+        } else if (taskA.getDueDate() === taskB.getDueDate()) {
+
+            // Check Time: recent first
+            if (taskA.getDueTime() >= taskB.getDueTime()) {
+                return 1;
+            }
+        }
+        return -1;
+    });
+}
 /*********************************************
 
 Functions that access  mySpace Object
@@ -146,8 +175,8 @@ function loadSpaceFromSessionStorage() {
 		return false;
     }
 	else{
-		mySpace = JSON.parse(mySpaceJSON);
-		return true;
+        mySpace.importJSON(JSON.parse(mySpaceJSON));
+        return true;
 	}
 }
 //Returns ID from mySpace
@@ -176,6 +205,11 @@ function getMatesInSpace() {
 function getAllTasks() {
     return mySpace.getTasks();
 }
+
+//Returns whole space
+function getSpace(){
+    return mySpace;
+}
 //Returns a filtered task array of all tasks matching userID in Session Storage.
 function getMyTasks(){
 	let currMateID = sessionStorage.getItem("user");
@@ -193,6 +227,7 @@ function getTasksByID(taskID){
 function addTaskToSpace(newTask) {
     mySpace.addTask(newTask);
 }
+
 //Callback function for loadSpaceFromFirestore();
 function loadSpaceFromFirestoreCallback(type, value) {
     if (type === 'title') {

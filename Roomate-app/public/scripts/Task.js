@@ -127,24 +127,67 @@
 	calcNewDate() {
 			let currDate = this.dueDate.split("-");
 			let currFormatedDate = currDate[1] + "/" + currDate[2] + "/" + currDate[0];
-
+		//error checking
+		if(this.recurringPeriod <= 0){
+			this.recurringPeriod = 1;
+		}
 	    let newDate = new Date(currFormatedDate);
 
 			let today = new Date();
-			today.getDate();
 
-	    newDate.setDate(newDate.getDate() + this.recurringPeriod);
+	    newDate.setDate(newDate.getDate() + parseInt(this.recurringPeriod));
 
 			while(newDate < today) {
-				newDate.setDate(newDate.getDate() + this.recurringPeriod);
-			}
+				newDate.setDate(newDate.getDate() + parseInt(this.recurringPeriod));
+			}//very innefficient for long times
 
 	    let dd = newDate.getDate();
 	    let mm = newDate.getMonth() + 1;
 	    let y = newDate.getFullYear();
-
+		if(dd < 10){
+			dd = '0' + dd;
+		}
+		if(mm < 10){
+			mm = '0' + mm;
+		}
 	    let formattedDate = y + '-' + mm + '-' + dd;
 	    this.dueDate =  formattedDate;
+	}
+
+	async pushComplete(){
+		task.setIsComplete(true);
+		await firebase.firestore().collection('Tasks').doc(this.task_ID).update({tskIsComplete:true});
+		
+	}
+	firestoreObj(){
+		return {
+			tskAssignedMate: this.assignedMate.getID(),
+			tskDescription: this.description,
+			tskDueDate: this.dueDate,
+			tskDueTime: this.dueTime,
+			tskFavour: this.favourMate,
+			tskIsComplete: this.isComplete,
+			tskIsRecurring: this.isRecurring,
+			tskRecurringPeriod: this.recurringPeriod,
+			tskTitle: this.title
+		}
+	}
+	importJSON(task){
+				// Task Descriptors
+				this.task_ID = task.task_ID;
+				this.title = task.title;
+				this.description = task.description;
+		
+				// Task Deadline Data
+				this.dueDate = task.dueDate;
+				this.dueTime = task.dueTime;
+				this.isRecurring = task.isRecurring;
+				this.recurringPeriod = task.recurringPeriod;
+		
+				// Task Completion Details
+				this.assignedMate = task.assignedMate;
+				this.isComplete = task.isComplete;
+				this.favourMate = task.favourMate;
 	}
 }
 
@@ -202,4 +245,8 @@ function createFirestoreTask() {
 
 
 
-module.exports = Task;
+try{
+	module.exports = Task;
+}catch(e){
+	
+}
