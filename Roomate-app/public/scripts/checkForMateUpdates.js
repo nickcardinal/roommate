@@ -1,4 +1,4 @@
-validate();
+initialize();
 
 let spaceID = sessionStorage.getItem("Space");
 let mateID = sessionStorage.getItem("user");
