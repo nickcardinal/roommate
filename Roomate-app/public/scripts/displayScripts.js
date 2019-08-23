@@ -1,15 +1,18 @@
 // User Information Display Functions
 // Found in --> ../html/profile.html
 function displayUserInfo() {
-  document.getElementById('FullName').innerHTML= sessionStorage.getItem('name');
-  document.getElementById('Email').innerHTML= sessionStorage.getItem('email');
+  document.getElementById('FullName').innerHTML = sessionStorage.getItem('name');
+  document.getElementById('Email').innerHTML = sessionStorage.getItem('email');
   document.getElementById('nameField').value = sessionStorage.getItem('name');
 }
 
 // Space Information Display Functions
 // Found in --> ../html/spaceKey.html
 function displaySpaceInfo() {
-  accessFirestoreSpace(sessionStorage.getItem('Space'), spaceKeyShowElements);
+  document.getElementById('showName').innerHTML = getSpaceTitle();
+  document.getElementById('showDescription').innerHTML = getSpaceDescription();
+  //	document.getElementById('showID').innerHTML = getSpaceID();
+  //accessFirestoreSpace(sessionStorage.getItem('Space'), spaceKeyShowElements);
 }
 
 function spaceKeyShowElements(spc) {
@@ -51,10 +54,17 @@ function appendTask(task) {
   row = table.insertRow(rows.length);
   let br = row.insertCell(0);
   tskTitle.innerHTML = task.getTitle();
-  tskComplete.innerHTML = '<input type="checkbox" onclick="completeTask(' + task.getTaskID() + ')"><br>';
+  if(task.getIsComplete()){
+    tskComplete.innerHTML = '<input type="checkbox" checked onclick="uncompleteTask(' + task.getTaskID() + ')"><br>';
+  }else{
+    tskComplete.innerHTML = '<input type="checkbox" onclick="completeTask(' + task.getTaskID() + ')"><br>';
+  }
   tskDesc.innerHTML = task.getDescription();
   tskDue.innerHTML = 'Due by ' + task.getDueDate() + ' ' + task.getDueTime();
   tskMate.innerHTML = 'Task assigned to ' + task.getAssignedMate();
+  if(task.getFavourMate() !== ''){
+    tskMate.innerHTML = 'Task favoured by ' + task.getFavourMate();
+  }
   br.innerHTML = '<br></br>'
 }
 //This function will branch based on Recurring/Nonrecurring
