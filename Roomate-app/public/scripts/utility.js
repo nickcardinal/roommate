@@ -73,12 +73,10 @@ function addMateToSpace() { //Tested
         } else {
             let spcDocRef = firebase.firestore().collection("Spaces").doc(userSpaceID);
             addSpaceRefToMatesSpaces(spcDocRef, currMateID).then(none => {
-                addSpaceRefToMatesSpaces().then(redir => {
                     //Save spaceID to session storage.
                     sessionStorage.setItem('Space', userSpaceID);
                     redirect('../html/overview.html');
                 });
-            });
         }
     });
 }
