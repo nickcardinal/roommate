@@ -151,8 +151,12 @@ console.log(task5);
 
 //console.log("start");
 
-// task6 = new Task();
-// task6.duplicate(recurTask);
+// var task6 = new Task();
+// task6.setTitle("Fold Clothes");
+// task6.setDescription("");
+// task6.setTaskID("123456");
+// task6.setIsRecurring(false);
+// task6.setIsComplete(false);
 // //
 // testSpace.reCreateRecurringTaskByFactory(task6, null);
 //

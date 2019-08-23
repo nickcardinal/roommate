@@ -97,8 +97,8 @@ function isValidSpace(spaceDocID) { //Tested
 
 //Andre's function
 function createTaskByFactory() {
-    var factory;
-	var tasksCollection = firebase.firestore().collection('Tasks');
+  var factory;
+	var tasksCollection = firestoreDB.collection('Tasks');
 	var matesArray =  getMatesInSpace();
     if ($('#isRecurringField').is(':checked')) {
         factory = new RecurringTaskFactory(tasksCollection, matesArray);
@@ -112,6 +112,10 @@ function createTaskByFactory() {
 }
 //Andre's function
 function completeTask(){
+  // var factory = new RecurringTaskFactory(taskdb);
+  // task.setAssignedMate(this.setNextMateAssignedToRecurringTask(task.getAssignedMate()));
+  // task.calcNewDate() //call Morgan's function
+  // this.addTask(factory.reCreateTask(task));
 }
 
 /*********************************************
