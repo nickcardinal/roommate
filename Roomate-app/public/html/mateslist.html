@@ -41,14 +41,16 @@
 		<script src="../scripts/Space.js"></script>
 		<script src="../scripts/Mate.js"></script>
 		<script src="../scripts/Task.js"></script>
+    <script scr="../utility.js"></script>
+    <script src="../scripts/checkForMateUpdates.js"></script>
 
     <title>Task List -- Test</title>
   </head>
-  <body onload="validate(); displayMates()">
+  <body onload="displayMates()">
     <div class="container page">
       <div class="center-items-container">
         <div class="center-items">
-            <table id="mateList">
+            <table id="mateList" class="animate fadeIn slow">
             </table>
         </div>
       </div>
