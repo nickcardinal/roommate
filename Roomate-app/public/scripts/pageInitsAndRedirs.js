@@ -5,9 +5,6 @@ function initialize() {
 
 function validate(){
   initialize();
-  if(sessionStorage.getItem('Space') !== undefined && getSpace() === undefined){ 
-    loadSpaceFromFirestore(sessionStorage.getItem('Space'));
-  }
     database = firebase.firestore();
     if(sessionStorage.getItem('log') === 'true'){
       updateToken_Overview(database);
@@ -34,6 +31,9 @@ function validate(){
             });
         }
     });
+    if(sessionStorage.getItem('Space') !== undefined && !getSpace().isLoaded){ 
+      loadSpaceFromFirestore(sessionStorage.getItem('Space'));
+    }
   }
 
 function initializeWelcome() {

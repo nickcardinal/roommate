@@ -69,12 +69,12 @@ function appendTask(task) {
     tskMate.innerHTML = 'Task favoured by ';
     firebase.firestore().collection('Mates').doc(task.getFavourMate()).get().then(doc => {
       try{tskMate.innerHTML += doc.data().usrNickname;}
-      catch(e){}
+      catch(e){tskMate.innerHTML += '?';}
     });
   }else{
     firebase.firestore().collection('Mates').doc(task.getAssignedMate()).get().then(doc => {
       try{tskMate.innerHTML += doc.data().usrNickname;}
-      catch(e){}
+      catch(e){tskMate.innerHTML += '?';}
     });
   }
   br.innerHTML = '<br></br>'

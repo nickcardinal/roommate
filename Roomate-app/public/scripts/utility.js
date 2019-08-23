@@ -182,6 +182,17 @@ function getMyTasks(){
 function addTaskToSpace(newTask) {
     mySpace.addTask(newTask);
 }
+
+//Returns mate with id id
+function getMateById(id){
+    mySpace.getMates().forEach(mate => {
+        if(id === mate.getID()){
+            return mate;
+        }
+    });
+    return new Mate();
+}
+
 //Callback function for loadSpaceFromFirestore();
 function loadSpaceFromFirestoreCallback(type, value) {
     if (type === 'title') {
