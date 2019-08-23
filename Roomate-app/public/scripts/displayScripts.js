@@ -67,16 +67,15 @@ function appendTask(task) {
   tskMate.innerHTML = 'Task assigned to ';
   if(task.getFavourMate() !== ''){
     tskMate.innerHTML = 'Task favoured by ';
-    try{firebase.firestore().collection('Mates').doc(task.getFavourMate()).get().then(doc => {
-      tskMate.innerHTML += doc.data().usrNickname;
+    firebase.firestore().collection('Mates').doc(task.getFavourMate()).get().then(doc => {
+      try{tskMate.innerHTML += doc.data().usrNickname;}
+      catch(e){}
     });
-  } catch(e){ }
   }else{
-    try{
     firebase.firestore().collection('Mates').doc(task.getAssignedMate()).get().then(doc => {
-      tskMate.innerHTML += doc.data().usrNickname;
+      try{tskMate.innerHTML += doc.data().usrNickname;}
+      catch(e){}
     });
-  } catch(e){}
   }
   br.innerHTML = '<br></br>'
 }

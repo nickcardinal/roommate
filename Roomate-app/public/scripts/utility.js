@@ -162,6 +162,11 @@ function getMatesInSpace() {
 function getAllTasks() {
     return mySpace.getTasks();
 }
+
+//Returns whole space
+function getSpace(){
+    return mySpace;
+}
 //Returns a filtered task array of all tasks matching userID in Session Storage.
 function getMyTasks(){
 	let currMateID = sessionStorage.getItem("user");

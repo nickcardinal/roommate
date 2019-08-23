@@ -5,7 +5,7 @@ function initialize() {
 
 function validate(){
   initialize();
-  if(sessionStorage.getItem('Space') !== undefined){ 
+  if(sessionStorage.getItem('Space') !== undefined && getSpace() === undefined){ 
     loadSpaceFromFirestore(sessionStorage.getItem('Space'));
   }
     database = firebase.firestore();
