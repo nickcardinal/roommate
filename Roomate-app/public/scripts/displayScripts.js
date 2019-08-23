@@ -78,6 +78,7 @@ function completeTask(taskID){
     tasks.forEach(task => {
         if(task.getTaskID() === taskID){
           if(task.getIsRecurring()){
+            // let fact = new RecurringTaskFactory(firebase.firestore().collection('Tasks'));
             let nextTask = Object.assign(new Task(), task);
             task.setIsComplete(true);
             nextTask.setFavourMate('');
