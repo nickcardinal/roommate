@@ -1,18 +1,10 @@
 class RecurringTaskFactory {
-  constructor(taskdb) {
-    this.task = new Task();
-    this.mate = new Mate();
+  constructor(taskdb, matesArray) {
+    //this.task = new Task();
+    this.mates = matesArray;
     this.taskdb = taskdb;
   }
 
-  createTask(mate) {
-    this.mate = mate;
-    this.populateTask();
-    this.insertTaskIntoFirestore();
-    //json here...
-    return this.task;
-  }
-  
   createTask() {
     this.populateTask();
     this.insertTaskIntoFirestore();
@@ -27,7 +19,7 @@ class RecurringTaskFactory {
     this.task.setDueTime($("#dueTimeField").val());
     this.task.setIsRecurring(true);
     this.task.setRecurringPeriod($('#recurringPeriodField').val());
-    this.task.setAssignedMate(this.mate);
+    this.task.setAssignedMate(this.setFirstMateAssignedToRecurringTask());
     this.task.setIsComplete(false);
     this.task.setFavourMate('');
   }
@@ -61,13 +53,66 @@ class RecurringTaskFactory {
     });
   }
 
-  reCreateTask(task) {
+  getNumberOfMatesRecurringTasks(mate) {
+      var numTasks = 0;
+      for (var i = 0; i < this.tasks.length; ++i) {
+          var tempTask = this.tasks[i];
+          if (tempTask.assignedMate == mate &&
+              tempTask.isRecurring &&
+             !tempTask.isComplete) {
+              ++numTasks;
+          }
+      }
+      return numTasks;
+  }
+
+  setFirstMateAssignedToRecurringTask() {
+      if (this.mates.length == 0) {
+          alert("No mates in the living space.");
+          return;
+      }
+
+      let minNumTasks = this.getNumberOfMatesRecurringTasks(this.mates[0]);
+      var minTaskMates = [];
+      minTaskMates.push(this.mates[0]);
+
+      for (var i = 1; i < this.mates.length; ++i) {
+          let j = this.getNumberOfMatesRecurringTasks(this.mates[i]); //would be more efficient to get all the number of tasks in one shot...
+          if (j < minNumTasks) {
+              minNumTasks = j;
+              minTaskMates = [];
+              minTaskMates.push(this.mates[i]);
+          } else if (j == minNumTasks) {
+              minTaskMates.push(this.mates[i]);
+          }
+      }
+
+      if (minTaskMates.length > 1) {
+          return minTaskMates[Math.floor(Math.random() * minTaskMates.length)];
+      } else {
+          return minTaskMates[0];
+      }
+  }
+
+  reCreateTask(task) { // pass in the deep copy of the task not the original... unless we change the logic
     this.task = task;
+    this.task.setAssignedMate(setNextMateAssignedToRecurringTask(this.task.getAssignedMate()));
+    this.task.calcNewDate();
     //uncomment the line below when ready
-    //this.insertTaskIntoFirestore();
+    this.insertTaskIntoFirestore();
     //json here...
     return this.task;
   }
+
+  setNextMateAssignedToRecurringTask(mate) {
+      for (var i = 0; i < this.mates.length - 1; ++i) {
+          if (this.mates[i] == mate) {
+              return this.mates[i + 1];
+          }
+      }
+      return this.mates[0];
+  }
+
 }
 
 try{

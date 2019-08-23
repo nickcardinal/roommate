@@ -97,8 +97,8 @@ function isValidSpace(spaceDocID) { //Tested
 
 //Andre's function
 function createTaskByFactory() {
-    var factory;
-	var tasksCollection = firebase.firestore().collection('Tasks');
+  var factory;
+	var tasksCollection = firestoreDB.collection('Tasks');
 	var matesArray =  getMatesInSpace();
     if ($('#isRecurringField').is(':checked')) {
         factory = new RecurringTaskFactory(tasksCollection, matesArray);
@@ -221,20 +221,17 @@ function getMyTasks(){
 		return task.assignMate === currMateID;
 	});
 }
+//Returns Task object matching taskID in mySpace tasks array.
+function getTasksByID(taskID){	
+	return mySpace.getTasks().filter(task => {
+		return task.getTaskID() === taskID;
+	});
+}
 //Adds Task to mySpace
 function addTaskToSpace(newTask) {
     mySpace.addTask(newTask);
 }
 
-//Returns task with id passed in
-function getTaskById(id){
-    let tasks = mySpace.getTasks();
-    for(let i = 0; i < tasks.length; i++){
-        if(tasks[i].getTaskID === id){
-            return tasks[i];
-        }
-    }
-}
 //Callback function for loadSpaceFromFirestore();
 function loadSpaceFromFirestoreCallback(type, value) {
     if (type === 'title') {
