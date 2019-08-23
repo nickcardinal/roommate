@@ -110,10 +110,42 @@ function createTaskByFactory() {
     addTaskToSpace(newTask);
     saveSpaceToSessionStorage();
 }
-//Andre's function
-//had to change the name
-function completeTask2(){
-
+//This function will branch based on Recurring/Nonrecurring
+//Functionality for marking a task as complete should be moved to the Task Object class.
+function completeTask(taskID){
+    //marks task with id taskID as completed
+    let tasks = getAllTasks();
+    tasks.forEach(task => {
+        if(task.getTaskID() === taskID){
+          if(task.getIsRecurring()){
+            // let fact = new RecurringTaskFactory(firebase.firestore().collection('Tasks'));
+            let nextTask = Object.assign(new Task(), task);
+            task.setIsComplete(true);
+            nextTask.setFavourMate('');
+            nextTask.setAssignedMate(mySpace.setNextMateAssignedToRecurringTask(task.getAssignedMate()));
+            nextTask.calcNewDate();
+            firebase.firestore().collection('Tasks').add(nextTask.firestoreObj()).then(result => {
+              nextTask.setTaskID(result.id);
+              addTaskToSpace(nextTask);
+              let spaceRef = firebase.firestore().collection('Spaces').doc(sessionStorage.getItem('Space'))
+              spaceRef.get().then(space => {
+                let taskList = space.data().spcTasks;
+                taskList.push(nextTask.getTaskID());
+                spaceRef.update({spcTasks:taskList}).then(updateRef => {
+                  firebase.firestore().collection('Tasks').doc(taskID).update({tskIsComplete:true}).then(result =>{
+                    location.reload()
+                  });
+                });
+              });
+            });
+          }else{
+            task.setIsComplete(true);
+            firebase.firestore().collection('Tasks').doc(taskID).update({tskIsComplete:true}).then(result =>{
+              location.reload()
+            });
+          }
+        }
+      });
 }
 /*********************************************
 
