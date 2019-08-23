@@ -1,4 +1,4 @@
-//const Mate = require('./Mate.js')
+const Mate = require('./Mate.js')
 const Task = require('./Task.js')
 
 class NonRecurringTaskFactory {
@@ -85,7 +85,6 @@ class NonRecurringTaskFactory {
           } else if (j === minNumTasks) {
               minTaskMates.push(this.mates[i]);
           }
-          //console.log(minTaskMates);
       }
 
       if (minTaskMates.length > 1) {
