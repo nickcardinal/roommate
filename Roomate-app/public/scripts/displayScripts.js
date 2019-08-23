@@ -40,6 +40,9 @@ function displayTasks(tasks) {
 }
 
 function appendTask(task) {
+  if(task.getIsComplete() && 0){//change the '0' for testing purposes
+    return;
+  }
   let table = document.getElementById("taskList");
   let rows = table.getElementsByTagName("tr");
   let row = table.insertRow(rows.length);
