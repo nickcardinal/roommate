@@ -3,14 +3,14 @@ const Task = require('./Task.js')
 
 class RecurringTaskFactory {
   constructor(taskdb, matesArray) {
-    //this.task = new Task();
+    this.task = new Task();
     this.mates = matesArray;
     this.taskdb = taskdb;
   }
 
   createTask() {
     this.populateTask();
-    this.insertTaskIntoFirestore();
+    task.setTaskID(this.insertTaskIntoFirestore()); //
     //json here...
     return this.task;
   }
@@ -54,6 +54,8 @@ class RecurringTaskFactory {
         redirect("../html/overview.html");
       });
     });
+    // return the reference task id
+    // return docRef.id
   }
 
   getNumberOfMatesRecurringTasks(mate) {
@@ -97,12 +99,12 @@ class RecurringTaskFactory {
       }
   }
 
-  reCreateTask(task) { // pass in the deep copy of the task not the original... unless we change the logic
-    this.task = task;
-    this.task.setAssignedMate(setNextMateAssignedToRecurringTask(this.task.getAssignedMate()));
+  reCreateTask(oldTask) { // pass in the old task
+    this.task.duplicate(oldTask);
+    this.task.setAssignedMate(this.setNextMateAssignedToRecurringTask(this.task.getAssignedMate()));
     this.task.calcNewDate();
     //uncomment the line below when ready
-    this.insertTaskIntoFirestore();
+    this.task.setTaskID(this.insertTaskIntoFirestore()); // assign the ID now that it has been upoaded to db
     //json here...
     return this.task;
   }
