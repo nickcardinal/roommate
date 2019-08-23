@@ -1,15 +1,18 @@
 // User Information Display Functions
 // Found in --> ../html/profile.html
 function displayUserInfo() {
-  document.getElementById('FullName').innerHTML= sessionStorage.getItem('name');
-  document.getElementById('Email').innerHTML= sessionStorage.getItem('email');
+  document.getElementById('FullName').innerHTML = sessionStorage.getItem('name');
+  document.getElementById('Email').innerHTML = sessionStorage.getItem('email');
   document.getElementById('nameField').value = sessionStorage.getItem('name');
 }
 
 // Space Information Display Functions
 // Found in --> ../html/spaceKey.html
 function displaySpaceInfo() {
-  accessFirestoreSpace(sessionStorage.getItem('Space'), spaceKeyShowElements);
+  document.getElementById('showName').innerHTML = getSpaceTitle();
+  document.getElementById('showDescription').innerHTML = getSpaceDescription();
+  //	document.getElementById('showID').innerHTML = getSpaceID();
+  //accessFirestoreSpace(sessionStorage.getItem('Space'), spaceKeyShowElements);
 }
 
 function spaceKeyShowElements(spc) {
