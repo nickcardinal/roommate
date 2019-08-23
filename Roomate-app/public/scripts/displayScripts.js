@@ -9,22 +9,11 @@ function displayUserInfo() {
 // Space Information Display Functions
 // Found in --> ../html/spaceKey.html
 function displaySpaceInfo() {
-  loadSpaceFromSessionStorage()
   document.getElementById('showName').innerHTML = getSpaceTitle();
   document.getElementById('showDescription').innerHTML = getSpaceDescription();
   try{document.getElementById('showID').innerHTML = getSpaceID();}
   catch(e){}
   //accessFirestoreSpace(sessionStorage.getItem('Space'), spaceKeyShowElements);
-}
-
-function spaceKeyShowElements(spc) {
-  document.getElementById('showName').innerHTML= spc.getTitle();
-  document.getElementById('showDescription').innerHTML= spc.getDescription();
-  try{
-    document.getElementById('showID').innerHTML= spc.getID();
-  }catch(e){
-
-  }
 }
 
 // Task Display Functions

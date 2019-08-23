@@ -3,7 +3,7 @@ function initialize() {
     firebase.initializeApp(firebaseConfig);
 }
 
-function validate(){
+async function validate(){
   initialize();
     database = firebase.firestore();
     if(sessionStorage.getItem('log') === 'true'){
@@ -31,6 +31,7 @@ function validate(){
             });
         }
     });
+    await loadSpace();
   }
 
 function initializeWelcome() {
@@ -58,11 +59,18 @@ function initializeWelcome() {
 }
 async function initializeOverview(){
 	validate();
-	if(!loadSpaceFromSessionStorage()){
+  displaySpaceInfo(); 
+}
+async function initializeSpaceKey(){
+	validate();
+  displaySpaceInfo(); 
+}
+
+async function loadSpace(){
+  if(!loadSpaceFromSessionStorage()){
 		await loadSpaceFromFirestore();
 		saveSpaceToSessionStorage();
   }
-  displaySpaceInfo(); 
 }
 function populateSpaceCallback(type, value){
 	if(type === 'title'){
