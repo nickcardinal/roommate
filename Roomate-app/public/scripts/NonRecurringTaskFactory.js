@@ -57,5 +57,8 @@ class NonRecurringTaskFactory {
     });
   }
 }
-
+try{
 module.exports = NonRecurringTaskFactory;
+}catch(e){
+  
+}

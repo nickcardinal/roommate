@@ -74,7 +74,8 @@ function appendTask(task) {
 //Functionality for marking a task as complete should be moved to the Task Object class.
 function completeTask(taskID){
     //marks task with id taskID as completed
-    mySpace.getTasks().forEach(task => {
+    let tasks = getAllTasks();
+    tasks.forEach(task => {
         if(task.getTaskID() === taskID){
           if(task.getIsRecurring()){
             let nextTask = Object.assign(new Task(), task);

@@ -73,4 +73,8 @@ class RecurringTaskFactory {
   }
 }
 
+try{
 module.exports = RecurringTaskFactory;
+}catch(e){
+  
+}
