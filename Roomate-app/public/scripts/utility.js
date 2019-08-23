@@ -98,9 +98,9 @@ function isValidSpace(spaceDocID) { //Tested
 //Andre's function
 async function createTaskByFactory() {
   var factory;
-	var tasksCollection = firestoreDB.collection('Tasks');
+	var tasksCollection = firebase.firestore().collection('Tasks');
 	var matesArray =  getMatesInSpace();
-    if ($('#isRecurringField').is(':checked') === true) {
+    if ($('#isRecurringField').is(':checked')) {
         factory = new RecurringTaskFactory(tasksCollection, matesArray);
     } else {
         factory = new NonRecurringTaskFactory(tasksCollection, matesArray);
