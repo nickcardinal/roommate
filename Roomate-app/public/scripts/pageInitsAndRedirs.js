@@ -23,7 +23,7 @@ function validate(){
             snapshot.forEach(doc => {
                 if(new Date() < doc.data().usrExpiration.toDate()){
                     sessionStorage.setItem('user', doc.id);
-                    updateExpiration(database, doc)
+                    updateExpiration(database, doc);
                 }else{
                     redirect("../index.html");
                 }
@@ -31,9 +31,6 @@ function validate(){
             });
         }
     });
-    if(sessionStorage.getItem('Space') !== undefined && !getSpace().isLoaded){ 
-      loadSpaceFromFirestore(sessionStorage.getItem('Space'));
-    }
   }
 
 function initializeWelcome() {

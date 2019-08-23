@@ -11,7 +11,7 @@ function displayUserInfo() {
 function displaySpaceInfo() {
   document.getElementById('showName').innerHTML = getSpaceTitle();
   document.getElementById('showDescription').innerHTML = getSpaceDescription();
-  //	document.getElementById('showID').innerHTML = getSpaceID();
+  document.getElementById('showID').innerHTML = sessionStorage.getItem('Space');
   //accessFirestoreSpace(sessionStorage.getItem('Space'), spaceKeyShowElements);
 }
 
