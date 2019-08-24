@@ -41,12 +41,12 @@ const Task = require("../public/scripts/Task.js");
 
 test('favour mate setter', function(){
 	let task = new Task();
-	task.setFavourMate('mate');
-	expect(task.favourMate).toEqual('mate');
+	task.setFavorMateID('mate');
+	expect(task.favorMateID).toEqual('mate');
 });
 
 test('favour mate getter', function(){
 	let task = new Task();
-	task.favourMate = 'mate';
-	expect(task.getFavourMate()).toEqual('mate');
+	task.favorMateID = 'mate';
+	expect(task.getFavorMateID()).toEqual('mate');
 });
