@@ -19,7 +19,6 @@ function displaySpaceInfo() {
 // Task Display Functions
 // Found in --> ../html/tasklist.html; to be moved to ../html/overview.html
 async function displayTasks(table) {
-  loadSpaceFromSessionStorage();
   var tasks = getAllTasks();
   sortTasks(tasks);
   tasks.forEach(task => {
@@ -70,7 +69,6 @@ async function resetTaskTable() {
 // Mates Display Functions
 // Found in --> ../html/mateslist.html; to be moved to ../html/overview.html
 async function displayMates(table) {
-  await loadSpaceFromFirestore();
     getMatesInSpace().forEach(mate => {
         appendMate(mate, table);
     });

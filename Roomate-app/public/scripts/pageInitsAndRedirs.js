@@ -31,7 +31,6 @@ async function mateListInit() {
       }
   });
   await loadSpace();
-  displayMates(document.getElementById('mateList'))
 }
 
 async function taskListInit() {
@@ -62,7 +61,7 @@ async function taskListInit() {
       }
   });
   await loadSpace();
-  displayTasks(document.getElementById('taskList'));
+  //displayTasks(document.getElementById('taskList'));
 }
 
 async function validate(){
