@@ -53,7 +53,9 @@ function appendTask(task, table) {
   tskDue.innerHTML = 'Due by ' + task.getDueDate() + ' ' + task.getDueTime();
   tskMate.innerHTML = 'Task assigned to ' + getMateByID(task.getAssignedMateID())[0].getNickName();
   if(task.getFavourMate() !== ''){
-    tskMate.innerHTML = 'Task favoured by ' + getMateByID(task.getFavourMate())[0].getNickName();
+    row = table.insertRow(rows.length);
+    let tskFav = row.insertCell(0);
+    tskFav.innerHTML = 'Task favoured by ' + getMateByID(task.getFavourMate())[0].getNickName();
   }
   br.innerHTML = '<br></br>'
 }
