@@ -133,10 +133,15 @@ async function completeTask(taskID){
       location.reload();
     }
 }else{
-    await favourTask(task);
-    saveSpaceToSessionStorage();
-    location.reload();
-    return;
+    if(task.getFavourMate !== ''){//cannot have more than one mate favour a task.
+        location.reload();
+        return;
+    }else{
+           await favourTask(task);
+           saveSpaceToSessionStorage();
+           location.reload();
+           return;
+         }
 }
 }
 //Morgan's function stub
