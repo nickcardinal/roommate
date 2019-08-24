@@ -19,7 +19,7 @@ function displaySpaceInfo() {
 // Task Display Functions
 // Found in --> ../html/tasklist.html; to be moved to ../html/overview.html
 async function displayTasks(table) {
-  await loadSpaceFromSessionStorage();
+  loadSpaceFromSessionStorage();
   var tasks = getAllTasks();
   sortTasksByDate(tasks);
   tasks.forEach(task => {
