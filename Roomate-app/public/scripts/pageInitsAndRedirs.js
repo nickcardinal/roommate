@@ -11,7 +11,6 @@ async function mateListInit() {
   }
   if(sessionStorage.getItem('NickName') !== sessionStorage.getItem('null')){
     updateNickName_JoinOrCreate(database);
-    return;
   }
   let query = database.collection('Mates').where('usrToken', '==', sessionStorage.getItem('token')).get().then(snapshot =>{
       if(snapshot.empty){
@@ -98,7 +97,7 @@ async function validate(){
 
 function initializeWelcome() {
   initialize();
-  document.getElementById("nameField").value = sessionStorage.getItem(2);
+  document.getElementById("nameField").value = sessionStorage.getItem('NickName');
   database = firebase.firestore();
   let query = database
     .collection("Mates")
@@ -228,6 +227,7 @@ function redirLoginToSpace(user, database) {
     .then(function(snapshot){
       sessionStorage.setItem('user', snapshot.docs[0].id);
       let user = snapshot.docs[0].data();
+      sessionStorage.setItem('NickName', user.usrNickname); //maybe delete
       let spaces = user.usrSpaces;
       if(spaces != undefined) {
         let spaceID = spaces[0].id;
