@@ -99,7 +99,7 @@ function redirLogin(user, authExpiration, database) {
     });
 }
 function editNickName() {
-  sessionStorage.setItem('NickName', document.getElementById("nameField").value);
+  sessionStorage.setItem('NickName', document.getElementById("nickNameField").value);
   if (sessionStorage.getItem('Space')) {
     redirect ('../html/overview.html');
   }
@@ -107,11 +107,6 @@ function editNickName() {
     redirect('../html/joinOrCreateSpace.html');
   }
 }
-// function displayUserInfo() {
-//   document.getElementById('FullName').innerHTML= sessionStorage.getItem('name');
-//   document.getElementById('Email').innerHTML= sessionStorage.getItem('email');
-//   document.getElementById('nameField').innerHTML = sessionStorage.getItem('nickname');
-// }
 
 function redirect(url){
   window.location.href = url;
