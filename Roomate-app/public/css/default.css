@@ -31,7 +31,7 @@ h3 {
 
 h4 {
   font-family: 'Montserrat', sans-serif;
-  font-size: 1.5em;
+  font-size: 1.3em;
 }
 
 p {
@@ -79,7 +79,7 @@ button {
 
   font-family: 'Montserrat', sans-serif;
   font-style: normal;
-  font-weight: bold;
+  /* font-weight: bold; */
   font-size: 1.25em;
   color: #FFFFFF;
 
@@ -92,11 +92,6 @@ button {
 
   -webkit-transition: all 0.125s ease-out;
   transition: all 0.125s ease-out;
-}
-
-.user-icon {
-  width: 50px;
-  height: auto;
 }
 
 /* INDEX */
@@ -127,10 +122,11 @@ button {
 }
 
 .top-bar {
-  height: 80px;
+  height: 10vh;
   display: flex;
   align-items: center;
-  margin-top: 40px;
+
+  overflow-y: visible;
 }
 
 .space {
@@ -141,60 +137,63 @@ button {
 
   margin-left: auto;
   margin-right: auto;
+  margin-top: 3vh;
+  margin-bottom: 3vh;
 }
 
 .space-content {
-  min-height: 50%;
-  min-height: 50vh;
+  min-height: 79%;
+  min-height: 79vh;
 }
 
 .space-information {
   width: 80vw;
   text-align: center;
+
+  padding-left: 5vw;
+  padding-right: 5vw;
 }
 
-@media (max-width: 576px) {
-  .home-logo {
-    width: 90vw;
-    height: auto;
-  }
+.user-icon {
+  width: 50px;
+  height: auto;
+}
 
-  .top-bar {
-    margin-top: 3vh;
-    flex-direction: column;
+@media (max-width: 825px) {
+  .blue-btn {
+    padding: 0vh 1vw;
+    height: 35px;
+
+    background: #88CCF1;
+    border-radius: 15px;
+    border: 0px;
+
+    font-family: 'Montserrat', sans-serif;
+    font-style: normal;
+    /* font-weight: bold; */
+    font-size: 1em;
+    color: #FFFFFF;
+
+    display: flex;
     align-items: center;
   }
 
-  .top-bar div button {
-    margin-left: auto;
-    margin-right: auto;
-  }
-
-  .top-bar-logo {
-    width: 0vw;
-    height: 0vh;
-  }
-}
-
-@media (max-height: 475px) {
   .home-logo {
     height: 40vh;
     width: auto;
   }
 
   .top-bar {
-    margin-top: 3vh;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .top-bar div button {
-    margin-left: auto;
-    margin-right: auto;
+    height: auto;
+    overflow-y: scroll;
   }
 
   .top-bar-logo {
-    width: 0vw;
-    height: 0vh;
+    display: none;
+  }
+
+  .space {
+    padding-left: 15px;
+    padding-right: 15px;
   }
 }
