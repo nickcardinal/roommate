@@ -118,7 +118,7 @@ async function createTaskByFactory() {
 //Only allows for you to complete your own tasks
 async function completeTask(taskID){
   task = getTasksByID(taskID)[0];
-  if(task.getAssignedMateID() === sessionStorage.getItem('user') || task.getFavourMate() === sessionStorage.getItem('user')){
+  if(task.getAssignedMateID() === sessionStorage.getItem('user') || task.getFavorMateID() === sessionStorage.getItem('user')){
   //if((task.favourMate === '' && sessionStorage.getItem('user') === task.assignedMate)|| task.favourMate === sessionStorage.getItem('user')){
   //marks task with id taskID as completed
   if(task.getIsRecurring()){
@@ -133,7 +133,7 @@ async function completeTask(taskID){
       location.reload();
     }
 }else{
-    if(task.getFavourMate !== ''){//cannot have more than one mate favour a task.
+    if(task.getFavorMateID !== ''){//cannot have more than one mate favour a task.
         location.reload();
         return;
     }else{
