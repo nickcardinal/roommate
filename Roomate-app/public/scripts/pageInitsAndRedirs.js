@@ -73,7 +73,7 @@ async function validate(){
     }
     if(sessionStorage.getItem('NickName') !== sessionStorage.getItem('null')){
       updateNickName_JoinOrCreate(database);
-      return;
+      //return;
     }
     let query = database.collection('Mates').where('usrToken', '==', sessionStorage.getItem('token')).get().then(snapshot =>{
         if(snapshot.empty){
