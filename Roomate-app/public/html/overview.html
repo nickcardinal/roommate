@@ -48,7 +48,7 @@
     <title>CheckMates</title>
   </head>
 <!--  onload="initializeOverview(); -->
-  <body class="test">
+  <body class="test" onload="initializeOverview()">
     <div class="space container test">
       <div class="top-bar test">
         <img class ="top-bar-logo test" src="../images/logoCheckMates.png" alt="Checkmates Logo">
@@ -67,7 +67,8 @@
         <!-- Mate Section -->
         <div class="test">
           <button class="blue-btn" type="button" onclick="redirectSpaceKey()">Invite a Mate</button>
-          <button class="blue-btn" type="button" onclick="openMateList()">View Mates</button>
+          <table id="mateList">
+          </table>
         </div>
 
         <!-- Task Section -->

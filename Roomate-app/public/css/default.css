@@ -179,8 +179,8 @@ button {
   }
 
   .home-logo {
-    height: 40vh;
-    width: auto;
+    height: auto;
+    width: 80vw;
   }
 
   .top-bar {
@@ -195,5 +195,12 @@ button {
   .space {
     padding-left: 15px;
     padding-right: 15px;
+  }
+}
+
+@media (max-height: 500px) {
+  .home-logo {
+    height: 40vh;
+    width: auto;
   }
 }
