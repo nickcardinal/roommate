@@ -98,6 +98,7 @@ function redirLogin(user, authExpiration, database) {
       }
     });
 }
+
 function editNickName() {
   sessionStorage.setItem('NickName', document.getElementById("nickNameField").value);
   if (sessionStorage.getItem('Space')) {
