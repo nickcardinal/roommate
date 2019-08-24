@@ -125,8 +125,8 @@ async function completeTask(taskID){
       let fact = new RecurringTaskFactory(firebase.firestore().collection('Tasks'), getMatesInSpace());
       await fact.reCreateTask(task);
       await task.pushComplete();
-      saveSpaceToSessionStorage();
-      location.reload();
+      //saveSpaceToSessionStorage();
+      //location.reload();
     }else{
       await task.pushComplete();
       saveSpaceToSessionStorage();

@@ -334,7 +334,8 @@ class Space {
                             currTask.setIsRecurring(taskRecord.data().tskIsRecurring);
                             currTask.setIsComplete(taskRecord.data().tskIsComplete);
                             currTask.setAssignedMateID(taskRecord.data().tskAssignedMateID);
-                            currTask.setFavourMate(taskRecord.data().tskFavour);
+                            currTask.setFavorMateID(taskRecord.data().tskFavorMateID);
+                            currTask.setSpaceID(taskRecord.data().tskSpaceID);
                             currTask.setTaskID(taskRecord.id);
                             currTask.setRecurringPeriod(taskRecord.data().tskRecurringPeriod);
                             return currTask;
