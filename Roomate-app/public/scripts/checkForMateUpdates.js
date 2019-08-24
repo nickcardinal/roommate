@@ -10,9 +10,14 @@ doc.onSnapshot(function(snapshot) {
   snapshot.docChanges().forEach(function(change) {
     if(change.type === "added") {
       console.log("New Mate", change.doc.data());
+      refreshMates();
     }
     if(change.type === "modified") {
       console.log("Modified Mates", change.doc.data());
+      refreshMates();
+    }
+    if(change.type === "removed") {
+      console.log("Removed Mate", change.doc.data());
       refreshMates();
     }
   });
