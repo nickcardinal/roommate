@@ -97,7 +97,6 @@ async function validate(){
 
 function initializeWelcome() {
   initialize();
-  document.getElementById("nameField").value = sessionStorage.getItem('NickName');
   database = firebase.firestore();
   let query = database
     .collection("Mates")
