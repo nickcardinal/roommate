@@ -19,7 +19,7 @@ function displaySpaceInfo() {
 // Task Display Functions
 // Found in --> ../html/tasklist.html; to be moved to ../html/overview.html
 async function displayTasks(table) {
-  await loadSpaceFromSessionStorage();
+  loadSpaceFromSessionStorage();
   var tasks = getAllTasks();
   sortTasksByDate(tasks);
   tasks.forEach(task => {
@@ -52,10 +52,10 @@ function appendTask(task, table) {
   tskDesc.innerHTML = task.getDescription();
   tskDue.innerHTML = 'Due by ' + task.getDueDate() + ' ' + task.getDueTime();
   tskMate.innerHTML = 'Task assigned to ' + getMateByID(task.getAssignedMateID())[0].getNickName();
-  if(task.getFavorMateID() !== ''){
+  if(task.getFavourMate() !== ''){
     row = table.insertRow(rows.length);
     let tskFav = row.insertCell(0);
-    //tskFav.innerHTML = 'Task favoured by ' + getMateByID(task.getFavorMateID())[0].getNickName();
+    tskFav.innerHTML = 'Task favoured by ' + getMateByID(task.getFavourMate())[0].getNickName();
   }
   br.innerHTML = '<br></br>'
 }
