@@ -20,7 +20,7 @@ function displaySpaceInfo() {
 // Found in --> ../html/tasklist.html; to be moved to ../html/overview.html
 async function displayTasks(table) {
   var tasks = getAllTasks();
-  sortTasks(tasks);
+  tasks = sortTasks(tasks);
   tasks.forEach(task => {
     appendTask(task, table);
   });

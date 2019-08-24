@@ -151,27 +151,27 @@ async function favourTask(task){
 
 // Splits completed Tasks from not completed
 function splitCompletedTasks(tasksArray) {
-  var completedTasks = new Array();
-  console.log("Splitting completed tasks.")
+  let taskObj = {complete:new Array(), incomplete:new Array()};
+  //console.log("Splitting completed tasks.")
   tasksArray.forEach(function(task, index) {
     if(task.getIsComplete() === true) {
-      completedTasks.push(task);
-      tasksArray.splice(index, 1);
+      taskObj.complete.push(task);
+    }else{
+        taskObj.incomplete.push(task);
     }
   });
-  return completedTasks;
+  return taskObj;
 }
 
 // Sorts completed into descending and not completed to ascending
 function sortTasks(tasksArray) {
-  console.log("Complete List:", tasksArray);
+  //console.log("Complete List:", tasksArray);
+  var tasks = splitCompletedTasks(tasksArray);
+  //console.log("--- AFTER SPLIT ---");
+  //console.log("Completed:", tasks.complete);
+  //console.log("Not Completed:", tasks.incomplete);
 
-  var completedTasks = splitCompletedTasks(tasksArray);
-  console.log("--- AFTER SPLIT ---");
-  console.log("Completed:", completedTasks);
-  console.log("Not Completed:", tasksArray);
-
-  tasksArray.sort((taskA, taskB) => {
+  tasks.incomplete.sort((taskA, taskB) => {
     // Check Date: oldest first
     if (taskA.getDueDate() > taskB.getDueDate()) {
         return 1;
@@ -184,7 +184,7 @@ function sortTasks(tasksArray) {
     return -1;
   });
 
-  completedTasks.sort((taskA, taskB) => {
+  tasks.complete.sort((taskA, taskB) => {
       // Check Date: recent first
       if (taskA.getDueDate() < taskB.getDueDate()) {
           return 1;
@@ -197,13 +197,14 @@ function sortTasks(tasksArray) {
       return -1;
   });
 
-  console.log("--- AFTER SORT ---");
-  console.log("Completed:", completedTasks);
-  console.log("Not Completed:", tasksArray);
+//   console.log("--- AFTER SORT ---");
+//   console.log("Completed:", tasks.complete);
+//   console.log("Not Completed:", tasks.incomplete);
 
-  tasksArray = tasksArray.concat(completedTasks);
-  console.log("--- AFTER CONCAT ---");
-  console.log("Complete List:", tasksArray);
+  tasksArray = tasks.incomplete.concat(tasks.complete);
+//   console.log("--- AFTER CONCAT ---");
+//   console.log("Complete List:", tasksArray);
+  return tasksArray;
 }
 
 /*********************************************
