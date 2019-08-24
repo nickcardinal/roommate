@@ -131,22 +131,63 @@ async function completeTask(taskID){
     }
 }
 
-function sortTasksByDate(tasksArray) {
-    tasksArray.sort((taskA, taskB) => {
-
-        // Check Date: recent first
-        if (taskA.getDueDate() > taskB.getDueDate()) {
-            return 1;
-        } else if (taskA.getDueDate() === taskB.getDueDate()) {
-
-            // Check Time: recent first
-            if (taskA.getDueTime() >= taskB.getDueTime()) {
-                return 1;
-            }
-        }
-        return -1;
-    });
+// Splits completed Tasks from not completed
+function splitCompletedTasks(tasksArray) {
+  var completedTasks = new Array();
+  console.log("Splitting completed tasks.")
+  tasksArray.forEach(function(task, index) {
+    if(task.getIsComplete() === true) {
+      completedTasks.push(task);
+      tasksArray.splice(index, 1);
+    }
+  });
+  return completedTasks;
 }
+
+// Sorts completed into descending and not completed to ascending
+function sortTasks(tasksArray) {
+  console.log("Complete List:", tasksArray);
+
+  var completedTasks = splitCompletedTasks(tasksArray);
+  console.log("--- AFTER SPLIT ---");
+  console.log("Completed:", completedTasks);
+  console.log("Not Completed:", tasksArray);
+
+  tasksArray.sort((taskA, taskB) => {
+    // Check Date: oldest first
+    if (taskA.getDueDate() > taskB.getDueDate()) {
+        return 1;
+    } else if (taskA.getDueDate() === taskB.getDueDate()) {
+        // Check Time: oldest first
+        if (taskA.getDueTime() >= taskB.getDueTime()) {
+            return 1;
+        }
+    }
+    return -1;
+  });
+
+  completedTasks.sort((taskA, taskB) => {
+      // Check Date: recent first
+      if (taskA.getDueDate() < taskB.getDueDate()) {
+          return 1;
+      } else if (taskA.getDueDate() === taskB.getDueDate()) {
+          // Check Time: recent first
+          if (taskA.getDueTime() >= taskB.getDueTime()) {
+              return 1;
+          }
+      }
+      return -1;
+  });
+
+  console.log("--- AFTER SORT ---");
+  console.log("Completed:", completedTasks);
+  console.log("Not Completed:", tasksArray);
+
+  tasksArray = tasksArray.concat(completedTasks);
+  console.log("--- AFTER CONCAT ---");
+  console.log("Complete List:", tasksArray);
+}
+
 /*********************************************
 
 Functions that access  mySpace Object

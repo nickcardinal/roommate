@@ -21,7 +21,7 @@ function displaySpaceInfo() {
 async function displayTasks(table) {
   await loadSpaceFromSessionStorage();
   var tasks = getAllTasks();
-  sortTasksByDate(tasks);
+  sortTasks(tasks);
   tasks.forEach(task => {
     appendTask(task, table);
   });
