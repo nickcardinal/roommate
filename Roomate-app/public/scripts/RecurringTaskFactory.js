@@ -19,7 +19,7 @@ class RecurringTaskFactory {
     this.task.setDueTime($("#dueTimeField").val());
     this.task.setIsRecurring(true);
     this.task.setRecurringPeriod($('#recurringPeriodField').val());
-    this.task.setAssignedMate(this.setFirstMateAssignedToRecurringTask());
+    this.task.setAssignedMateID(this.setFirstMateAssignedToRecurringTask());
     this.task.setIsComplete(false);
     this.task.setFavourMate('');
   }
@@ -33,7 +33,7 @@ class RecurringTaskFactory {
       tskDueTime: this.task.getDueTime(),
       tskIsRecurring: this.task.getIsRecurring(),
       tskRecurringPeriod: this.task.getRecurringPeriod(),
-      tskAssignedMateID: this.task.getAssignedMate().getID(),
+      tskAssignedMateID: this.task.getAssignedMateID(),
       tskIsComplete: this.task.getIsComplete(),
       tskFavour:""
     }
@@ -48,11 +48,11 @@ class RecurringTaskFactory {
     return docRef.id;
   }
 
-  getNumberOfMatesRecurringTasks(mate) {
+  getNumberOfMatesRecurringTasks(mateID) {
       var numTasks = 0;
       for (var i = 0; i < this.tasks.length; ++i) {
           var tempTask = this.tasks[i];
-          if (tempTask.assignedMate == mate &&
+          if (tempTask.assignedMateID == mateID &&
               tempTask.isRecurring &&
              !tempTask.isComplete) {
               ++numTasks;
@@ -67,18 +67,18 @@ class RecurringTaskFactory {
           return;
       }
 
-      let minNumTasks = this.getNumberOfMatesRecurringTasks(this.mates[0]);
+      let minNumTasks = this.getNumberOfMatesRecurringTasks(this.mates[0].getID());
       var minTaskMates = [];
-      minTaskMates.push(this.mates[0]);
+      minTaskMates.push(this.mates[0].getID());
 
       for (var i = 1; i < this.mates.length; ++i) {
-          let j = this.getNumberOfMatesRecurringTasks(this.mates[i]); //would be more efficient to get all the number of tasks in one shot...
+          let j = this.getNumberOfMatesRecurringTasks(this.mates[i].getID()); //would be more efficient to get all the number of tasks in one shot...
           if (j < minNumTasks) {
               minNumTasks = j;
               minTaskMates = [];
-              minTaskMates.push(this.mates[i]);
+              minTaskMates.push(this.mates[i].getID());
           } else if (j == minNumTasks) {
-              minTaskMates.push(this.mates[i]);
+              minTaskMates.push(this.mates[i].getID());
           }
       }
 
@@ -91,19 +91,19 @@ class RecurringTaskFactory {
 
   async reCreateTask(oldTask) { // pass in the old task
     this.task.duplicate(oldTask);
-    this.task.setAssignedMate(this.setNextMateAssignedToRecurringTask(this.task.getAssignedMate()));
+    this.task.setAssignedMateID(this.setNextMateAssignedToRecurringTask(this.task.getAssignedMateID()));
     this.task.calcNewDate();
     this.task.setTaskID(await this.insertTaskIntoFirestore()); // assign the ID now that it has been upoaded to db
     return this.task;
   }
 
-  setNextMateAssignedToRecurringTask(mate) {
+  setNextMateAssignedToRecurringTask(mateID) {
       for (var i = 0; i < this.mates.length - 1; ++i) {
-          if (this.mates[i] == mate) {
-              return this.mates[i + 1];
+          if (this.mates[i].getID() == mateID) {
+              return this.mates[i + 1].getID();
           }
       }
-      return this.mates[0];
+      return this.mates[0].getID();
   }
 
 }

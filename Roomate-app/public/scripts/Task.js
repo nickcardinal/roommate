@@ -12,7 +12,7 @@
 		this.recurringPeriod = 0;
 
 		// Task Completion Details
-		this.assignedMate;
+		this.assignedMateID;
 		this.isComplete;
 		this.favourMate;
 	}
@@ -25,7 +25,7 @@
 		this.dueTime = task.getDueTime();
 		this.isRecurring = task.getIsRecurring();
 		this.recurringPeriod = task.getRecurringPeriod();
-		this.assignedMate = task.getAssignedMate();
+		this.assignedMateID = task.getAssignedMateID();
 		this.isComplete = task.getIsComplete();
 		this.favourMate = task.getFavourMate();
 	}
@@ -97,12 +97,12 @@
 	}
 
 	// Getters/Setters: Task Completion Details
-	setAssignedMate(assignedMate) {
-		this.assignedMate = assignedMate;
+	setAssignedMateID(assignedMateID) {
+		this.assignedMateID = assignedMateID;
 	}
 
-	getAssignedMate() {
-		return this.assignedMate;
+	getAssignedMateID() {
+		return this.assignedMateID;
 	}
 
 	setIsComplete(isComplete) {
@@ -120,7 +120,7 @@
 		console.log('dueDate: ', this.dueDate);
 		console.log('dueTime: ', this.dueTime);
 		console.log('isRecurring: ', this.isRecurring);
-		console.log('assignedMate: ', this.assignedMate);
+		console.log('assignedMateID: ', this.assignedMateID);
 		console.log('isComplete: ', this.isComplete);
 	}
 
@@ -157,11 +157,11 @@
 	async pushComplete(){
 		task.setIsComplete(true);
 		await firebase.firestore().collection('Tasks').doc(this.task_ID).update({tskIsComplete:true});
-		
+
 	}
 	firestoreObj(){
 		return {
-			tskAssignedMate: this.assignedMate.getID(),
+			tskAssignedMateID: this.assignedMateID,
 			tskDescription: this.description,
 			tskDueDate: this.dueDate,
 			tskDueTime: this.dueTime,
@@ -177,15 +177,15 @@
 				this.task_ID = task.task_ID;
 				this.title = task.title;
 				this.description = task.description;
-		
+
 				// Task Deadline Data
 				this.dueDate = task.dueDate;
 				this.dueTime = task.dueTime;
 				this.isRecurring = task.isRecurring;
 				this.recurringPeriod = task.recurringPeriod;
-		
+
 				// Task Completion Details
-				this.assignedMate = task.assignedMate;
+				this.assignedMateID = task.assignedMateID;
 				this.isComplete = task.isComplete;
 				this.favourMate = task.favourMate;
 	}
@@ -221,7 +221,7 @@ function createFirestoreTask() {
 		tskDueTime: $("#dueTimeField").val(),
 		tskIsRecurring: $('#isRecurringField').is(':checked'),
 		tskRecurringPeriod: $('#recurringPeriodField').val(),
-		tskAssignedMate: "Unique Mate ID",
+		tskAssignedMateID: "Unique Mate ID",
 		tskIsComplete: false,
 		tskFavour:""
 	}
@@ -248,5 +248,5 @@ function createFirestoreTask() {
 try{
 	module.exports = Task;
 }catch(e){
-	
+
 }
