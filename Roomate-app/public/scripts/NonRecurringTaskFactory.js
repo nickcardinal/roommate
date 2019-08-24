@@ -19,9 +19,10 @@ class NonRecurringTaskFactory {
     this.task.setDueTime($("#dueTimeField").val());
     this.task.setIsRecurring(false);
     this.task.setRecurringPeriod(0);
+    this.task.setSpaceID(sessionStorage.getItem("Space"));
     this.task.setAssignedMateID(this.setMateToNonRecurringTask());
     this.task.setIsComplete(false);
-    this.task.setFavourMate('');
+    this.task.setFavorMateID('');
   }
 
   async insertTaskIntoFirestore() {
@@ -33,9 +34,10 @@ class NonRecurringTaskFactory {
       tskDueTime: this.task.getDueTime(),
       tskIsRecurring: this.task.getIsRecurring(),
       tskRecurringPeriod: this.task.getRecurringPeriod(),
+      tskSpaceID: this.task.getSpaceID(),
       tskAssignedMateID: this.task.getAssignedMateID(),
       tskIsComplete: this.task.getIsComplete(),
-      tskFavour:""
+      tskFavorMateID: this.task.getFavorMateID()
     }
 
     // Add Task to Space in db

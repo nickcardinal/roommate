@@ -51,18 +51,11 @@ function appendTask(task, table) {
   }
   tskDesc.innerHTML = task.getDescription();
   tskDue.innerHTML = 'Due by ' + task.getDueDate() + ' ' + task.getDueTime();
-  tskMate.innerHTML = 'Task assigned to ';
-  if(task.getFavourMate() !== ''){
-    tskMate.innerHTML = 'Task favoured by ';
-    firebase.firestore().collection('Mates').doc(task.getFavourMate()).get().then(doc => {
-      try{tskMate.innerHTML += doc.data().usrNickname;}
-      catch(e){tskMate.innerHTML += '?';}
-    });
-  }else{
-    firebase.firestore().collection('Mates').doc(task.getAssignedMateID()).get().then(doc => {
-      try{tskMate.innerHTML += doc.data().usrNickname;}
-      catch(e){tskMate.innerHTML += '?';}
-    });
+  tskMate.innerHTML = 'Task assigned to ' + getMateByID(task.getAssignedMateID())[0].getNickName();
+  if(task.getFavorMateID() !== ''){
+    row = table.insertRow(rows.length);
+    let tskFav = row.insertCell(0);
+    //tskFav.innerHTML = 'Task favoured by ' + getMateByID(task.getFavorMateID())[0].getNickName();
   }
   br.innerHTML = '<br></br>'
 }
