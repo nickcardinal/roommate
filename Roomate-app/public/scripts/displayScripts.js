@@ -59,7 +59,7 @@ function appendTask(task, table) {
       catch(e){tskMate.innerHTML += '?';}
     });
   }else{
-    firebase.firestore().collection('Mates').doc(task.getAssignedMate()).get().then(doc => {
+    firebase.firestore().collection('Mates').doc(task.getAssignedMateID()).get().then(doc => {
       try{tskMate.innerHTML += doc.data().usrNickname;}
       catch(e){tskMate.innerHTML += '?';}
     });

@@ -230,7 +230,7 @@ function getSpace() {
 function getMyTasks() {
     let currMateID = sessionStorage.getItem("user");
     mySpace.getTasks().filter(task => {
-        return task.assignMate === currMateID;
+        return task.assignedMateID === currMateID;
     });
 }
 //Returns Task object matching taskID in mySpace tasks array.

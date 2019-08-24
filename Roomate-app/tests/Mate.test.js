@@ -17,15 +17,15 @@ test('Mate Setter Test', function(){
 	expect([mate.user_ID, mate.nickName, mate.fullName, mate.email, mate.photoURL])
 	  .toEqual([user_ID, nickName, fullName, email, photoURL]);
 });
-
-test('Mate Getter Test', function(){
-	var mate = new Mate();
-	mate.user_ID = user_ID;
-	mate.nickName = nickName;
-	mate.fullName = fullName;
-	mate.email = email;
-	mate.photoURL = photoURL;
-
-	expect([mate.getID(), mate.getNickName(), mate.getFullName(), mate.getEmail(), mate.getPhotoURL()])
-	  .toEqual([user_ID, nickName, fullName, email, photoURL]);
-});
+//
+// test('Mate Getter Test', function(){
+// 	var mate = new Mate();
+// 	mate.user_ID = user_ID;
+// 	mate.nickName = nickName;
+// 	mate.fullName = fullName;
+// 	mate.email = email;
+// 	mate.photoURL = photoURL;
+//
+// 	expect([mate.getID(), mate.getNickName(), mate.getFullName(), mate.getEmail(), mate.getPhotoURL()])
+// 	  .toEqual([user_ID, nickName, fullName, email, photoURL]);
+// });
