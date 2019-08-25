@@ -124,15 +124,15 @@
 	}
 
 	outputTaskProperties(){
-		console.log('task_ID: ', this.task_ID);
-		console.log('space_ID: ', this.space_ID);
-		console.log('title: ', this.title);
-		console.log('description: ', this.description);
-		console.log('dueDate: ', this.dueDate);
-		console.log('dueTime: ', this.dueTime);
-		console.log('isRecurring: ', this.isRecurring);
-		console.log('assignedMateID: ', this.assignedMateID);
-		console.log('isComplete: ', this.isComplete);
+		// console.log('task_ID: ', this.task_ID);
+		// console.log('space_ID: ', this.space_ID);
+		// console.log('title: ', this.title);
+		// console.log('description: ', this.description);
+		// console.log('dueDate: ', this.dueDate);
+		// console.log('dueTime: ', this.dueTime);
+		// console.log('isRecurring: ', this.isRecurring);
+		// console.log('assignedMateID: ', this.assignedMateID);
+		// console.log('isComplete: ', this.isComplete);
 	}
 
 	calcNewDate() {

@@ -65,7 +65,6 @@ class NonRecurringTaskFactory {
 
   setMateToNonRecurringTask() {
       if (this.mates.length == 0) {
-          console.log("No mates in the living space.");
           return;
       }
 

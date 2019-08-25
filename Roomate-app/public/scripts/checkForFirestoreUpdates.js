@@ -8,13 +8,13 @@ let mateDoc = firebase.firestore().collection("Mates").where('usrSpaces', 'array
 mateDoc.onSnapshot(function(snapshot) {
   snapshot.docChanges().forEach(function(change) {
     if(change.type === "added") {
-      console.log("New Mate", change.doc.data());
+      //console.log("New Mate", change.doc.data());
     }
     if(change.type === "modified") {
-      console.log("Modified Mate", change.doc.data());
+      //console.log("Modified Mate", change.doc.data());
     }
     if(change.type === "removed") {
-      console.log("Removed Mate", change.doc.data());
+      //console.log("Removed Mate", change.doc.data());
     }
   });
   refreshMates();
@@ -30,13 +30,13 @@ let taskDoc = firebase.firestore().collection("Tasks").where('tskSpaceID', '==',
 taskDoc.onSnapshot(function(snapshot) {
   snapshot.docChanges().forEach(function(change) {
     if(change.type === "added") {
-      console.log("New Task", change.doc.data());
+      //console.log("New Task", change.doc.data());
     }
     if(change.type === "modified") {
-      console.log("Modified Task", change.doc.data());
+      //console.log("Modified Task", change.doc.data());
     }
     if(change.type === "removed") {
-      console.log("Removed Task", change.doc.data());
+      //console.log("Removed Task", change.doc.data());
     }
   });
   refreshTasks();
