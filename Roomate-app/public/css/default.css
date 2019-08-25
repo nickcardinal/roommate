@@ -240,10 +240,6 @@ button {
     width: 75px;
     font-size: 0.70em;
   }
-
-  .mate-sect tr {
-    font-size: 0em;
-  }
 }
 
 @media (max-height: 500px) {
