@@ -168,7 +168,6 @@
 	async pushComplete(){
 		task.setIsComplete(true);
 		await firebase.firestore().collection('Tasks').doc(this.task_ID).update({tskIsComplete:true});
-
 	}
 	firestoreObj(){
 		return {

@@ -124,37 +124,27 @@ function redirLoginToSpace(user, database) {
   function redirect(url){
     window.location.href = url;
   }
-
   function redirectIndex() {
       redirect("..index.html");
   }
-
   function redirectProfile() {
       redirect("../html/profile.html");
   }
-
   function redirectCreateNewSpace() {
       redirect("../html/createNewSpace.html");
   }
-
   function redirectCreateTask() {
   	redirect("../html/createTask.html");
   }
-
   function redirectOverview() {
       redirect("../html/overview.html");
   }
-
   function redirectSpaceKey() {
     redirect("../html/spaceKey.html");
   }
-
   function openTaskList() {
     redirect("../html/tasklist.html");
-  	// window.open("../html/tasklist.html");
   }
-
   function openMateList() {
     redirect("../html/mateslist.html");
-    // window.open("../html/tasklist.html");
   }
