@@ -75,7 +75,7 @@ function appendTask(task, table) {
     }
   }catch(e){}
 
-  br.innerHTML = '<br></br>'
+  br.innerHTML = '<br>'
 }
 
 async function resetTaskTable() {

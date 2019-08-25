@@ -50,7 +50,8 @@
 
     <title>CheckMates</title>
   </head>
-  <body onload="initializeOverview()">
+  <!-- <body onload="initializeOverview()"> -->
+  <body>
     <div class="space container">
       <div class="top-bar">
         <img class ="top-bar-logo hide-at-825" src="../images/logoCheckMates.png" alt="Checkmates Logo">
@@ -77,11 +78,12 @@
         </div>
 
         <!-- Task Section -->
-        <div class="task-sect ">
+        <div class="task-sect">
           <button class="blue-btn" type="button" onclick="redirectCreateTask()">Create a Task</button>
           <br>
           <br class="show-at-450">
-          <table id="taskList">
+          <table class="" id="taskList">
+            <tr><br></tr>
           </table>
         </div>
       </div>

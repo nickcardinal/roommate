@@ -256,6 +256,16 @@ function getMateByID(userID) {
         return mate.getID() === userID;
     });
 }
+//Reloads mySpace Mates array from Firestore.
+function loadMatesInSpace(){
+	mySpace.mates = [];
+	mySpace.fillMatesArray();
+}
+//Reloads mySpace Mates array from Firestore.
+function loadTasksInSpace(){
+	mySpace.tasks = [];
+	mySpace.fillTasksArray();
+}
 //Returns Mates array from mySpace
 function getMatesInSpace() {
     return mySpace.getMates();
@@ -264,7 +274,6 @@ function getMatesInSpace() {
 function getAllTasks() {
     return mySpace.getTasks();
 }
-
 //Returns whole space
 function getSpace() {
     return mySpace;
