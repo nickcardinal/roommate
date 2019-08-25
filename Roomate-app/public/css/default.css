@@ -259,25 +259,25 @@ table {
 
 
 .task-sect tr:nth-child(2n) {
-  border-left: 5px dotted green;
-  border-right: 5px dotted green;
+  border-left: 1px solid gray;
+  border-right: 1px solid gray;
 }
 
 .task-sect tr:nth-child(3n) {
-  border-left: 5px dotted green;
-  border-right: 5px dotted green;
+  border-left: 1px solid gray;
+  border-right: 1px solid gray;
 }
 
 .task-sect tr:nth-child(4n) {
-  border-left: 5px dotted green;
-  border-right: 5px dotted green;
+  border-left: 1px solid gray;
+  border-right: 1px solid gray;
 
   text-align: right;
 }
 
 .task-sect tr:nth-child(5n) {
-  border-top: 5px dotted green;
-  border-bottom: 5px dotted green;
+  border-top: 1px solid gray;
+  border-bottom: 1px solid gray;
 }
 
 @media (max-width: 825px) {
