@@ -6,19 +6,12 @@ function initialize() {
 async function validate(){
   initialize();
     database = firebase.firestore();
-    if(sessionStorage.getItem('log') === 'true'){
-      updateToken_Overview(database);
-      return;
-    }
     if(sessionStorage.getItem('NickName') !== sessionStorage.getItem('null')){
       updateNickName_JoinOrCreate(database);
-      //return;
     }
     let query = database.collection('Mates').where('usrToken', '==', sessionStorage.getItem('token')).get().then(snapshot =>{
         if(snapshot.empty){
             redirect("../index.html");
-            //console.log('Invalid Token :')
-            //console.log(sessionStorage.getItem('token'));
         }else{
             snapshot.forEach(doc => {
                 if(new Date() < doc.data().usrExpiration.toDate()){
@@ -36,51 +29,49 @@ async function validate(){
 
 function initializeWelcome() {
   initialize();
-  database = firebase.firestore();
-  let query = database
-    .collection("Mates")
-    .where("usrToken", "==", sessionStorage.getItem('token'));
-  query
-    .get()
-    .then(snapshot => {
-    if (snapshot.empty) {
-      redirect('../index.html');
-    } else {
-    snapshot.forEach(doc => {
-      if (new Date() < doc.data().usrExpiration.toDate()) {
-        sessionStorage.setItem('user', doc.id);
-      } else {
-        redirect('../index.html');
-      }
-    });
-    }
-  });
+  // database = firebase.firestore();
+  // let query = database
+  //   .collection("Mates")
+  //   .where("usrToken", "==", sessionStorage.getItem('token'));
+  // query
+  //   .get()
+  //   .then(snapshot => {
+  //   if (snapshot.empty) {
+  //     redirect('../index.html');
+  //   } else {
+  //   snapshot.forEach(doc => {
+  //     if (new Date() < doc.data().usrExpiration.toDate()) {
+  //       sessionStorage.setItem('user', doc.id);
+  //     } else {
+  //       redirect('../index.html');
+  //     }
+  //   });
+  //   }
+  // });
+  validate();
 }
 async function initializeOverview(){
   database = firebase.firestore();
-  if(sessionStorage.getItem('log') === 'true'){
-    updateToken_Overview(database);
-  }
   if(sessionStorage.getItem('NickName') !== sessionStorage.getItem('null')){
     updateNickName_JoinOrCreate(database);
   }
-  let query = database.collection('Mates').where('usrToken', '==', sessionStorage.getItem('token')).get().then(snapshot =>{
-      if(snapshot.empty){
-          redirect("../index.html");
-          //console.log('Invalid Token :')
-          //console.log(sessionStorage.getItem('token'));
-      }else{
-          snapshot.forEach(doc => {
-              if(new Date() < doc.data().usrExpiration.toDate()){
-                  sessionStorage.setItem('user', doc.id);
-                  updateExpiration(database, doc);
-              }else{
-                  redirect("../index.html");
-              }
+  // let query = database.collection('Mates').where('usrToken', '==', sessionStorage.getItem('token')).get().then(snapshot =>{
+  //     if(snapshot.empty){
+  //         redirect("../index.html");
+  //         //console.log('Invalid Token :')
+  //         //console.log(sessionStorage.getItem('token'));
+  //     }else{
+  //         snapshot.forEach(doc => {
+  //             if(new Date() < doc.data().usrExpiration.toDate()){
+  //                 sessionStorage.setItem('user', doc.id);
+  //                 updateExpiration(database, doc);
+  //             }else{
+  //                 redirect("../index.html");
+  //             }
 
-          });
-      }
-  });
+  //         });
+  //     }
+  // });
   await loadSpace();
   await displaySpaceInfo();
 }
@@ -151,8 +142,6 @@ function openMateList() {
 
 // Login Redirect Functions
 function redirLogin(user, authExpiration, database) {
-  sessionStorage.setItem('log', 'true');
-  firebase.firestore.setLogLevel('debug');
   let mateRef = database.collection("Mates");
   let mateQuery = mateRef.where("usrEmail", "==", user.email);
 
@@ -185,7 +174,7 @@ function redirLoginToSpace(user, database) {
 
   matedb
     .get()
-    .then(function(snapshot){
+    .then(async function(snapshot){
       sessionStorage.setItem('user', snapshot.docs[0].id);
       let user = snapshot.docs[0].data();
       sessionStorage.setItem('NickName', user.usrNickname); //maybe delete
@@ -193,6 +182,12 @@ function redirLoginToSpace(user, database) {
       if(spaces != undefined) {
         let spaceID = spaces[0].id;
         sessionStorage.setItem('Space', spaceID);
+        let date = new Date();
+        date.setTime(date.getTime() + 86400000);
+        await database.collection('Mates').doc(sessionStorage.getItem('user')).update({
+          usrExpiration:date,
+          usrToken:sessionStorage.getItem('token')
+        });
         redirect('../html/overview.html')
       }else {
         redirect('../html/joinOrCreateSpace.html')
