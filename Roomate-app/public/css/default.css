@@ -173,6 +173,9 @@ button {
 
   display: flex;
   margin-top: 5vh;
+  padding-top: 2vh;
+
+  border-top: 1px solid gray;
 }
 
 /* Mate Section */
@@ -240,6 +243,10 @@ button {
     margin-top: 10px;
   }
 
+  .mate-sect {
+    min-width: 100px;
+  }
+
   .mate-sect button {
     margin-bottom: 20px;
   }
@@ -259,7 +266,7 @@ button {
   }
 
   .mate-sect {
-    width: 75px;
+    min-width: 75px;
     font-size: 0.75em;
   }
 
