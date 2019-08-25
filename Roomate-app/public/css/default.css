@@ -70,8 +70,9 @@ button {
 }
 
 .blue-btn {
+  margin: 2.5px;
   padding: 0vh 2vw;
-  height: 50px;
+  height: 45px;
 
   background: #88CCF1;
   border-radius: 20px;
@@ -118,16 +119,27 @@ button {
 /* OVERVIEW */
 .top-bar-logo {
   width: auto;
-  height: 80px;
+  height: 100px;
 }
 
 .top-bar {
   height: 10vh;
   display: flex;
-  align-items: center;
 
   overflow-y: visible;
 }
+
+.space-information {
+  width: 80vw;
+  text-align: center;
+
+  padding: 5px;
+}
+
+/* .profile-btns {
+  display: flex;
+  justify-content: flex-end;
+} */
 
 .space {
   min-width: 90%;
@@ -144,38 +156,43 @@ button {
 .space-content {
   min-height: 79%;
   min-height: 79vh;
+
+  display: flex;
+  margin-top: 5vh;
 }
 
-.space-information {
-  width: 80vw;
-  text-align: center;
-
-  padding-left: 5vw;
-  padding-right: 5vw;
-}
-
+/* Mate Section */
 .user-icon {
   width: 50px;
   height: auto;
+  border-radius: 50px;
+}
+
+.mate-sect {
+  /* width: 20vw; */
+  text-align: center;
+  /* align-items: center;
+  justify-content: center; */
+
+  margin-right: 20px;
+}
+
+.mate-sect table {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.mate-sect tr {
+  min-height: 0px;
+
+  padding-left: auto;
+  padding-right: auto;
 }
 
 @media (max-width: 825px) {
   .blue-btn {
-    padding: 0vh 1vw;
-    height: 35px;
-
-    background: #88CCF1;
-    border-radius: 15px;
-    border: 0px;
-
-    font-family: 'Montserrat', sans-serif;
-    font-style: normal;
-    /* font-weight: bold; */
+    padding: 0vh 15px;
     font-size: 1em;
-    color: #FFFFFF;
-
-    display: flex;
-    align-items: center;
   }
 
   .home-logo {
@@ -192,9 +209,40 @@ button {
     display: none;
   }
 
+  .space-information {
+    text-align: left;
+  }
+
   .space {
     padding-left: 15px;
     padding-right: 15px;
+  }
+
+  .space-content {
+    /* flex-direction: column; */
+    /* align-items: center; */
+
+    margin-top: 0px;
+  }
+
+  .mate-sect {
+    /* min-width: 140px; */
+  }
+
+  .mate-sect table {
+    /* min-width: 140px; */
+  }
+
+}
+
+@media (max-width: 450px) {
+  .mate-sect {
+    width: 75px;
+    font-size: 0.70em;
+  }
+
+  .mate-sect tr {
+    font-size: 0em;
   }
 }
 

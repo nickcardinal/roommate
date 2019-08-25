@@ -81,11 +81,11 @@ class Space {
     //this will be called completeTask in utility.js
     reCreateRecurringTaskByFactory(task, taskdb) {
         var factory = new RecurringTaskFactory(taskdb);
-        task.setAssignedMate(this.setNextMateAssignedToRecurringTask(task.getAssignedMate()));
+        task.setAssignedMateID(this.setNextMateAssignedToRecurringTask(task.getAssignedMate()));
         task.calcNewDate() //call Morgan's function
         this.addTask(factory.reCreateTask(task));
     }
-  
+
 	//Moved to utility.js
     isValidSpace(spaceDocID) {
         var db = firebase.firestore();
@@ -333,8 +333,9 @@ class Space {
                             currTask.setDueTime(taskRecord.data().tskDueTime);
                             currTask.setIsRecurring(taskRecord.data().tskIsRecurring);
                             currTask.setIsComplete(taskRecord.data().tskIsComplete);
-                            currTask.setAssignedMate(taskRecord.data().tskAssignedMate);
-                            currTask.setFavourMate(taskRecord.data().tskFavour);
+                            currTask.setAssignedMateID(taskRecord.data().tskAssignedMateID);
+                            currTask.setFavorMateID(taskRecord.data().tskFavorMateID);
+                            currTask.setSpaceID(taskRecord.data().tskSpaceID);
                             currTask.setTaskID(taskRecord.id);
                             currTask.setRecurringPeriod(taskRecord.data().tskRecurringPeriod);
                             return currTask;
@@ -352,5 +353,5 @@ class Space {
 try{
 	module.exports = Space;
 }catch(e){
-	
+
 }

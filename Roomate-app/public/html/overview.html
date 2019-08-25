@@ -44,37 +44,39 @@
     <script src="../scripts/Mate.js"></script>
     <script src="../scripts/Task.js"></script>
     <script src="../scripts/utility.js"></script>
+    <script src="../scripts/checkForMateUpdates.js"></script>
+    <script src="../scripts/checkForTaskUpdates.js"></script>
 
     <title>CheckMates</title>
   </head>
-<!--  onload="initializeOverview(); -->
-  <body class="test" onload="initializeOverview()">
-    <div class="space container test">
-      <div class="top-bar test">
-        <img class ="top-bar-logo test" src="../images/logoCheckMates.png" alt="Checkmates Logo">
-        <div class="space-information test">
-          <h3 id="showName">Boop</h3>
-          <h4 id="showDescription">Scoop diddly doop</h4>
+  <body onload="initializeOverview(); mateListInit(); taskListInit()">
+    <div class="space container">
+      <div class="top-bar ">
+        <img class ="top-bar-logo " src="../images/logoCheckMates.png" alt="Checkmates Logo">
+        <div class="space-information ">
+          <h3 id="showName">Title</h3>
+          <p id="showDescription">Description</h4>
         </div>
-        <div class="test">
+        <div class="profile-btns ">
           <button class="blue-btn" type="button" onclick="logout()">Logout</button>
+          <button class="blue-btn" type="button" onclick="redirect('./profile.html')">Profile</button>
         </div>
       </div>
 
-      <br>
-
-      <div class="space-content test">
+      <div class="space-content ">
         <!-- Mate Section -->
-        <div class="test">
-          <button class="blue-btn" type="button" onclick="redirectSpaceKey()">Invite a Mate</button>
-          <table id="mateList">
+        <div class="mate-sect ">
+          <button class="blue-btn " type="button" onclick="redirectSpaceKey()">Invite a Mate</button>
+          <br>
+          <table class="" id="mateList">
           </table>
         </div>
 
         <!-- Task Section -->
-        <div class="test">
+        <div class="task-sect ">
           <button class="blue-btn" type="button" onclick="redirectCreateTask()">Create a Task</button>
-          <button class="blue-btn" type="button" onclick="openTaskList()">View Tasks</button>
+          <!-- <table id="taskList">
+          </table> -->
         </div>
       </div>
     </div>

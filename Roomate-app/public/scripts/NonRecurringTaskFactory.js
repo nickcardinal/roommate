@@ -19,9 +19,10 @@ class NonRecurringTaskFactory {
     this.task.setDueTime($("#dueTimeField").val());
     this.task.setIsRecurring(false);
     this.task.setRecurringPeriod(0);
-    this.task.setAssignedMate(this.setMateToNonRecurringTask());
+    this.task.setSpaceID(sessionStorage.getItem("Space"));
+    this.task.setAssignedMateID(this.setMateToNonRecurringTask());
     this.task.setIsComplete(false);
-    this.task.setFavourMate('');
+    this.task.setFavorMateID('');
   }
 
   async insertTaskIntoFirestore() {
@@ -33,9 +34,10 @@ class NonRecurringTaskFactory {
       tskDueTime: this.task.getDueTime(),
       tskIsRecurring: this.task.getIsRecurring(),
       tskRecurringPeriod: this.task.getRecurringPeriod(),
-      tskAssignedMateID: this.task.getAssignedMate().getID(),
+      tskSpaceID: this.task.getSpaceID(),
+      tskAssignedMateID: this.task.getAssignedMateID(),
       tskIsComplete: this.task.getIsComplete(),
-      tskFavour:""
+      tskFavorMateID: this.task.getFavorMateID()
     }
 
     // Add Task to Space in db
@@ -48,11 +50,11 @@ class NonRecurringTaskFactory {
     return docRef.id;
   }
 
-  getNumberOfMatesNonRecurringTasks(mate) {
+  getNumberOfMatesNonRecurringTasks(mateID) {
       var numTasks = 0;
       for (var i = 0; i < this.tasks.length; ++i) {
           var tempTask = this.tasks[i];
-          if (tempTask.assignedMate == mate &&
+          if (tempTask.assignedMateID == mateID &&
              !tempTask.isRecurring &&
              !tempTask.isComplete) {
               ++numTasks;
@@ -67,18 +69,18 @@ class NonRecurringTaskFactory {
           return;
       }
 
-      let minNumTasks = this.getNumberOfMatesNonRecurringTasks(this.mates[0]);
+      let minNumTasks = this.getNumberOfMatesNonRecurringTasks(this.mates[0].getID());
       var minTaskMates = [];
-      minTaskMates.push(this.mates[0]);
+      minTaskMates.push(this.mates[0].getID());
 
       for (var i = 1; i < this.mates.length; ++i) {
-          let j = this.getNumberOfMatesNonRecurringTasks(this.mates[i]); //would be more efficient to get all the number of tasks in one shot...
+          let j = this.getNumberOfMatesNonRecurringTasks(this.mates[i].getID()); //would be more efficient to get all the number of tasks in one shot...
           if (j < minNumTasks) {
               minNumTasks = j;
               minTaskMates = [];
-              minTaskMates.push(this.mates[i]);
+              minTaskMates.push(this.mates[i].getID());
           } else if (j === minNumTasks) {
-              minTaskMates.push(this.mates[i]);
+              minTaskMates.push(this.mates[i].getID());
           }
       }
 

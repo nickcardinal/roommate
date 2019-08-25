@@ -118,35 +118,95 @@ async function createTaskByFactory() {
 //Only allows for you to complete your own tasks
 async function completeTask(taskID){
   task = getTasksByID(taskID)[0];
+  if(task.getAssignedMateID() === sessionStorage.getItem('user') || task.getFavorMateID() === sessionStorage.getItem('user')){
   //if((task.favourMate === '' && sessionStorage.getItem('user') === task.assignedMate)|| task.favourMate === sessionStorage.getItem('user')){
   //marks task with id taskID as completed
   if(task.getIsRecurring()){
       let fact = new RecurringTaskFactory(firebase.firestore().collection('Tasks'), getMatesInSpace());
       await fact.reCreateTask(task);
       await task.pushComplete();
-      saveSpaceToSessionStorage();
-      location.reload();
+      //saveSpaceToSessionStorage();
+      //location.reload();
     }else{
       await task.pushComplete();
+      saveSpaceToSessionStorage();
+      location.reload();
     }
+}else{
+    if(task.getFavorMateID !== ''){//cannot have more than one mate favour a task.
+        location.reload();
+        return;
+    }else{
+           await favourTask(task);
+           saveSpaceToSessionStorage();
+           location.reload();
+           return;
+         }
+}
+}
+//Morgan's function stub
+async function favourTask(task){
+
 }
 
-function sortTasksByDate(tasksArray) {
-    tasksArray.sort((taskA, taskB) => {
+// Splits completed Tasks from not completed
+function splitCompletedTasks(tasksArray) {
+  let taskObj = {complete:new Array(), incomplete:new Array()};
+  //console.log("Splitting completed tasks.")
+  tasksArray.forEach(function(task, index) {
+    if(task.getIsComplete() === true) {
+      taskObj.complete.push(task);
+    }else{
+        taskObj.incomplete.push(task);
+    }
+  });
+  return taskObj;
+}
 
-        // Check Date: recent first
-        if (taskA.getDueDate() > taskB.getDueDate()) {
+// Sorts completed into descending and not completed to ascending
+function sortTasks(tasksArray) {
+  //console.log("Complete List:", tasksArray);
+  var tasks = splitCompletedTasks(tasksArray);
+  //console.log("--- AFTER SPLIT ---");
+  //console.log("Completed:", tasks.complete);
+  //console.log("Not Completed:", tasks.incomplete);
+
+  tasks.incomplete.sort((taskA, taskB) => {
+    // Check Date: oldest first
+    if (taskA.getDueDate() > taskB.getDueDate()) {
+        return 1;
+    } else if (taskA.getDueDate() === taskB.getDueDate()) {
+        // Check Time: oldest first
+        if (taskA.getDueTime() >= taskB.getDueTime()) {
             return 1;
-        } else if (taskA.getDueDate() === taskB.getDueDate()) {
-
-            // Check Time: recent first
-            if (taskA.getDueTime() >= taskB.getDueTime()) {
-                return 1;
-            }
         }
-        return -1;
-    });
+    }
+    return -1;
+  });
+
+  tasks.complete.sort((taskA, taskB) => {
+      // Check Date: recent first
+      if (taskA.getDueDate() < taskB.getDueDate()) {
+          return 1;
+      } else if (taskA.getDueDate() === taskB.getDueDate()) {
+          // Check Time: recent first
+          if (taskA.getDueTime() >= taskB.getDueTime()) {
+              return 1;
+          }
+      }
+      return -1;
+  });
+
+//   console.log("--- AFTER SORT ---");
+//   console.log("Completed:", tasks.complete);
+//   console.log("Not Completed:", tasks.incomplete);
+
+  tasksArray = tasks.incomplete.concat(tasks.complete);
+//   console.log("--- AFTER CONCAT ---");
+//   console.log("Complete List:", tasksArray);
+  return tasksArray;
 }
+
 /*********************************************
 
 Functions that access  mySpace Object
@@ -212,7 +272,7 @@ function getSpace() {
 function getMyTasks() {
     let currMateID = sessionStorage.getItem("user");
     mySpace.getTasks().filter(task => {
-        return task.assignMate === currMateID;
+        return task.assignedMateID === currMateID;
     });
 }
 //Returns Task object matching taskID in mySpace tasks array.

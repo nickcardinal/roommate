@@ -3,7 +3,7 @@
 function displayUserInfo() {
   document.getElementById('FullName').innerHTML = sessionStorage.getItem('name');
   document.getElementById('Email').innerHTML = sessionStorage.getItem('email');
-  document.getElementById('nameField').value = sessionStorage.getItem('name');
+  document.getElementById('nickNameField').value = sessionStorage.getItem('NickName');
 }
 
 // Space Information Display Functions
@@ -19,9 +19,8 @@ function displaySpaceInfo() {
 // Task Display Functions
 // Found in --> ../html/tasklist.html; to be moved to ../html/overview.html
 async function displayTasks(table) {
-  await loadSpaceFromSessionStorage();
   var tasks = getAllTasks();
-  sortTasksByDate(tasks);
+  tasks = sortTasks(tasks);
   tasks.forEach(task => {
     appendTask(task, table);
   });
@@ -51,18 +50,11 @@ function appendTask(task, table) {
   }
   tskDesc.innerHTML = task.getDescription();
   tskDue.innerHTML = 'Due by ' + task.getDueDate() + ' ' + task.getDueTime();
-  tskMate.innerHTML = 'Task assigned to ';
-  if(task.getFavourMate() !== ''){
-    tskMate.innerHTML = 'Task favoured by ';
-    firebase.firestore().collection('Mates').doc(task.getFavourMate()).get().then(doc => {
-      try{tskMate.innerHTML += doc.data().usrNickname;}
-      catch(e){tskMate.innerHTML += '?';}
-    });
-  }else{
-    firebase.firestore().collection('Mates').doc(task.getAssignedMate()).get().then(doc => {
-      try{tskMate.innerHTML += doc.data().usrNickname;}
-      catch(e){tskMate.innerHTML += '?';}
-    });
+  tskMate.innerHTML = 'Task assigned to ' + getMateByID(task.getAssignedMateID())[0].getNickName();
+  if(task.getFavorMateID() !== ''){
+    row = table.insertRow(rows.length);
+    let tskFav = row.insertCell(0);
+    tskFav.innerHTML = 'Task favoured by ' + getMateByID(task.getFavorMateID())[0].getNickName();
   }
   br.innerHTML = '<br></br>'
 }
@@ -77,7 +69,6 @@ async function resetTaskTable() {
 // Mates Display Functions
 // Found in --> ../html/mateslist.html; to be moved to ../html/overview.html
 async function displayMates(table) {
-  await loadSpaceFromFirestore();
     getMatesInSpace().forEach(mate => {
         appendMate(mate, table);
     });
@@ -97,7 +88,7 @@ function appendMate(mate, table) {
 
   mteIcon.innerHTML = '<img class ="user-icon" src=' + mate.getPhotoURL() + " " + 'alt="Checkmates Logo">';
   mteName.innerHTML = mate.getNickName();
-  br.innerHTML = '<br></br>'
+  br.innerHTML = '<br>'
 }
 
 async function resetMateTable() {

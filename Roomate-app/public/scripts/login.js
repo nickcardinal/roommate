@@ -15,6 +15,7 @@
         user = result.user;
         sessionStorage.setItem('token', token);
         sessionStorage.setItem('email', user.email);
+        sessionStorage.setItem('name', user.displayName);
         redirLogin(user, date, db);
       });
   }).catch(function(error) {
@@ -43,6 +44,8 @@ function logout() {
       redirect('../index.html');
     });
 }
+
+//not in use
 function redirLogin(user, authExpiration, database) {
   sessionStorage.setItem('log', 'true');
   firebase.firestore.setLogLevel('debug');
@@ -53,9 +56,9 @@ function redirLogin(user, authExpiration, database) {
     .get()
     .then(snapshot => {
       if (snapshot.empty) {
-        sessionStorage.setItem('name', user.displayName);
+        //sessionStorage.setItem('name', user.displayName);
         sessionStorage.removeItem('log');
-    
+
 
         mateRef
           .add({
@@ -76,7 +79,9 @@ function redirLogin(user, authExpiration, database) {
 
         //redirect if no nickname
         let nickname = user.usrNickName;
+        console.log(nickname);
         if(nickname == undefined) {
+          sessionStorage.setItem('NickName', user.displayName);
           redirect('../html/profile.html');
         }
 
@@ -93,14 +98,15 @@ function redirLogin(user, authExpiration, database) {
       }
     });
 }
-function loginNewUser(redir) {
-  sessionStorage.setItem('NickName', document.getElementById("nameField").value);
-  redirect(redir);
-}
-function displayUserInfo() {
-  document.getElementById('FullName').innerHTML= sessionStorage.getItem('name');
-  document.getElementById('Email').innerHTML= sessionStorage.getItem('email');
-  document.getElementById('nameField').innerHTML = sessionStorage.getItem('nickname');
+
+function editNickName() {
+  sessionStorage.setItem('NickName', document.getElementById("nickNameField").value);
+  if (sessionStorage.getItem('Space')) {
+    redirect ('../html/overview.html');
+  }
+  else {
+    redirect('../html/joinOrCreateSpace.html');
+  }
 }
 
 function redirect(url){

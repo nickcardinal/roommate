@@ -2,6 +2,7 @@
 	constructor() {
 		// Task Descriptors
 		this.task_ID;
+		this.space_ID;
 		this.title;
 		this.description;
 
@@ -12,9 +13,9 @@
 		this.recurringPeriod = 0;
 
 		// Task Completion Details
-		this.assignedMate;
+		this.assignedMateID;
 		this.isComplete;
-		this.favourMate;
+		this.favorMateID;
 	}
 
 	duplicate(task) {
@@ -25,9 +26,10 @@
 		this.dueTime = task.getDueTime();
 		this.isRecurring = task.getIsRecurring();
 		this.recurringPeriod = task.getRecurringPeriod();
-		this.assignedMate = task.getAssignedMate();
+		this.assignedMateID = task.getAssignedMateID();
 		this.isComplete = task.getIsComplete();
-		this.favourMate = task.getFavourMate();
+		this.space_ID = task.getSpaceID();
+		this.favorMateID = task.getFavorMateID();
 	}
 
 	// Getters/Setters: Task Descriptors
@@ -37,6 +39,14 @@
 
 	getTaskID() {
 		return this.task_ID;
+	}
+
+	setSpaceID(space_ID) {
+		this.space_ID = space_ID;
+	}
+
+	getSpaceID() {
+		return this.space_ID;
 	}
 
 	setTitle(title) {
@@ -88,21 +98,21 @@
 		return this.recurringPeriod;
 	}
 
-	setFavourMate(mate){
-		this.favourMate = mate;
+	setFavorMateID(mate){
+		this.favorMateID = mate;
 	}
 
-	getFavourMate(){
-		return this.favourMate;
+	getFavorMateID(){
+		return this.favorMateID;
 	}
 
 	// Getters/Setters: Task Completion Details
-	setAssignedMate(assignedMate) {
-		this.assignedMate = assignedMate;
+	setAssignedMateID(assignedMateID) {
+		this.assignedMateID = assignedMateID;
 	}
 
-	getAssignedMate() {
-		return this.assignedMate;
+	getAssignedMateID() {
+		return this.assignedMateID;
 	}
 
 	setIsComplete(isComplete) {
@@ -115,12 +125,13 @@
 
 	outputTaskProperties(){
 		console.log('task_ID: ', this.task_ID);
+		console.log('space_ID: ', this.space_ID);
 		console.log('title: ', this.title);
 		console.log('description: ', this.description);
 		console.log('dueDate: ', this.dueDate);
 		console.log('dueTime: ', this.dueTime);
 		console.log('isRecurring: ', this.isRecurring);
-		console.log('assignedMate: ', this.assignedMate);
+		console.log('assignedMateID: ', this.assignedMateID);
 		console.log('isComplete: ', this.isComplete);
 	}
 
@@ -157,15 +168,16 @@
 	async pushComplete(){
 		task.setIsComplete(true);
 		await firebase.firestore().collection('Tasks').doc(this.task_ID).update({tskIsComplete:true});
-		
+
 	}
 	firestoreObj(){
 		return {
-			tskAssignedMate: this.assignedMate.getID(),
+			tskAssignedMateID: this.assignedMateID,
+			tskSpaceID: this.space_ID,
 			tskDescription: this.description,
 			tskDueDate: this.dueDate,
 			tskDueTime: this.dueTime,
-			tskFavour: this.favourMate,
+			tskFavour: this.favorMateID,
 			tskIsComplete: this.isComplete,
 			tskIsRecurring: this.isRecurring,
 			tskRecurringPeriod: this.recurringPeriod,
@@ -175,78 +187,25 @@
 	importJSON(task){
 				// Task Descriptors
 				this.task_ID = task.task_ID;
+				this.space_ID = task.space_ID;
 				this.title = task.title;
 				this.description = task.description;
-		
+
 				// Task Deadline Data
 				this.dueDate = task.dueDate;
 				this.dueTime = task.dueTime;
 				this.isRecurring = task.isRecurring;
 				this.recurringPeriod = task.recurringPeriod;
-		
+
 				// Task Completion Details
-				this.assignedMate = task.assignedMate;
+				this.assignedMateID = task.assignedMateID;
 				this.isComplete = task.isComplete;
-				this.favourMate = task.favourMate;
+				this.favorMateID = task.favorMateID;
 	}
 }
-
-//old stuff
-function createTask() {
-	var taskdb = firebase.firestore().collection("Tasks");
-	//somehow find the space object and call createTaskByFactoryFunction()
-}
-
-//old stuff
-function reCreateRecurringTask() {
-	var taskdb = firebase.firestore().collection("Tasks");
-	//find the original task using the id
-	//call duplicate on the new task and pass in the old task
-	//update the original task to set isComplete to true
-	//update the original in json and the database
-	//somehow find the space object and call reCreateTaskByFactoryFunction()
-	// pass in taskdb and the new task
-}
-
-//old stuff but currently tied to the button
-function createFirestoreTask() {
-	var taskdb = firebase.firestore().collection("Tasks");
-	console.log("We're in the mainframe... Task data collection has commenced.");
-
-	// Setting firestore data
-	let data = {
-		tskTitle: $("#titleField").val(),
-		tskDescription: $("#descriptionField").val(),
-		tskDueDate: $("#dueDateField").val(),
-		tskDueTime: $("#dueTimeField").val(),
-		tskIsRecurring: $('#isRecurringField').is(':checked'),
-		tskRecurringPeriod: $('#recurringPeriodField').val(),
-		tskAssignedMate: "Unique Mate ID",
-		tskIsComplete: false,
-		tskFavour:""
-	}
-
-	// Add Task to Space
-	taskdb
-		.add(data)
-		.then(function(docRef) {
-			console.log("Task in session: " + docRef.id);
-			var spaceID = sessionStorage.getItem("Space");
-			console.log("Space in session: " + spaceID);
-			var spacedb = firebase.firestore().collection("Spaces").doc(spaceID);
-			spacedb.update({
-				spcTasks: firebase.firestore.FieldValue.arrayUnion(docRef.id),
-			}).
-			then(none => {
-				redirect("../html/overview.html");
-			});
-		});
-}
-
-
 
 try{
 	module.exports = Task;
 }catch(e){
-	
+
 }

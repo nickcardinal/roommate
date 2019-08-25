@@ -41,7 +41,6 @@ function updateToken_Overview(database) {
 
 function updateNickName_JoinOrCreate(database) {
     let nickname = sessionStorage.getItem('NickName');
-    sessionStorage.removeItem('NickName');
     database
     .collection("Mates")
     .where("usrToken", "==", sessionStorage.getItem('token'))
