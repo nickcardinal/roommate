@@ -55,12 +55,12 @@
         <form style="height:450px">
           Task Title:
           <br>
-          <input type="text" id="titleField">
+          <input type="text" id="titleField" maxlength="30">
           <br><br>
 
           Description:
           <br>
-          <input type="text" id="descriptionField">
+          <input type="text" id="descriptionField" maxlength="130">
           <br><br>
 
           <!-- Div For One Time Task -->
@@ -103,7 +103,7 @@
           </div>
         </form>
 
-        <button class="blue-btn" type="button" onclick="createTaskByFactory()" style="position:sticky;">Create Task</button>
+        <button class="blue-btn" type="button" onclick="checkLength()" style="position:sticky;">Create Task</button>
         </div>
       </div>
     </div>
