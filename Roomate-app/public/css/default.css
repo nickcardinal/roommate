@@ -52,6 +52,10 @@ button {
   padding: 0;
 }
 
+table {
+  border-collapse: collapse;
+}
+
 .center-items-container {
   min-height: 100%;
   min-height: 100vh;
@@ -162,6 +166,25 @@ button {
   padding: 5px;
 }
 
+.profile-btns {
+  width: 150px;
+  height: 100px;
+  flex-direction: column;
+  align-items: flex-end;
+  align-content: flex-end;
+}
+
+.profile-btns button {
+  float: right;
+}
+
+.space-information {
+  width: 80vw;
+  text-align: center;
+
+  padding: 5px;
+}
+
 /* .profile-btns {
   display: flex;
   justify-content: flex-end;
@@ -226,6 +249,36 @@ button {
   align-self: flex-end;
 }
 
+.task-sect table {
+  width: 100%;
+}
+
+.task-sect tr {
+  width: 100%;
+}
+
+
+.task-sect tr:nth-child(2n) {
+  border-left: 1px solid gray;
+  border-right: 1px solid gray;
+}
+
+.task-sect tr:nth-child(3n) {
+  border-left: 1px solid gray;
+  border-right: 1px solid gray;
+}
+
+.task-sect tr:nth-child(4n) {
+  border-left: 1px solid gray;
+  border-right: 1px solid gray;
+
+  text-align: right;
+}
+
+.task-sect tr:nth-child(5n) {
+  border-top: 1px solid gray;
+  border-bottom: 1px solid gray;
+}
 
 @media (max-width: 825px) {
   .blue-btn {
@@ -249,6 +302,26 @@ button {
   .space {
     padding-left: 15px;
     padding-right: 15px;
+  }
+
+  .space-content {
+    margin-top: 10px;
+  }
+
+  .mate-sect {
+    min-width: 100px;
+  }
+
+  .mate-sect button {
+    margin-bottom: 20px;
+  }
+
+  .hide-at-825 {
+    display: none;
+  }
+
+  .show-at-825 {
+    display: inline-flex;
   }
 
   .space-content {

@@ -60,7 +60,7 @@ function appendTask(task, table) {
       tskFav.innerHTML = 'Task favoured by ' + getMateByID(task.getFavorMateID())[0].getNickName();
     }catch(e){}
   }
-  br.innerHTML = '<br></br>'
+  br.innerHTML = '<br>'
 }
 
 async function resetTaskTable() {
