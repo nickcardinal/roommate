@@ -54,7 +54,7 @@ async function addMateRefToSpacesMates(mateRef, currSpaceID) { //Tested
         spaceMates = new Array();
     }
     spaceMates.push(mateRef);
-    await spcDoc.update({
+    await spcDocRef.update({
         spcMates: spaceMates
     });
 }
