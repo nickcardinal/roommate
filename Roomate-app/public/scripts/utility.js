@@ -48,13 +48,13 @@ async function addSpaceRefToMatesSpaces(spaceRef, currMateID) { //Tested
 //Add mateRef to Spaces.spcMates firebase collection.
 async function addMateRefToSpacesMates(mateRef, currSpaceID) { //Tested
     let spcDocRef = firebase.firestore().collection("Spaces").doc(currSpaceID);
-    spcDocRef = await spcDocRef.get();
+    let spcDoc = await spcDocRef.get();
     let spcMates = spcDoc.data().spcMates;
     if (spcMates === undefined) {
         spcMates = new Array();
     }
     spcMates.push(mateRef);
-    await spcDocRef.update({
+    await spcDoc.update({
         spcMates: spcMates
     });
 }
