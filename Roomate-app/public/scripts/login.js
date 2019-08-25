@@ -1,4 +1,4 @@
-﻿function login() {
+﻿async function login() {
   localStorage.clear();
   sessionStorage.clear();
   let token, user;
@@ -6,23 +6,18 @@
   let db = firebase.firestore();
   let date = new Date();
   date.setTime(date.getTime() + 86400000);
-  firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL).then(function() {
-    firebase
-      .auth()
-      .signInWithPopup(provider)
-      .then(function(result) {
-        token = result.credential.accessToken;
-        user = result.user;
-        sessionStorage.setItem('token', token);
-        sessionStorage.setItem('email', user.email);
-        sessionStorage.setItem('name', user.displayName);
-        redirLogin(user, date, db);
-      });
-  }).catch(function(error) {
+  await firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL);
+  let result = await firebase.auth().signInWithPopup(provider).catch(function(error) {
     var errorCode = error.code;
     var errorMessage = error.message;
     console.log("ERROR: " + errorCode + " : " + errorMessage);
   });
+  token = result.credential.accessToken;
+  user = result.user;
+  sessionStorage.setItem('token', token);
+  sessionStorage.setItem('email', user.email);
+  sessionStorage.setItem('name', user.displayName);
+  redirLogin(user, date, db);
 }
 function logout() {
   let db = firebase.firestore();
@@ -47,8 +42,6 @@ function logout() {
 
 //not in use
 function redirLogin(user, authExpiration, database) {
-  sessionStorage.setItem('log', 'true');
-  firebase.firestore.setLogLevel('debug');
   let mateRef = database.collection("Mates");
   let mateQuery = mateRef.where("usrEmail", "==", user.email);
 

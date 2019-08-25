@@ -35,16 +35,15 @@ function addSpaceToFirestore(newSpace) { //Tested
 //Add spaceRef to Mates.usrSpaces firebase collection.
 async function addSpaceRefToMatesSpaces(spaceRef, currMateID) { //Tested
     let mateDocRef = firebase.firestore().collection("Mates").doc(currMateID);
-    await mateDocRef.get().then(mateDoc => {
-        let mateSpaces = mateDoc.data().usrSpaces;
-        if (mateSpaces === undefined) {
-            mateSpaces = new Array();
-        }
-        mateSpaces.push(spaceRef);
-        mateDocRef.update({
-            usrSpaces: mateSpaces
-        });
-    })
+    let mateDoc = await mateDocRef.get()
+    let mateSpaces = mateDoc.data().usrSpaces;
+    if (mateSpaces === undefined) {
+        mateSpaces = new Array();
+    }
+    mateSpaces.push(spaceRef);
+    await mateDocRef.update({
+        usrSpaces: mateSpaces
+    });
 }
 //Add mateRef to Spaces.spcMates firebase collection.
 async function addMateRefToSpacesMates(mateRef, currSpaceID) { //Tested
