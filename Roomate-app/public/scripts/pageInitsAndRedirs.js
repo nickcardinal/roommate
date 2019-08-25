@@ -30,10 +30,6 @@ function initializeWelcome() {
   validate();
 }
 async function initializeOverview(){
-  database = firebase.firestore();
-  if(sessionStorage.getItem('NickName') !== sessionStorage.getItem('null')){
-    updateNickName_JoinOrCreate(database);
-  }
   await loadSpace();
   await displaySpaceInfo();
 }
