@@ -147,15 +147,15 @@ async function completeTask(taskID){
 }else{
     if(task.getFavorMateID !== ''){//cannot have more than one mate favour a taskk
     }else{
-           await favourTask(task);
+           await favorTask(task);
          }
     }
     saveSpaceToSessionStorage();
     refreshTasks();
 }
 //Morgan's function stub
-async function favourTask(task){
-
+async function favorTask(task){
+  
 }
 
 // Splits completed Tasks from not completed

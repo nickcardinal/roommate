@@ -27,39 +27,54 @@ async function displayTasks(table) {
 }
 
 function appendTask(task, table) {
+  let userID = sessionStorage.getItem('user');
+
   if(task.getIsComplete() && 0){//change the '0' for testing purposes
     return;
   }
   let rows = table.getElementsByTagName("tr");
+
   let row = table.insertRow(rows.length);
   let tskTitle = row.insertCell(0);
+
   let tskComplete = row.insertCell(1);
   row = table.insertRow(rows.length);
+
   let tskDesc = row.insertCell(0);
   row = table.insertRow(rows.length);
+
   let tskDue = row.insertCell(0);
   row = table.insertRow(rows.length);
+
   let tskMate = row.insertCell(0);
   row = table.insertRow(rows.length);
+
   let br = row.insertCell(0);
   tskTitle.innerHTML = task.getTitle();
+
   if(task.getIsComplete()){
     tskComplete.innerHTML = '✅<br>';
   }else{
-    tskComplete.innerHTML = '<input type="checkbox" onclick="completeTask(\'' + task.getTaskID() + '\')"><br>';
+    if(userID === getMateByID(task.getAssignedMateID())[0]) {
+      tskComplete.innerHTML = '<input type="checkbox" onclick="completeTask(\'' + task.getTaskID() + '\')"><br>';
+    } else {
+      tskComplete.innerHTML = '<button class="blue-btn" onclick="favorTask(\'' + task.getTaskID() + '\')">❤</button><br>';
+    }
   }
+
   tskDesc.innerHTML = task.getDescription();
   tskDue.innerHTML = 'Due by ' + task.getDueDate() + ' ' + task.getDueTime();
+
   try{
-    tskMate.innerHTML = 'Task assigned to ' + getMateByID(task.getAssignedMateID())[0].getNickName();
+    if(task.getFavorMateID() !== ''){
+      try{
+        tskMate.innerHTML = 'Task favored by ' + getMateByID(task.getFavorMateID())[0].getNickName();
+      }catch(e){}
+    } else {
+      tskMate.innerHTML = 'Task assigned to ' + getMateByID(task.getAssignedMateID())[0].getNickName();
+    }
   }catch(e){}
-  if(task.getFavorMateID() !== ''){
-    row = table.insertRow(rows.length);
-    let tskFav = row.insertCell(0);
-    try{
-      tskFav.innerHTML = 'Task favoured by ' + getMateByID(task.getFavorMateID())[0].getNickName();
-    }catch(e){}
-  }
+
   br.innerHTML = '<br></br>'
 }
 
