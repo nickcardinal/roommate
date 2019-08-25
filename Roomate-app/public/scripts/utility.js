@@ -161,7 +161,6 @@ async function favourTask(task){
 // Splits completed Tasks from not completed
 function splitCompletedTasks(tasksArray) {
   let taskObj = {complete:new Array(), incomplete:new Array()};
-  //console.log("Splitting completed tasks.")
   tasksArray.forEach(function(task, index) {
     if(task.getIsComplete() === true) {
       taskObj.complete.push(task);
@@ -174,12 +173,7 @@ function splitCompletedTasks(tasksArray) {
 
 // Sorts completed into descending and not completed to ascending
 function sortTasks(tasksArray) {
-  //console.log("Complete List:", tasksArray);
   var tasks = splitCompletedTasks(tasksArray);
-  //console.log("--- AFTER SPLIT ---");
-  //console.log("Completed:", tasks.complete);
-  //console.log("Not Completed:", tasks.incomplete);
-
   tasks.incomplete.sort((taskA, taskB) => {
     // Check Date: oldest first
     if (taskA.getDueDate() > taskB.getDueDate()) {
@@ -205,14 +199,7 @@ function sortTasks(tasksArray) {
       }
       return -1;
   });
-
-//   console.log("--- AFTER SORT ---");
-//   console.log("Completed:", tasks.complete);
-//   console.log("Not Completed:", tasks.incomplete);
-
   tasksArray = tasks.incomplete.concat(tasks.complete);
-//   console.log("--- AFTER CONCAT ---");
-//   console.log("Complete List:", tasksArray);
   return tasksArray;
 }
 

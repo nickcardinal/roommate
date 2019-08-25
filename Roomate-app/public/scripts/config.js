@@ -14,7 +14,7 @@ function updateExpiration(database, doc) {
         usrExpiration: date
     });
 }
-function updateToken_Overview(database) {
+async function updateToken_Overview(database) {
     sessionStorage.removeItem('log');
     let mateRef = database.collection("Mates");
     let mateQuery = mateRef.where("usrEmail", "==", sessionStorage.getItem('email'));

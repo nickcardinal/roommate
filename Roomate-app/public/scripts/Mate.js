@@ -67,10 +67,10 @@ class Mate {
     }
 
 	outputMateProperties(){
-		console.log('email: ', this.email);
-		console.log('nickname: ', this.nickName);
-		console.log('fullName: ', this.fullName);
-		console.log('photoURL: ', this.photoURL);
+		// console.log('email: ', this.email);
+		// console.log('nickname: ', this.nickName);
+		// console.log('fullName: ', this.fullName);
+		// console.log('photoURL: ', this.photoURL);
     }
     
     importJSON(mate){
