@@ -130,16 +130,14 @@ async function completeTask(taskID){
     }else{
       await task.pushComplete();
       saveSpaceToSessionStorage();
-      location.reload();
     }
 }else{
     if(task.getFavorMateID !== ''){//cannot have more than one mate favour a task.
-        location.reload();
+        //location.reload();
         return;
     }else{
            await favourTask(task);
            saveSpaceToSessionStorage();
-           location.reload();
            return;
          }
 }
