@@ -107,13 +107,14 @@ function checkLength() {
     alert("Please add a Description");
     isFilled = false;
   }
-  if (isFilled === true) {
-    createTaskByFactory();
-  }
+  return isFilled;
 }
 
 //Andre's function
 async function createTaskByFactory() {
+  if (checkLength() === false) {
+    return;
+  }
   var factory;
 	var tasksCollection = firebase.firestore().collection('Tasks');
 	var matesArray =  getMatesInSpace();
