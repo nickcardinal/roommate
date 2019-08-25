@@ -29,25 +29,6 @@ async function validate(){
 
 function initializeWelcome() {
   initialize();
-  // database = firebase.firestore();
-  // let query = database
-  //   .collection("Mates")
-  //   .where("usrToken", "==", sessionStorage.getItem('token'));
-  // query
-  //   .get()
-  //   .then(snapshot => {
-  //   if (snapshot.empty) {
-  //     redirect('../index.html');
-  //   } else {
-  //   snapshot.forEach(doc => {
-  //     if (new Date() < doc.data().usrExpiration.toDate()) {
-  //       sessionStorage.setItem('user', doc.id);
-  //     } else {
-  //       redirect('../index.html');
-  //     }
-  //   });
-  //   }
-  // });
   validate();
 }
 async function initializeOverview(){
@@ -55,23 +36,6 @@ async function initializeOverview(){
   if(sessionStorage.getItem('NickName') !== sessionStorage.getItem('null')){
     updateNickName_JoinOrCreate(database);
   }
-  // let query = database.collection('Mates').where('usrToken', '==', sessionStorage.getItem('token')).get().then(snapshot =>{
-  //     if(snapshot.empty){
-  //         redirect("../index.html");
-  //         //console.log('Invalid Token :')
-  //         //console.log(sessionStorage.getItem('token'));
-  //     }else{
-  //         snapshot.forEach(doc => {
-  //             if(new Date() < doc.data().usrExpiration.toDate()){
-  //                 sessionStorage.setItem('user', doc.id);
-  //                 updateExpiration(database, doc);
-  //             }else{
-  //                 redirect("../index.html");
-  //             }
-
-  //         });
-  //     }
-  // });
   await loadSpace();
   await displaySpaceInfo();
 }
