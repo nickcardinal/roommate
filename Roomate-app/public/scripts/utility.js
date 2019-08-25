@@ -48,16 +48,15 @@ async function addSpaceRefToMatesSpaces(spaceRef, currMateID) { //Tested
 //Add mateRef to Spaces.spcMates firebase collection.
 async function addMateRefToSpacesMates(mateRef, currSpaceID) { //Tested
     let spcDocRef = firebase.firestore().collection("Spaces").doc(currSpaceID);
-    await spcDocRef.get().then(spcDoc => {
-        let spcMates = spcDoc.data().spcMates;
-        if (spcMates === undefined) {
-            spcMates = new Array();
-        }
-        spcMates.push(mateRef);
-        spcDocRef.update({
-            spcMates: spcMates
-        });
-    })
+    let spcDocRef = await spcDocRef.get();
+    let spcMates = spcDoc.data().spcMates;
+    if (spcMates === undefined) {
+        spcMates = new Array();
+    }
+    spcMates.push(mateRef);
+    await spcDocRef.update({
+        spcMates: spcMates
+    });
 }
 //Pulls SpaceID from joinSpace.html && adds mateRef to Spaces.spcMates && adds Space to Mates.usrSpaces
 async function addMateToSpace() { //Tested
@@ -71,13 +70,13 @@ async function addMateToSpace() { //Tested
             return;
         } else {
             let spcDocRef = firebase.firestore().collection("Spaces").doc(userSpaceID);
-            await addSpaceRefToMatesSpaces(spcDocRef, currMateID).then(async function (none) {
-                await addMateRefToSpacesMates(currMateID, userSpaceID);
-                //Save spaceID to session storage.
-                sessionStorage.setItem('Space', userSpaceID);
-            }).then(redir => {
-                redirect('../html/overview.html');
-            })
+            await addSpaceRefToMatesSpaces(spcDocRef, currMateID)
+            await addMateRefToSpacesMates(currMateID, userSpaceID);
+
+            //Save spaceID to session storage.
+            sessionStorage.setItem('Space', userSpaceID);
+
+            redirect('../html/overview.html');
         }
     });
 }
