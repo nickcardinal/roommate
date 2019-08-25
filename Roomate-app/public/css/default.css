@@ -31,7 +31,7 @@ h3 {
 
 h4 {
   font-family: 'Montserrat', sans-serif;
-  font-size: 1.4em;
+  font-size: 1.3em;
 }
 
 p {
@@ -155,6 +155,18 @@ button {
   float: right;
 }
 
+.space-information {
+  width: 80vw;
+  text-align: center;
+
+  padding: 5px;
+}
+
+/* .profile-btns {
+  display: flex;
+  justify-content: flex-end;
+} */
+
 .space {
   min-width: 90%;
   min-width: 90vw;
@@ -258,7 +270,6 @@ button {
   .show-at-825 {
     display: inline-flex;
   }
-}
 
 @media (max-width: 450px) {
   .space-content {
