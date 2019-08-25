@@ -241,8 +241,13 @@ function saveSpaceToSessionStorage() {
 async function loadSpaceFromFirestore() {
     let currSpaceID = sessionStorage.getItem("Space");
     mySpace = new Space();
-    await mySpace.populateFromFirestore(currSpaceID, loadSpaceFromFirestoreCallback);
-	return true;
+	if(!currSpaceID){
+		return false;
+	}
+	else{
+		await mySpace.populateFromFirestore(currSpaceID, loadSpaceFromFirestoreCallback);
+		return true;
+	}
 }
 //Loads mySpace from Session Storage JSON.
 function loadSpaceFromSessionStorage() {
