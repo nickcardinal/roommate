@@ -88,7 +88,7 @@ function appendMate(mate, table) {
 
   mteIcon.innerHTML = '<img class ="user-icon" src=' + mate.getPhotoURL() + " " + 'alt="Checkmates Logo">';
   mteName.innerHTML = mate.getNickName();
-  br.innerHTML = '<br></br>'
+  br.innerHTML = '<br>'
 }
 
 async function resetMateTable() {
