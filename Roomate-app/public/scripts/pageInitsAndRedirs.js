@@ -5,25 +5,23 @@ function initialize() {
 
 async function validate(){
   initialize();
-    database = firebase.firestore();
-    if(sessionStorage.getItem('NickName') !== sessionStorage.getItem('null')){
-      updateNickName_JoinOrCreate(database);
-    }
-    let query = database.collection('Mates').where('usrToken', '==', sessionStorage.getItem('token')).get().then(snapshot =>{
-        if(snapshot.empty){
-            redirect("../index.html");
+  database = firebase.firestore();
+  if(sessionStorage.getItem('NickName') !== sessionStorage.getItem('null')){
+    updateNickName_JoinOrCreate(database);
+  }
+  let query = await database.collection('Mates').where('usrToken', '==', sessionStorage.getItem('token')).get();
+    if(query.empty){
+      redirect("../index.html");
+    }else{
+      snapshot.forEach(doc => {
+        if(new Date() < doc.data().usrExpiration.toDate()){
+          sessionStorage.setItem('user', doc.id);
+          updateExpiration(database, doc);
         }else{
-            snapshot.forEach(doc => {
-                if(new Date() < doc.data().usrExpiration.toDate()){
-                    sessionStorage.setItem('user', doc.id);
-                    updateExpiration(database, doc);
-                }else{
-                    redirect("../index.html");
-                }
-
-            });
+          redirect("../index.html");
+            }
+          });
         }
-    });
     await loadSpace();
   }
 
