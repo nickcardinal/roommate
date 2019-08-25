@@ -13,7 +13,7 @@ async function validate(){
     if(query.empty){
       redirect("../index.html");
     }else{
-      snapshot.forEach(doc => {
+      query.forEach(doc => {
         if(new Date() < doc.data().usrExpiration.toDate()){
           sessionStorage.setItem('user', doc.id);
           updateExpiration(database, doc);
@@ -63,45 +63,6 @@ function populateSpaceCallback(type, value){
 	}
 }
 
-// Redirect Page Functions
-function redirect(url){
-  window.location.href = url;
-}
-
-function redirectIndex() {
-    redirect("..index.html");
-}
-
-function redirectProfile() {
-    redirect("../html/profile.html");
-}
-
-function redirectCreateNewSpace() {
-    redirect("../html/createNewSpace.html");
-}
-
-function redirectCreateTask() {
-	redirect("../html/createTask.html");
-}
-
-function redirectOverview() {
-    redirect("../html/overview.html");
-}
-
-function redirectSpaceKey() {
-  redirect("../html/spaceKey.html");
-}
-
-function openTaskList() {
-  redirect("../html/tasklist.html");
-	// window.open("../html/tasklist.html");
-}
-
-function openMateList() {
-  redirect("../html/mateslist.html");
-  // window.open("../html/tasklist.html");
-}
-
 // Login Redirect Functions
 function redirLogin(user, authExpiration, database) {
   let mateRef = database.collection("Mates");
@@ -141,18 +102,59 @@ function redirLoginToSpace(user, database) {
       let user = snapshot.docs[0].data();
       sessionStorage.setItem('NickName', user.usrNickname); //maybe delete
       let spaces = user.usrSpaces;
+
+      let date = new Date();
+      date.setTime(date.getTime() + 86400000);
+      await database.collection('Mates').doc(sessionStorage.getItem('user')).update({
+        usrExpiration:date,
+        usrToken:sessionStorage.getItem('token')
+      });
+
       if(spaces != undefined) {
         let spaceID = spaces[0].id;
         sessionStorage.setItem('Space', spaceID);
-        let date = new Date();
-        date.setTime(date.getTime() + 86400000);
-        await database.collection('Mates').doc(sessionStorage.getItem('user')).update({
-          usrExpiration:date,
-          usrToken:sessionStorage.getItem('token')
-        });
         redirect('../html/overview.html')
       }else {
         redirect('../html/joinOrCreateSpace.html')
       }
     });
+  }
+
+  // Redirect Page Functions
+  function redirect(url){
+    window.location.href = url;
+  }
+
+  function redirectIndex() {
+      redirect("..index.html");
+  }
+
+  function redirectProfile() {
+      redirect("../html/profile.html");
+  }
+
+  function redirectCreateNewSpace() {
+      redirect("../html/createNewSpace.html");
+  }
+
+  function redirectCreateTask() {
+  	redirect("../html/createTask.html");
+  }
+
+  function redirectOverview() {
+      redirect("../html/overview.html");
+  }
+
+  function redirectSpaceKey() {
+    redirect("../html/spaceKey.html");
+  }
+
+  function openTaskList() {
+    redirect("../html/tasklist.html");
+  	// window.open("../html/tasklist.html");
+  }
+
+  function openMateList() {
+    redirect("../html/mateslist.html");
+    // window.open("../html/tasklist.html");
   }

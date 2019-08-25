@@ -40,58 +40,6 @@ function logout() {
     });
 }
 
-//not in use
-function redirLogin(user, authExpiration, database) {
-  let mateRef = database.collection("Mates");
-  let mateQuery = mateRef.where("usrEmail", "==", user.email);
-
-  mateQuery
-    .get()
-    .then(snapshot => {
-      if (snapshot.empty) {
-        //sessionStorage.setItem('name', user.displayName);
-        sessionStorage.removeItem('log');
-
-
-        mateRef
-          .add({
-            usrToken: sessionStorage.getItem('token'),
-            usrExpiration: authExpiration,
-            usrPhotoUrl: user.photoURL,
-            usrEmail: user.email,
-            usrName: user.displayName,
-            usrNickname: user.displayName
-          })
-          .then(ref => {
-            redirect('../html/profile.html');
-          });
-      } else {
-
-        sessionStorage.setItem('user', snapshot.docs[0].id);
-        let user = snapshot.docs[0].data();
-
-        //redirect if no nickname
-        let nickname = user.usrNickName;
-        console.log(nickname);
-        if(nickname == undefined) {
-          sessionStorage.setItem('NickName', user.displayName);
-          redirect('../html/profile.html');
-        }
-
-        //redirect if no space
-        let spaces = user.usrSpaces;
-        redirLoginToSpace(user, database);
-        if(spaces != undefined) {
-          let spaceID = spaces[0].id;
-          sessionStorage.setItem('Space', spaceID);
-          redirect('../html/overview.html')
-        }else {
-          redirect('../html/joinOrCreateSpace.html')
-        }
-      }
-    });
-}
-
 function editNickName() {
   sessionStorage.setItem('NickName', document.getElementById("nickNameField").value);
   if (sessionStorage.getItem('Space')) {
