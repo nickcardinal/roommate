@@ -43,26 +43,27 @@
     <!-- <script src="../scripts/sortTasks.js"></script> -->
     <script src="../scripts/Mate.js"></script>
     <script src="../scripts/Task.js"></script>
+    <script src="../scripts/RecurringTaskFactory.js"></script>
+    <script src="../scripts/NonRecurringTaskFactory.js"></script>
     <script src="../scripts/utility.js"></script>
-    <script src="../scripts/checkForMateUpdates.js"></script>
-    <script src="../scripts/checkForTaskUpdates.js"></script>
+    <script src="../scripts/checkForFirestoreUpdates.js"></script>
 
     <title>CheckMates</title>
   </head>
-  <body onload="initializeOverview(); mateListInit(); taskListInit()">
+  <!-- <body onload="initializeOverview()"> -->
+  <body>
     <div class="space container">
       <div class="top-bar">
         <img class ="top-bar-logo hide-at-825" src="../images/logoCheckMates.png" alt="Checkmates Logo">
         <div class="space-information">
-          <h2 id="showName">Title</h3>
-          <h4 id="showDescription">Description</h4>
+          <h2 id="showName"></h3>
+          <h4 id="showDescription"></h4>
         </div>
         <div class="profile-btns">
           <button class="blue-btn" type="button" onclick="logout()">Logout</button>
           <button class="blue-btn" type="button" onclick="redirect('./profile.html')">Profile</button>
         </div>
       </div>
-
 
       <div class="space-content ">
         <!-- Mate Section -->
@@ -77,11 +78,12 @@
         </div>
 
         <!-- Task Section -->
-        <div class="task-sect ">
+        <div class="task-sect test">
           <button class="blue-btn" type="button" onclick="redirectCreateTask()">Create a Task</button>
           <br>
           <br class="show-at-450">
-          <table id="taskList">
+          <table class="test" id="taskList">
+            <tr><br></tr>
           </table>
         </div>
       </div>

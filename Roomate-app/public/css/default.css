@@ -31,7 +31,7 @@ h3 {
 
 h4 {
   font-family: 'Montserrat', sans-serif;
-  font-size: 1.4em;
+  font-size: 1.3em;
 }
 
 p {
@@ -50,6 +50,10 @@ button {
   border: none;
   background: none;
   padding: 0;
+}
+
+table {
+  border-collapse: collapse;
 }
 
 .center-items-container {
@@ -155,6 +159,37 @@ button {
   float: right;
 }
 
+.space-information {
+  width: 80vw;
+  text-align: center;
+
+  padding: 5px;
+}
+
+.profile-btns {
+  width: 150px;
+  height: 100px;
+  flex-direction: column;
+  align-items: flex-end;
+  align-content: flex-end;
+}
+
+.profile-btns button {
+  float: right;
+}
+
+.space-information {
+  width: 80vw;
+  text-align: center;
+
+  padding: 5px;
+}
+
+/* .profile-btns {
+  display: flex;
+  justify-content: flex-end;
+} */
+
 .space {
   min-width: 90%;
   min-width: 90vw;
@@ -214,6 +249,36 @@ button {
   align-self: flex-end;
 }
 
+.task-sect table {
+  width: 100%;
+}
+
+.task-sect tr {
+  width: 100%;
+}
+
+
+.task-sect tr:nth-child(2n) {
+  border-left: 5px dotted green;
+  border-right: 5px dotted green;
+}
+
+.task-sect tr:nth-child(3n) {
+  border-left: 5px dotted green;
+  border-right: 5px dotted green;
+}
+
+.task-sect tr:nth-child(4n) {
+  border-left: 5px dotted green;
+  border-right: 5px dotted green;
+
+  text-align: right;
+}
+
+.task-sect tr:nth-child(5n) {
+  border-top: 5px dotted green;
+  border-bottom: 5px dotted green;
+}
 
 @media (max-width: 825px) {
   .blue-btn {
@@ -258,7 +323,26 @@ button {
   .show-at-825 {
     display: inline-flex;
   }
-}
+
+  .space-content {
+    margin-top: 10px;
+  }
+
+  .mate-sect {
+    min-width: 100px;
+  }
+
+  .mate-sect button {
+    margin-bottom: 20px;
+  }
+
+  .hide-at-825 {
+    display: none;
+  }
+
+  .show-at-825 {
+    display: inline-flex;
+  }
 
 @media (max-width: 450px) {
   .space-content {

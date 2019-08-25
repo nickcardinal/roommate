@@ -3,123 +3,39 @@ function initialize() {
     firebase.initializeApp(firebaseConfig);
 }
 
-async function mateListInit() {
-  database = firebase.firestore();
-  if(sessionStorage.getItem('log') === 'true'){
-    updateToken_Overview(database);
-    return;
-  }
-  if(sessionStorage.getItem('NickName') !== sessionStorage.getItem('null')){
-    updateNickName_JoinOrCreate(database);
-  }
-  let query = database.collection('Mates').where('usrToken', '==', sessionStorage.getItem('token')).get().then(snapshot =>{
-      if(snapshot.empty){
-          redirect("../index.html");
-          //console.log('Invalid Token :')
-          //console.log(sessionStorage.getItem('token'));
-      }else{
-          snapshot.forEach(doc => {
-              if(new Date() < doc.data().usrExpiration.toDate()){
-                  sessionStorage.setItem('user', doc.id);
-                  updateExpiration(database, doc);
-              }else{
-                  redirect("../index.html");
-              }
-
-          });
-      }
-  });
-  await loadSpace();
-}
-
-async function taskListInit() {
-  database = firebase.firestore();
-  if(sessionStorage.getItem('log') === 'true'){
-    updateToken_Overview(database);
-    return;
-  }
-  if(sessionStorage.getItem('NickName') !== sessionStorage.getItem('null')){
-    updateNickName_JoinOrCreate(database);
-    return;
-  }
-  let query = database.collection('Mates').where('usrToken', '==', sessionStorage.getItem('token')).get().then(snapshot =>{
-      if(snapshot.empty){
-          redirect("../index.html");
-          //console.log('Invalid Token :')
-          //console.log(sessionStorage.getItem('token'));
-      }else{
-          snapshot.forEach(doc => {
-              if(new Date() < doc.data().usrExpiration.toDate()){
-                  sessionStorage.setItem('user', doc.id);
-                  updateExpiration(database, doc);
-              }else{
-                  redirect("../index.html");
-              }
-
-          });
-      }
-  });
-  await loadSpace();
-  //displayTasks(document.getElementById('taskList'));
-}
-
 async function validate(){
   initialize();
-    database = firebase.firestore();
-    if(sessionStorage.getItem('log') === 'true'){
-      updateToken_Overview(database);
-      return;
-    }
-    if(sessionStorage.getItem('NickName') !== sessionStorage.getItem('null')){
-      updateNickName_JoinOrCreate(database);
-      //return;
-    }
-    let query = database.collection('Mates').where('usrToken', '==', sessionStorage.getItem('token')).get().then(snapshot =>{
-        if(snapshot.empty){
-            redirect("../index.html");
-            //console.log('Invalid Token :')
-            //console.log(sessionStorage.getItem('token'));
+  database = firebase.firestore();
+  if(sessionStorage.getItem('NickName') !== sessionStorage.getItem('null')){
+    updateNickName_JoinOrCreate(database);
+  }
+  let query = await database.collection('Mates').where('usrToken', '==', sessionStorage.getItem('token')).get();
+    if(query.empty){
+      redirect("../index.html");
+    }else{
+      query.forEach(doc => {
+        if(new Date() < doc.data().usrExpiration.toDate()){
+          sessionStorage.setItem('user', doc.id);
+          updateExpiration(database, doc);
         }else{
-            snapshot.forEach(doc => {
-                if(new Date() < doc.data().usrExpiration.toDate()){
-                    sessionStorage.setItem('user', doc.id);
-                    updateExpiration(database, doc);
-                }else{
-                    redirect("../index.html");
-                }
-
-            });
+          redirect("../index.html");
+            }
+          });
         }
-    });
     await loadSpace();
   }
 
 function initializeWelcome() {
   initialize();
-  database = firebase.firestore();
-  let query = database
-    .collection("Mates")
-    .where("usrToken", "==", sessionStorage.getItem('token'));
-  query
-    .get()
-    .then(snapshot => {
-    if (snapshot.empty) {
-      redirect('../index.html');
-    } else {
-    snapshot.forEach(doc => {
-      if (new Date() < doc.data().usrExpiration.toDate()) {
-        sessionStorage.setItem('user', doc.id);
-      } else {
-        redirect('../index.html');
-      }
-    });
-    }
-  });
+  validate();
 }
 async function initializeOverview(){
-  await validate();
+  database = firebase.firestore();
+  if(sessionStorage.getItem('NickName') !== sessionStorage.getItem('null')){
+    updateNickName_JoinOrCreate(database);
+  }
   await loadSpace();
-  displaySpaceInfo();
+  await displaySpaceInfo();
 }
 async function initializeSpaceKey(){
   await validate();
@@ -147,49 +63,8 @@ function populateSpaceCallback(type, value){
 	}
 }
 
-// Redirect Page Functions
-function redirect(url){
-  window.location.href = url;
-}
-
-function redirectIndex() {
-    redirect("..index.html");
-}
-
-function redirectProfile() {
-    redirect("../html/profile.html");
-}
-
-function redirectCreateNewSpace() {
-    redirect("../html/createNewSpace.html");
-}
-
-function redirectCreateTask() {
-	redirect("../html/createTask.html");
-}
-
-function redirectOverview() {
-    redirect("../html/overview.html");
-}
-
-function redirectSpaceKey() {
-  redirect("../html/spaceKey.html");
-}
-
-function openTaskList() {
-  redirect("../html/tasklist.html");
-	// window.open("../html/tasklist.html");
-}
-
-function openMateList() {
-  redirect("../html/mateslist.html");
-  // window.open("../html/tasklist.html");
-}
-
 // Login Redirect Functions
 function redirLogin(user, authExpiration, database) {
-  sessionStorage.setItem('log', 'true');
-  firebase.firestore.setLogLevel('debug');
   let mateRef = database.collection("Mates");
   let mateQuery = mateRef.where("usrEmail", "==", user.email);
 
@@ -197,7 +72,7 @@ function redirLogin(user, authExpiration, database) {
     .get()
     .then(snapshot => {
       if (snapshot.empty) {
-        sessionStorage.setItem('name', user.displayName);
+        sessionStorage.setItem('NickName', user.displayName);
         sessionStorage.removeItem('log');
         mateRef
           .add({
@@ -222,11 +97,19 @@ function redirLoginToSpace(user, database) {
 
   matedb
     .get()
-    .then(function(snapshot){
+    .then(async function(snapshot){
       sessionStorage.setItem('user', snapshot.docs[0].id);
       let user = snapshot.docs[0].data();
       sessionStorage.setItem('NickName', user.usrNickname); //maybe delete
       let spaces = user.usrSpaces;
+
+      let date = new Date();
+      date.setTime(date.getTime() + 86400000);
+      await database.collection('Mates').doc(sessionStorage.getItem('user')).update({
+        usrExpiration:date,
+        usrToken:sessionStorage.getItem('token')
+      });
+
       if(spaces != undefined) {
         let spaceID = spaces[0].id;
         sessionStorage.setItem('Space', spaceID);
@@ -235,4 +118,43 @@ function redirLoginToSpace(user, database) {
         redirect('../html/joinOrCreateSpace.html')
       }
     });
+  }
+
+  // Redirect Page Functions
+  function redirect(url){
+    window.location.href = url;
+  }
+
+  function redirectIndex() {
+      redirect("..index.html");
+  }
+
+  function redirectProfile() {
+      redirect("../html/profile.html");
+  }
+
+  function redirectCreateNewSpace() {
+      redirect("../html/createNewSpace.html");
+  }
+
+  function redirectCreateTask() {
+  	redirect("../html/createTask.html");
+  }
+
+  function redirectOverview() {
+      redirect("../html/overview.html");
+  }
+
+  function redirectSpaceKey() {
+    redirect("../html/spaceKey.html");
+  }
+
+  function openTaskList() {
+    redirect("../html/tasklist.html");
+  	// window.open("../html/tasklist.html");
+  }
+
+  function openMateList() {
+    redirect("../html/mateslist.html");
+    // window.open("../html/tasklist.html");
   }

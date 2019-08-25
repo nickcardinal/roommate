@@ -35,30 +35,28 @@ function addSpaceToFirestore(newSpace) { //Tested
 //Add spaceRef to Mates.usrSpaces firebase collection.
 async function addSpaceRefToMatesSpaces(spaceRef, currMateID) { //Tested
     let mateDocRef = firebase.firestore().collection("Mates").doc(currMateID);
-    await mateDocRef.get().then(mateDoc => {
-        let mateSpaces = mateDoc.data().usrSpaces;
-        if (mateSpaces === undefined) {
-            mateSpaces = new Array();
-        }
-        mateSpaces.push(spaceRef);
-        mateDocRef.update({
-            usrSpaces: mateSpaces
-        });
-    })
+    let mateDoc = await mateDocRef.get()
+    let mateSpaces = mateDoc.data().usrSpaces;
+    if (mateSpaces === undefined) {
+        mateSpaces = new Array();
+    }
+    mateSpaces.push(spaceRef);
+    await mateDocRef.update({
+        usrSpaces: mateSpaces
+    });
 }
 //Add mateRef to Spaces.spcMates firebase collection.
 async function addMateRefToSpacesMates(mateRef, currSpaceID) { //Tested
     let spcDocRef = firebase.firestore().collection("Spaces").doc(currSpaceID);
-    await spcDocRef.get().then(spcDoc => {
-        let spcMates = spcDoc.data().spcMates;
-        if (spcMates === undefined) {
-            spcMates = new Array();
-        }
-        spcMates.push(mateRef);
-        spcDocRef.update({
-            spcMates: spcMates
-        });
-    })
+    let spcDoc = await spcDocRef.get();
+    let spaceMates = spcDoc.data().spcMates;
+    if (spaceMates === undefined) {
+        spaceMates = new Array();
+    }
+    spaceMates.push(mateRef);
+    await spcDocRef.update({
+        spcMates: spaceMates
+    });
 }
 //Pulls SpaceID from joinSpace.html && adds mateRef to Spaces.spcMates && adds Space to Mates.usrSpaces
 async function addMateToSpace() { //Tested
@@ -72,13 +70,13 @@ async function addMateToSpace() { //Tested
             return;
         } else {
             let spcDocRef = firebase.firestore().collection("Spaces").doc(userSpaceID);
-            await addSpaceRefToMatesSpaces(spcDocRef, currMateID).then(async function (none) {
-                await addMateRefToSpacesMates(currMateID, userSpaceID);
-                //Save spaceID to session storage.
-                sessionStorage.setItem('Space', userSpaceID);
-            }).then(redir => {
-                redirect('../html/overview.html');
-            })
+            await addSpaceRefToMatesSpaces(spcDocRef, currMateID)
+            await addMateRefToSpacesMates(currMateID, userSpaceID);
+
+            //Save spaceID to session storage.
+            sessionStorage.setItem('Space', userSpaceID);
+
+            redirect('../html/overview.html');
         }
     });
 }
@@ -95,8 +93,26 @@ function isValidSpace(spaceDocID) { //Tested
     });
 }
 
+function checkLength() {
+  var isFilled = true;
+  var textbox = document.getElementById("titleField");
+  if(textbox.value.length < 1) {
+    alert("Please add a Title");
+    isFilled = false;
+  }
+  textbox = document.getElementById("descriptionField");
+  if(textbox.value.length < 1) {
+    alert("Please add a Description");
+    isFilled = false;
+  }
+  return isFilled;
+}
+
 //Andre's function
 async function createTaskByFactory() {
+  if (checkLength() === false) {
+    return;
+  }
   var factory;
 	var tasksCollection = firebase.firestore().collection('Tasks');
 	var matesArray =  getMatesInSpace();
@@ -130,16 +146,14 @@ async function completeTask(taskID){
     }else{
       await task.pushComplete();
       saveSpaceToSessionStorage();
-      location.reload();
     }
 }else{
     if(task.getFavorMateID !== ''){//cannot have more than one mate favour a task.
-        location.reload();
+        //location.reload();
         return;
     }else{
            await favourTask(task);
            saveSpaceToSessionStorage();
-           location.reload();
            return;
          }
 }
@@ -223,8 +237,13 @@ function saveSpaceToSessionStorage() {
 async function loadSpaceFromFirestore() {
     let currSpaceID = sessionStorage.getItem("Space");
     mySpace = new Space();
-    await mySpace.populateFromFirestore(currSpaceID, loadSpaceFromFirestoreCallback);
-	return true;
+	if(!currSpaceID){
+		return false;
+	}
+	else{
+		await mySpace.populateFromFirestore(currSpaceID, loadSpaceFromFirestoreCallback);
+		return true;
+	}
 }
 //Loads mySpace from Session Storage JSON.
 function loadSpaceFromSessionStorage() {
