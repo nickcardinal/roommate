@@ -51,32 +51,38 @@
   </head>
   <body onload="initializeOverview(); mateListInit(); taskListInit()">
     <div class="space container">
-      <div class="top-bar ">
-        <img class ="top-bar-logo " src="../images/logoCheckMates.png" alt="Checkmates Logo">
-        <div class="space-information ">
-          <h3 id="showName">Title</h3>
-          <p id="showDescription">Description</h4>
+      <div class="top-bar">
+        <img class ="top-bar-logo hide-at-825" src="../images/logoCheckMates.png" alt="Checkmates Logo">
+        <div class="space-information">
+          <h2 id="showName">Title</h3>
+          <h4 id="showDescription">Description</h4>
         </div>
-        <div class="profile-btns ">
+        <div class="profile-btns">
           <button class="blue-btn" type="button" onclick="logout()">Logout</button>
           <button class="blue-btn" type="button" onclick="redirect('./profile.html')">Profile</button>
         </div>
       </div>
 
-      <div class="space-content ">
+
+      <div class="space-content test">
         <!-- Mate Section -->
-        <div class="mate-sect ">
-          <button class="blue-btn " type="button" onclick="redirectSpaceKey()">Invite a Mate</button>
+        <div class="mate-sect test">
+          <button class="blue-btn hide-at-825" type="button" onclick="redirectSpaceKey()">Invite a Mate</button>
+          <button class="blue-btn show-at-825 hide-at-450" type="button" onclick="redirectSpaceKey()">Invite</button>
+          <button class="blue-btn show-at-450" type="button" onclick="redirectSpaceKey()">+</button>
           <br>
+          <br class="show-at-450">
           <table class="" id="mateList">
           </table>
         </div>
 
         <!-- Task Section -->
-        <div class="task-sect ">
+        <div class="task-sect test">
           <button class="blue-btn" type="button" onclick="redirectCreateTask()">Create a Task</button>
-          <!-- <table id="taskList">
-          </table> -->
+          <br>
+          <br class="show-at-825">
+          <table id="taskList">
+          </table>
         </div>
       </div>
     </div>
