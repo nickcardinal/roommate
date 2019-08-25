@@ -142,19 +142,19 @@ async function completeTask(taskID){
       let fact = new RecurringTaskFactory(firebase.firestore().collection('Tasks'), getMatesInSpace());
       await fact.reCreateTask(task);
       await task.pushComplete();
-      //saveSpaceToSessionStorage();
-      //location.reload();
+      refreshTasks();
     }else{
       await task.pushComplete();
       saveSpaceToSessionStorage();
     }
 }else{
     if(task.getFavorMateID !== ''){//cannot have more than one mate favour a task.
-        //location.reload();
+        refreshTasks();
         return;
     }else{
            await favourTask(task);
            saveSpaceToSessionStorage();
+           refreshTasks();
            return;
          }
 }
