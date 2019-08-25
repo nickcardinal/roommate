@@ -197,7 +197,7 @@ function redirLogin(user, authExpiration, database) {
     .get()
     .then(snapshot => {
       if (snapshot.empty) {
-        sessionStorage.setItem('name', user.displayName);
+        sessionStorage.setItem('NickName', user.displayName);
         sessionStorage.removeItem('log');
         mateRef
           .add({

@@ -95,8 +95,26 @@ function isValidSpace(spaceDocID) { //Tested
     });
 }
 
+function checkLength() {
+  var isFilled = true;
+  var textbox = document.getElementById("titleField");
+  if(textbox.value.length < 1) {
+    alert("Please add a Title");
+    isFilled = false;
+  }
+  textbox = document.getElementById("descriptionField");
+  if(textbox.value.length < 1) {
+    alert("Please add a Description");
+    isFilled = false;
+  }
+  return isFilled;
+}
+
 //Andre's function
 async function createTaskByFactory() {
+  if (checkLength() === false) {
+    return;
+  }
   var factory;
 	var tasksCollection = firebase.firestore().collection('Tasks');
 	var matesArray =  getMatesInSpace();
