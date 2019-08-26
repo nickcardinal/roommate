@@ -153,6 +153,19 @@ async function completeTask(taskID){
     //removed because when something is saved
     //refreshTasks();
 }
+
+async function deleteTask(taskID) {
+  task = getTasksByID(taskID)[0];
+  //logic to delete the task
+  var spaceRef = firebase.firestore().collection("Spaces").doc(mySpace.ID);
+  await spaceRef.update({
+    spcTasks: firebase.firestore.FieldValue.arrayRemove(taskID)
+  });
+
+  await task.pushDelete();
+
+  saveSpaceToSessionStorage();
+}
 //Morgan's function stub
 async function favorTask(taskID){
   console.log('In favorTask function');
