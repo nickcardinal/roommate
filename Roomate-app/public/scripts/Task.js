@@ -176,6 +176,14 @@
 		await firebase.firestore().collection('Tasks').doc(this.task_ID).update({tskFavorMateID:favorMateID});
 	}
 
+	async pushDelete() {
+		await firebase.firestore().collection("Tasks").doc(this.task_ID).delete().then(function() {
+	    console.log("Document successfully deleted!");
+	  }).catch(function(error) {
+	    console.error("Error removing document: ", error);
+	  });
+	}
+
 	firestoreObj(){
 		return {
 			tskAssignedMateID: this.assignedMateID,

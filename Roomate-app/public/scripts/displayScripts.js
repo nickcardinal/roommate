@@ -38,7 +38,10 @@ function appendTask(task, table) {
   let tskTitle = row.insertCell(0);
 
   let tskComplete = row.insertCell(1);
+  let tskDelete = row.insertCell(1); //this is by Andre
   row = table.insertRow(rows.length);
+
+  //row = table.insertRow(rows.length);
 
   let tskDesc = row.insertCell(0);
   row = table.insertRow(rows.length);
@@ -56,17 +59,21 @@ function appendTask(task, table) {
     tskComplete.innerHTML = '✅<br>';
   }else{
     if(userID === task.getFavorMateID()) {
-        tskComplete.innerHTML = '<input type="checkbox" onclick="completeTask(\'' + task.getTaskID() + '\')"><br>';
+        tskComplete.innerHTML = '<button class="blue-btn" onclick="completeTask(\'' + task.getTaskID() + '\')">◉<button>';
     }
     else if(userID === task.getAssignedMateID() && task.getFavorMateID() == '') {
-        tskComplete.innerHTML = '<input type="checkbox" onclick="completeTask(\'' + task.getTaskID() + '\')"><br>';
+        tskComplete.innerHTML = '<button class="blue-btn" onclick="completeTask(\'' + task.getTaskID() + '\')">◉<button>';
       }
     else if(task.getFavorMateID() == '' ){
-          tskComplete.innerHTML = '<button class="blue-btn" onclick="favorTask(\'' + task.getTaskID() + '\')">❤</button>';
+          tskComplete.innerHTML = '<button class="orange-btn" onclick="favorTask(\'' + task.getTaskID() + '\')">❤</button>';
     }
     else {
       tskComplete.innerHTML = "";
     }
+  }
+
+  if(!task.getIsComplete()) { //by Andre
+    tskDelete.innerHTML = '<button onclick="deleteTask(\'' + task.getTaskID() + '\')">❌</button>';
   }
 
   tskDesc.innerHTML = task.getDescription();
