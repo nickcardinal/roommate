@@ -44,7 +44,6 @@ taskDoc.onSnapshot(function(snapshot) {
 });
 
 async function refreshTasks() {
-  console.log("Refreshed Tasks");
   await loadSpaceFromFirestore();
   resetTaskTable();
 }
