@@ -93,6 +93,26 @@ table {
   text-align: center;
 }
 
+.orange-btn {
+  margin: 2.5px;
+  padding: 0vh 2vw;
+  height: 45px;
+
+  background: #FFCE95;
+  border-radius: 20px;
+  border: 0px;
+
+  font-family: 'Montserrat', sans-serif;
+  font-style: normal;
+  font-size: 1.275em;
+  color: #FFFFFF;
+
+  display: flex;
+  align-items: center;
+
+  text-align: center;
+}
+
 .blue-btn:hover {
   background-color: #449DD1;
 
@@ -223,6 +243,10 @@ table {
   align-self: flex-end;
 }
 
+.task-sect .orange-btn {
+  align-self: flex-end;
+}
+
 .task-sect table {
   width: 100%;
 }
@@ -246,8 +270,21 @@ table {
   width: auto;
 
   font-size: 0.75em;
+}
 
-  background: #FFCE95;
+.task-sect tr .orange-btn {
+  margin-top: 0;
+  margin-bottom: 0;
+  margin-left: 0;
+  margin-right: 0;
+
+  padding-left: auto;
+  padding-right: auto;
+
+  height: 30px;
+  width: auto;
+
+  font-size: 0.75em;
 }
 
 .task-sect td  {
