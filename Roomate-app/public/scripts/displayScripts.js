@@ -55,10 +55,17 @@ function appendTask(task, table) {
   if(task.getIsComplete()){
     tskComplete.innerHTML = '✅<br>';
   }else{
-    if(userID === getMateByID(task.getAssignedMateID())[0]) {
-      tskComplete.innerHTML = '<input type="checkbox" onclick="completeTask(\'' + task.getTaskID() + '\')"><br>';
-    } else {
-      tskComplete.innerHTML = '<button class="blue-btn" onclick="favorTask(\'' + task.getTaskID() + '\')">❤</button><br>';
+    if(userID === task.getFavorMateID()) {
+        tskComplete.innerHTML = '<input type="checkbox" onclick="completeTask(\'' + task.getTaskID() + '\')"><br>';
+    }
+    else if(userID === task.getAssignedMateID() && task.getFavorMateID() == '') {
+        tskComplete.innerHTML = '<input type="checkbox" onclick="completeTask(\'' + task.getTaskID() + '\')"><br>';
+      }
+    else if(task.getFavorMateID() == '' ){
+          tskComplete.innerHTML = '<button class="blue-btn" onclick="favorTask(\'' + task.getTaskID() + '\')">❤</button>';
+    }
+    else {
+      tskComplete.innerHTML = "";
     }
   }
 

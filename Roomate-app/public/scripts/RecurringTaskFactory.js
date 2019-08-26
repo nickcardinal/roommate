@@ -94,6 +94,7 @@ class RecurringTaskFactory {
   async reCreateTask(oldTask) { // pass in the old task
     this.task.duplicate(oldTask);
     this.task.setAssignedMateID(this.setNextMateAssignedToRecurringTask(this.task.getAssignedMateID()));
+    this.task.setFavorMateID('');
     this.task.calcNewDate();
     this.task.setTaskID(await this.insertTaskIntoFirestore()); // assign the ID now that it has been upoaded to db
     return this.task;

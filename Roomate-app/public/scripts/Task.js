@@ -168,8 +168,14 @@
 	async pushComplete(){
 		task.setIsComplete(true);
 		await firebase.firestore().collection('Tasks').doc(this.task_ID).update({tskIsComplete:true});
-
 	}
+
+	async pushFavor(favorMateID){
+		console.log('Pushing user: ' + sessionStorage.getItem('user'));
+		task.setFavorMateID(favorMateID);
+		await firebase.firestore().collection('Tasks').doc(this.task_ID).update({tskFavorMateID:favorMateID});
+	}
+
 	firestoreObj(){
 		return {
 			tskAssignedMateID: this.assignedMateID,
