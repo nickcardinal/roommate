@@ -59,13 +59,13 @@ function appendTask(task, table) {
     tskComplete.innerHTML = '✅<br>';
   }else{
     if(userID === task.getFavorMateID()) {
-        tskComplete.innerHTML = '<input type="checkbox" onclick="completeTask(\'' + task.getTaskID() + '\')"><br>';
+        tskComplete.innerHTML = '<button class="blue-btn" onclick="completeTask(\'' + task.getTaskID() + '\')">◉<button>';
     }
     else if(userID === task.getAssignedMateID() && task.getFavorMateID() == '') {
-        tskComplete.innerHTML = '<input type="checkbox" onclick="completeTask(\'' + task.getTaskID() + '\')"><br>';
+        tskComplete.innerHTML = '<button class="blue-btn" onclick="completeTask(\'' + task.getTaskID() + '\')">◉<button>';
       }
     else if(task.getFavorMateID() == '' ){
-          tskComplete.innerHTML = '<button class="blue-btn" onclick="favorTask(\'' + task.getTaskID() + '\')">❤</button>';
+          tskComplete.innerHTML = '<button class="orange-btn" onclick="favorTask(\'' + task.getTaskID() + '\')">❤</button>';
     }
     else {
       tskComplete.innerHTML = "";
