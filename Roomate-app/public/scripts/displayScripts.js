@@ -38,7 +38,10 @@ function appendTask(task, table) {
   let tskTitle = row.insertCell(0);
 
   let tskComplete = row.insertCell(1);
+  let tskDelete = row.insertCell(1); //this is by Andre
   row = table.insertRow(rows.length);
+
+  //row = table.insertRow(rows.length);
 
   let tskDesc = row.insertCell(0);
   row = table.insertRow(rows.length);
@@ -67,6 +70,10 @@ function appendTask(task, table) {
     else {
       tskComplete.innerHTML = "";
     }
+  }
+
+  if(!task.getIsComplete()) { //by Andre
+    tskDelete.innerHTML = '<button onclick="deleteTask(\'' + task.getTaskID() + '\')">❌</button>';
   }
 
   tskDesc.innerHTML = task.getDescription();
