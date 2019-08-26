@@ -23,6 +23,7 @@ mateDoc.onSnapshot(function(snapshot) {
 async function refreshMates() {
   await loadSpaceFromFirestore();
   resetMateTable();
+  resetTaskTable();
 }
 
 let taskDoc = firebase.firestore().collection("Tasks").where('tskSpaceID', '==', spaceID);
@@ -38,8 +39,8 @@ taskDoc.onSnapshot(function(snapshot) {
     if(change.type === "removed") {
       //console.log("Removed Task", change.doc.data());
     }
+    refreshTasks();
   });
-  refreshTasks();
 });
 
 async function refreshTasks() {
