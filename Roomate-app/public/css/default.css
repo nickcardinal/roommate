@@ -137,6 +137,7 @@ table {
 
 .top-bar {
   height: 10vh;
+  min-height: 100px;
   display: flex;
 }
 
@@ -158,37 +159,6 @@ table {
 .profile-btns button {
   float: right;
 }
-
-.space-information {
-  width: 80vw;
-  text-align: center;
-
-  padding: 5px;
-}
-
-.profile-btns {
-  width: 150px;
-  height: 100px;
-  flex-direction: column;
-  align-items: flex-end;
-  align-content: flex-end;
-}
-
-.profile-btns button {
-  float: right;
-}
-
-.space-information {
-  width: 80vw;
-  text-align: center;
-
-  padding: 5px;
-}
-
-/* .profile-btns {
-  display: flex;
-  justify-content: flex-end;
-} */
 
 .space {
   min-width: 90%;
@@ -207,10 +177,14 @@ table {
   min-height: 79vh;
 
   display: flex;
-  margin-top: 5vh;
+  margin-top: 2vh;
   padding-top: 2vh;
 
   border-top: 1px solid gray;
+}
+
+.space-content table{
+  margin-top: 2vh;
 }
 
 /* Mate Section */
@@ -254,30 +228,57 @@ table {
 }
 
 .task-sect tr {
+  border-left: 1px solid gray;
+  border-right: 1px solid gray;
   width: 100%;
 }
 
+.task-sect tr .blue-btn {
+  margin-top: 0;
+  margin-bottom: 0;
+  margin-left: 0;
+  margin-right: 0;
 
-.task-sect tr:nth-child(2n) {
-  border-left: 1px solid gray;
-  border-right: 1px solid gray;
+  padding-left: auto;
+  padding-right: auto;
+
+  height: 30px;
+  width: auto;
+
+  font-size: 0.75em;
+
+  background: #FFCE95;
 }
 
-.task-sect tr:nth-child(3n) {
-  border-left: 1px solid gray;
-  border-right: 1px solid gray;
+.task-sect td  {
+  padding: 2.5px 10px;
 }
 
-.task-sect tr:nth-child(4n) {
-  border-left: 1px solid gray;
-  border-right: 1px solid gray;
+.task-sect td button {
+  float: right;
+}
 
-  text-align: right;
+.task-sect td input {
+  float: right;
+}
+
+.task-sect tr:first-child {
+  border-top: 1px solid gray;
 }
 
 .task-sect tr:nth-child(5n) {
   border-top: 1px solid gray;
   border-bottom: 1px solid gray;
+  border-left: none;
+  border-right: none;
+}
+
+.task-sect tr:nth-child(5n + 1) {
+  font-size: 1.25em;
+}
+
+.task-sect tr:last-child {
+  border-bottom: none;
 }
 
 @media (max-width: 825px) {
@@ -289,10 +290,6 @@ table {
   .home-logo {
     height: auto;
     width: 80vw;
-  }
-
-  .top-bar {
-    height: auto;
   }
 
   .space-information {
@@ -308,12 +305,12 @@ table {
     margin-top: 10px;
   }
 
-  .mate-sect {
-    min-width: 100px;
+  .space-content .blue-btn {
+    margin-bottom: 20px;
   }
 
-  .mate-sect button {
-    margin-bottom: 20px;
+  .mate-sect {
+    min-width: 100px;
   }
 
   .hide-at-825 {
@@ -328,12 +325,12 @@ table {
     margin-top: 10px;
   }
 
-  .mate-sect {
-    min-width: 100px;
+  .space-content table {
+    margin-top: 0;
   }
 
-  .mate-sect button {
-    margin-bottom: 20px;
+  .mate-sect {
+    min-width: 100px;
   }
 
   .hide-at-825 {

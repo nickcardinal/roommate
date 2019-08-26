@@ -47,11 +47,12 @@
     <script src="../scripts/NonRecurringTaskFactory.js"></script>
     <script src="../scripts/utility.js"></script>
     <script src="../scripts/checkForFirestoreUpdates.js"></script>
+    <script src="../scripts/flyweight.js"></script>
 
     <title>CheckMates</title>
   </head>
-  <!-- <body onload="initializeOverview()"> -->
-  <body>
+  <body onload="initializeOverview()">
+  <!-- <body> -->
     <div class="space container">
       <div class="top-bar">
         <img class ="top-bar-logo hide-at-825" src="../images/logoCheckMates.png" alt="Checkmates Logo">
@@ -65,14 +66,12 @@
         </div>
       </div>
 
-      <div class="space-content ">
+      <div class="space-content">
         <!-- Mate Section -->
         <div class="mate-sect">
           <button class="blue-btn hide-at-825" type="button" onclick="redirectSpaceKey()">Invite a Mate</button>
           <button class="blue-btn show-at-825 hide-at-450" type="button" onclick="redirectSpaceKey()">Invite</button>
           <button class="blue-btn show-at-450" type="button" onclick="redirectSpaceKey()">+</button>
-          <br>
-          <br class="show-at-450">
           <table class="" id="mateList">
           </table>
         </div>
@@ -80,10 +79,7 @@
         <!-- Task Section -->
         <div class="task-sect">
           <button class="blue-btn" type="button" onclick="redirectCreateTask()">Create a Task</button>
-          <br>
-          <br class="show-at-450">
           <table class="" id="taskList">
-            <tr><br></tr>
           </table>
         </div>
       </div>

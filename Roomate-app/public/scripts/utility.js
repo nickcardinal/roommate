@@ -145,17 +145,24 @@ async function completeTask(taskID){
       await task.pushComplete();
     }
 }else{
-    if(task.getFavorMateID !== ''){//cannot have more than one mate favour a taskk
-    }else{
-           await favorTask(task);
-         }
+    if(task.getFavorMateID() === ''){//cannot have more than one mate favour a taskk
+      await favorTask(task);
     }
+  }
     saveSpaceToSessionStorage();
-    refreshTasks();
+    //removed because when something is saved
+    //refreshTasks();
 }
 //Morgan's function stub
-async function favorTask(task){
-  
+async function favorTask(taskID){
+  console.log('In favorTask function');
+  task = getTasksByID(taskID)[0];
+  task.setFavorMateID(sessionStorage.getItem('user'));
+
+  await task.pushFavor(sessionStorage.getItem('user'));
+
+  saveSpaceToSessionStorage();
+  //refreshTasks();
 }
 
 // Splits completed Tasks from not completed
