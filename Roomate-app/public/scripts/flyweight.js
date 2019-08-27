@@ -65,7 +65,7 @@ class Flyweight{
         return doc;
     }
 
-    async push(docId, collection, doc){
+    push(docId, collection, doc){
         if(collection === 'Spaces'){
             this.insert(this.spaces, doc, docId);
         }else if(collection === 'Tasks'){
@@ -78,7 +78,7 @@ class Flyweight{
         this.save();
     }
 
-    async pushFireDoc(doc, collection){
+    pushFireDoc(doc, collection){
         if(collection === 'Spaces'){
             this.insert(this.spaces, this.getSpace(doc), doc.id);
         }else if(collection === 'Tasks'){
