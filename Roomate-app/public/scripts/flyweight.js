@@ -35,7 +35,7 @@ class flyweight{
             doc = this.getMate(doc);
             this.insert(this.mates, doc, docId);
         }
-        save();
+        this.save();
         return doc;
     }
     async forcePush(docId, collection, doc){//forces an upload to firestore
@@ -75,9 +75,34 @@ class flyweight{
         }else{
             throw('Unexpected collection: ' + collection + ' was not one of "Spaces", "Tasks", "Mates"');
         }
-        save();
+        this.save();
     }
 
+    async pushFireDoc(doc, collection){
+        if(collection === 'Spaces'){
+            this.insert(this.spaces, fireSpace(doc), doc.id);
+        }else if(collection === 'Tasks'){
+            this.insert(this.tasks, fireTask(doc), doc.id);
+        }else if(collection === 'Mates'){
+            this.insert(this.mates, fireMate(doc), doc.id);
+        }else{
+            throw('Unexpected collection: ' + collection + ' was not one of "Spaces", "Tasks", "Mates"');
+        }
+        this.save();
+    }
+
+    delete(docId, collection){
+        if(collection === 'Spaces'){
+            this.insert(this.spaces, fireSpace(doc), doc.id);
+        }else if(collection === 'Tasks'){
+            this.insert(this.tasks, fireTask(doc), doc.id);
+        }else if(collection === 'Mates'){
+            
+        }else{
+            throw('Unexpected collection: ' + collection + ' was not one of "Spaces", "Tasks", "Mates"');
+        }
+        this.save();
+    }
     async forcePushAll(){
         await this.spaces.forEach(async space => {
             await db.collection('Spaces').doc(space.id).update(space.data);
@@ -109,6 +134,13 @@ class flyweight{
             }
         });
         arr.push(this.formMap(doc, docId));
+    }
+    remove(arr, id){
+        for(let i = 0; i < arr.length; i++){
+            if(arr[i].id===id){
+                arr.splice(id, 1);
+            }
+        }
     }
     formMap(doc, id){
         return {data:doc, id:id};
