@@ -311,6 +311,14 @@ table {
     text-align: left;
   }
 
+  .space-information h2 {
+    font-size: 2em;
+  }
+
+  .space-information h4 {
+    font-size: 1.125em;
+  }
+
   .space {
     padding-left: 15px;
     padding-right: 15px;
