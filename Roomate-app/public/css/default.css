@@ -284,6 +284,9 @@ table {
 .task-btn:hover {
   font-weight: bold;
   color: #FFCE95;
+
+  -webkit-transition: all 0.125s ease-out;
+  transition: all 0.125s ease-out;
 }
 
 .delete-btn {
