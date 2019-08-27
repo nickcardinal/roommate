@@ -38,34 +38,38 @@ function appendTask(task, table) {
   let tskTitle = row.insertCell(0);
 
   let tskComplete = row.insertCell(1);
-  let tskDelete = row.insertCell(1); //this is by Andre
+
   row = table.insertRow(rows.length);
 
   //row = table.insertRow(rows.length);
 
   let tskDesc = row.insertCell(0);
+  let tskFiller = row.insertCell(1);
   row = table.insertRow(rows.length);
 
   let tskDue = row.insertCell(0);
+  let tskRecur = row.insertCell(1);
   row = table.insertRow(rows.length);
 
   let tskMate = row.insertCell(0);
+  let tskDelete = row.insertCell(1); //this is by Andre
   row = table.insertRow(rows.length);
 
   let br = row.insertCell(0);
+  let br2 = row.insertCell(1);
   tskTitle.innerHTML = task.getTitle();
 
   if(task.getIsComplete()){
-    tskComplete.innerHTML = '✅<br>';
+    tskComplete.innerHTML = '<button title="This task is complete" class="task-btn">✅</button>';
   }else{
     if(userID === task.getFavorMateID()) {
-        tskComplete.innerHTML = '<button class="blue-btn" onclick="completeTask(\'' + task.getTaskID() + '\')">◉<button>';
+        tskComplete.innerHTML = '<button title="Mark task as complete" class="task-btn" onclick="completeTask(\'' + task.getTaskID() + '\')">☐<button>';
     }
     else if(userID === task.getAssignedMateID() && task.getFavorMateID() == '') {
-        tskComplete.innerHTML = '<button class="blue-btn" onclick="completeTask(\'' + task.getTaskID() + '\')">◉<button>';
+        tskComplete.innerHTML = '<button title="Mark task as complete" class="task-btn" onclick="completeTask(\'' + task.getTaskID() + '\')">☐<button>';
       }
     else if(task.getFavorMateID() == '' ){
-          tskComplete.innerHTML = '<button class="orange-btn" onclick="favorTask(\'' + task.getTaskID() + '\')">❤</button>';
+          tskComplete.innerHTML = '<button title="Favor task" class="task-btn" onclick="favorTask(\'' + task.getTaskID() + '\')">❤</button>';
     }
     else {
       tskComplete.innerHTML = "";
@@ -73,7 +77,11 @@ function appendTask(task, table) {
   }
 
   if(!task.getIsComplete()) { //by Andre
-    tskDelete.innerHTML = '<button onclick="deleteTask(\'' + task.getTaskID() + '\')">❌</button>';
+    tskDelete.innerHTML = '<button class="delete-btn" onclick="deleteTask(\'' + task.getTaskID() + '\')">Delete Task</button>';
+  }
+
+  if(task.getRecurringPeriod() > 0) {
+    tskRecur.innerHTML = 'Repeats every ' + task.getRecurringPeriod() + ' days';
   }
 
   tskDesc.innerHTML = task.getDescription();
