@@ -60,7 +60,7 @@ function appendTask(task, table) {
   tskTitle.innerHTML = task.getTitle();
 
   if(task.getIsComplete()){
-    tskComplete.innerHTML = '<button title="This task is complete" class="task-btn">✅</button>';
+    tskComplete.innerHTML = '<button title="This task is complete" class="">☑</button>';
   }else{
     if(userID === task.getFavorMateID()) {
         tskComplete.innerHTML = '<button title="Mark task as complete" class="task-btn" onclick="completeTask(\'' + task.getTaskID() + '\')">☐<button>';
