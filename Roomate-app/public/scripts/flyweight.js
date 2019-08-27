@@ -80,11 +80,11 @@ class Flyweight{
 
     async pushFireDoc(doc, collection){
         if(collection === 'Spaces'){
-            this.insert(this.spaces, fireSpace(doc), doc.id);
+            this.insert(this.spaces, this.getSpace(doc), doc.id);
         }else if(collection === 'Tasks'){
-            this.insert(this.tasks, fireTask(doc), doc.id);
+            this.insert(this.tasks, this.getTask(doc), doc.id);
         }else if(collection === 'Mates'){
-            this.insert(this.mates, fireMate(doc), doc.id);
+            this.insert(this.mates, this.getMate(doc), doc.id);
         }else{
             throw('Unexpected collection: ' + collection + ' was not one of "Spaces", "Tasks", "Mates"');
         }
@@ -93,11 +93,11 @@ class Flyweight{
 
     delete(docId, collection){
         if(collection === 'Spaces'){
-            this.insert(this.spaces, fireSpace(doc), doc.id);
+            this.remove(this.spaces, doc.id);
         }else if(collection === 'Tasks'){
-            this.insert(this.tasks, fireTask(doc), doc.id);
+            this.remove(this.tasks, doc.id);
         }else if(collection === 'Mates'){
-            
+            this.remove(this.mates, doc.id);
         }else{
             throw('Unexpected collection: ' + collection + ' was not one of "Spaces", "Tasks", "Mates"');
         }
