@@ -284,6 +284,9 @@ table {
 .task-btn:hover {
   font-weight: bold;
   color: #FFCE95;
+
+  -webkit-transition: all 0.125s ease-out;
+  transition: all 0.125s ease-out;
 }
 
 .delete-btn {
@@ -309,6 +312,14 @@ table {
 
   .space-information {
     text-align: left;
+  }
+
+  .space-information h2 {
+    font-size: 2em;
+  }
+
+  .space-information h4 {
+    font-size: 1.125em;
   }
 
   .space {
