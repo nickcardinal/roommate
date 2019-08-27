@@ -1,4 +1,4 @@
-class flyweight{
+class Flyweight{
     constructor(database){
         this.spaces = new Array();
         this.tasks = new Array();
